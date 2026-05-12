@@ -2,7 +2,8 @@
 
 ## Stack: Laravel 11 API + React 18 / Vite SPA
 
-Arquitectura desacoplada tipo Monorepo. Laravel expone una API REST consumida por React (SPA con Vite). La misma API puede servir en el futuro a una app móvil.
+Arquitectura desacoplada tipo Monorepo. Laravel expone una API REST consumida por React (SPA con Vite). La misma API
+puede servir en el futuro a una app móvil.
 
 ---
 
@@ -13,10 +14,10 @@ Arquitectura desacoplada tipo Monorepo. Laravel expone una API REST consumida po
 │                      VPS Hetzner CX32                        │
 │                  Ubuntu 22.04 LTS                            │
 │                                                              │
-│  ┌──────────────────┐   HTTPS   ┌────────────────────────-┐  │
-│  │   Nginx (static)  │ ◄───────► │   Laravel 11 API       │  │
-│  │   React build     │           │   PHP-FPM 8.2          │  │
-│  │   /dist/          │           └───────────┬────────────┘  │
+│  ┌──────────────────┐   HTTPS    ┌───────────────────────-┐  │
+│  │   Nginx (static) │ ◄───────►  │   Laravel 11 API       │  │
+│  │   React build    │            │   PHP-FPM 8.2          │  │
+│  │   /dist/         │            └───────────┬────────────┘  │
 │  └──────────────────┘                        │               │
 │                                 ┌────────────▼────────────┐  │
 │                                 │     PostgreSQL 16       │  │
@@ -197,7 +198,8 @@ CienciasNET/
 
 ## Convención de Migraciones
 
-Las migraciones viven en `backend/database/migrations/`. Se ejecutan en orden por timestamp. Cada tabla tiene su propia migración. Todas las PKs son UUID.
+Las migraciones viven en `backend/database/migrations/`. Se ejecutan en orden por timestamp. Cada tabla tiene su propia
+migración. Todas las PKs son UUID.
 
 ```bash
 # Crear nueva migración
@@ -210,7 +212,8 @@ php artisan migrate
 php artisan migrate:status
 ```
 
-**Regla del equipo:** Cada vez que un miembro crea una migración y hace push, los demás deben ejecutar `php artisan migrate` al hacer `git pull`.
+**Regla del equipo:** Cada vez que un miembro crea una migración y hace push, los demás deben ejecutar
+`php artisan migrate` al hacer `git pull`.
 
 ---
 
@@ -231,23 +234,23 @@ php artisan migrate:status
 
 ## Matriz de Roles y Acceso
 
-| Módulo | superadmin | toe | psicologia | auxiliar | coord_acad | administrativo | docente | padre |
-|---|---|---|---|---|---|---|---|---|
-| Gestión de usuarios | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Asistencia alumnos | ✅ | 👁️ | ❌ | ✅ | 👁️ | ❌ | ❌ | ✅ hijo |
-| Justificar faltas | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Asistencia docentes | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| Finanzas (pagos) | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ hijo |
-| Exámenes (crear) | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| Notas (registrar) | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | 👁️ opcional | ❌ |
-| Ver notas | ✅ | 👁️ | 👁️ | 👁️ | ✅ | ❌ | ❌ | ✅ hijo |
-| Incidencias (registrar) | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Derivar a Psicología | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Atenciones psicología | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Materiales | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ✅ ver |
-| Horarios | ✅ | 👁️ | 👁️ | 👁️ | ✅ | ❌ | ✅ ver | ✅ ver |
-| Comunicados | ✅ | ✅ | ✅ | 👁️ | ✅ | 👁️ | 👁️ | ✅ |
-| Reportes globales | ✅ | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Módulo                  | superadmin | toe | psicologia | auxiliar | coord_acad | administrativo | docente      | padre  |
+|-------------------------|------------|-----|------------|----------|------------|----------------|--------------|--------|
+| Gestión de usuarios     | ✅          | ❌   | ❌          | ❌        | ❌          | ❌              | ❌            | ❌      |
+| Asistencia alumnos      | ✅          | 👁️ | ❌          | ✅        | 👁️        | ❌              | ❌            | ✅ hijo |
+| Justificar faltas       | ✅          | ✅   | ❌          | ✅        | ❌          | ❌              | ❌            | ❌      |
+| Asistencia docentes     | ✅          | ❌   | ❌          | ❌        | ❌          | ✅              | ❌            | ❌      |
+| Finanzas (pagos)        | ✅          | ❌   | ❌          | ❌        | ❌          | ✅              | ❌            | ✅ hijo |
+| Exámenes (crear)        | ✅          | ❌   | ❌          | ❌        | ✅          | ❌              | ❌            | ❌      |
+| Notas (registrar)       | ✅          | ❌   | ❌          | ❌        | ✅          | ❌              | 👁️ opcional | ❌      |
+| Ver notas               | ✅          | 👁️ | 👁️        | 👁️      | ✅          | ❌              | ❌            | ✅ hijo |
+| Incidencias (registrar) | ✅          | ✅   | ❌          | ✅        | ❌          | ❌              | ❌            | ❌      |
+| Derivar a Psicología    | ✅          | ✅   | ❌          | ❌        | ❌          | ❌              | ❌            | ❌      |
+| Atenciones psicología   | ✅          | ❌   | ✅          | ❌        | ❌          | ❌              | ❌            | ❌      |
+| Materiales              | ✅          | ❌   | ❌          | ❌        | ✅          | ❌              | ✅            | ✅ ver  |
+| Horarios                | ✅          | 👁️ | 👁️        | 👁️      | ✅          | ❌              | ✅ ver        | ✅ ver  |
+| Comunicados             | ✅          | ✅   | ✅          | 👁️      | ✅          | 👁️            | 👁️          | ✅      |
+| Reportes globales       | ✅          | ❌   | ❌          | ❌        | ✅          | ✅              | ❌            | ❌      |
 
 > 👁️ = Solo lectura / consulta. ✅ = Lectura y escritura.
 
@@ -256,10 +259,12 @@ php artisan migrate:status
 ## Comunicación CORS y API
 
 En desarrollo:
+
 - Frontend: `localhost:5173` (Vite dev server)
 - Backend: `localhost:8000` (Laravel built-in server)
 
 En producción:
+
 - Nginx sirve los estáticos del build (`frontend/dist/`) directamente
 - Nginx actúa como reverse proxy a PHP-FPM para `/api/*`
 
@@ -275,8 +280,8 @@ En producción:
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-  headers: { 'Accept': 'application/json' },
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
+    headers: {'Accept': 'application/json'},
 });
 ```

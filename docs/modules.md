@@ -11,8 +11,10 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 ### Reglas de Negocio
 
 - **Horario límite de entrada:** 7:45 AM. Después de esa hora se registra como tardanza.
-- **Notificaciones (Correo):** El sistema envía correo automático al padre al registrar el ingreso (ej. 7:40 AM) y al registrar la salida (ej. 3:30 PM). Todos los asuntos llevan el prefijo `[CienciasNET]`.
-- **Regla de Faltas:** Si un alumno acumula 3 faltas, el sistema genera una alerta automática en el panel de TOE y Auxiliar para citar al padre.
+- **Notificaciones (Correo):** El sistema envía correo automático al padre al registrar el ingreso (ej. 7:40 AM) y al
+  registrar la salida (ej. 3:30 PM). Todos los asuntos llevan el prefijo `[CienciasNET]`.
+- **Regla de Faltas:** Si un alumno acumula 3 faltas, el sistema genera una alerta automática en el panel de TOE y
+  Auxiliar para citar al padre.
 - **Justificaciones:** Solo TOE o Auxiliar pueden cambiar el estado de "Falta Injustificada" a "Falta Justificada".
 
 ### Casos de Uso
@@ -37,7 +39,8 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 ### Reglas de Negocio
 
 - Los docentes **no registran su propia asistencia** en el sistema. Lo hace Yanina.
-- **Tardanzas (Acumulativas):** Los minutos de tardanza de los docentes se acumulan mensualmente. El sistema suma todos los minutos de retraso en el mes para facilitar el descuento salarial.
+- **Tardanzas (Acumulativas):** Los minutos de tardanza de los docentes se acumulan mensualmente. El sistema suma todos
+  los minutos de retraso en el mes para facilitar el descuento salarial.
 - **Falta Justificada:** Se descuentan únicamente las horas no laboradas (no se pagan).
 - **Falta Injustificada:** Se descuentan las horas no laboradas multiplicadas por 2 (sanción doble).
 - **Sustitución:** El sistema permite registrar si las horas fueron cubiertas por un docente sustituto.
@@ -60,16 +63,18 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 
 ### Estructura de Costos Base
 
-| Concepto | Monto |
-|---|---|
+| Concepto         | Monto     |
+|------------------|-----------|
 | Cuota de Ingreso | S/ 200.00 |
-| Matrícula | S/ 480.00 |
+| Matrícula        | S/ 480.00 |
 | Mensualidad Base | S/ 480.00 |
 
 ### Reglas de Negocio
 
-- **Pronto Pago:** Si el padre cancela la mensualidad hasta el último día del mes (30 o 31), el sistema aplica automáticamente un descuento de S/ 30.00, dejando la deuda en S/ 450.00.
-- **Condiciones Especiales por Alumno:** `normal` (pago completo), `becado` (1er puesto — no paga o paga fracción), `descuento` (acuerdo con dirección).
+- **Pronto Pago:** Si el padre cancela la mensualidad hasta el último día del mes (30 o 31), el sistema aplica
+  automáticamente un descuento de S/ 30.00, dejando la deuda en S/ 450.00.
+- **Condiciones Especiales por Alumno:** `normal` (pago completo), `becado` (1er puesto — no paga o paga fracción),
+  `descuento` (acuerdo con dirección).
 
 ### Casos de Uso
 
@@ -79,7 +84,8 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 - `ObtenerEstadoCuenta` — Total requerido, monto pagado, saldo pendiente por alumno
 - `ObtenerEstadoCuentaPadre` — Padre ve pagos de sus hijos vinculados
 - `ListarMorosos` — Alumnos con pagos vencidos
-- `EnviarRecordatorioPago` — Correo automático al padre con deuda pendiente (asunto: `[CienciasNET] Recordatorio de pago`)
+- `EnviarRecordatorioPago` — Correo automático al padre con deuda pendiente (asunto:
+  `[CienciasNET] Recordatorio de pago`)
 - `GenerarReciboPDF` — Exportar recibo de pago en PDF
 - `GenerarReporteCaja` — Ingresos del día/mes para dirección
 
@@ -93,8 +99,8 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 
 - **Ciclo Semanal:** Exámenes se rinden los viernes y se publican el martes siguiente.
 - **Estructura de Exámenes:**
-  - 1° a 4° de Secundaria: Examen general de 40 preguntas.
-  - 5° de Secundaria: Examen tipo admisión de 60 preguntas, dividido por canales (`ciencias` / `letras`).
+    - 1° a 4° de Secundaria: Examen general de 40 preguntas.
+    - 5° de Secundaria: Examen tipo admisión de 60 preguntas, dividido por canales (`ciencias` / `letras`).
 - **Publicación:** Mientras `publicado = false`, las notas no son visibles para alumnos ni padres.
 - **Ranking:** Al publicar el examen, el sistema calcula automáticamente el puesto (`puesto_ranking`) de cada alumno.
 
@@ -120,8 +126,10 @@ Detalle funcional de cada módulo con sus casos de uso y reglas de negocio.
 
 - **Registro Actitudinal:** El Auxiliar registra incidencias conductuales en el Cuaderno de Incidencias virtual.
 - **Derivación:** Casos graves pasan a TOE. TOE puede derivar a Psicología.
-- **Notificar a padres:** TOE notifica a los padres sobre faltas graves por correo (asunto: `[CienciasNET] Incidencia conductual — <nombre alumno>`).
-- **Confidencialidad:** El módulo de Psicología (`atenciones_psicologia`) es privado. Sus reportes detallados (`notas_privadas`) no son visibles para docentes ni auxiliares. Solo Psicología y Dirección (superadmin).
+- **Notificar a padres:** TOE notifica a los padres sobre faltas graves por correo (asunto:
+  `[CienciasNET] Incidencia conductual — <nombre alumno>`).
+- **Confidencialidad:** El módulo de Psicología (`atenciones_psicologia`) es privado. Sus reportes detallados (
+  `notas_privadas`) no son visibles para docentes ni auxiliares. Solo Psicología y Dirección (superadmin).
 - **Escalamiento:** TOE puede reportar denuncias a UGEL desde el sistema.
 
 ### Casos de Uso

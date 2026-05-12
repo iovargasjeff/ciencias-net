@@ -1,6 +1,7 @@
 # Seguridad — CienciasNET
 
-Al gestionar datos de **menores de edad** (escolares) y registros psicológicos confidenciales, la seguridad es prioritaria en todas las capas.
+Al gestionar datos de **menores de edad** (escolares) y registros psicológicos confidenciales, la seguridad es
+prioritaria en todas las capas.
 
 ---
 
@@ -106,14 +107,14 @@ add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
 Se registra en `audit_logs` (PostgreSQL):
 
-| Evento | Qué se registra |
-|---|---|
-| Login exitoso / fallido | user_id, IP, timestamp |
-| Cambio de nota | ID, valor anterior, valor nuevo, quién |
-| Creación / modificación de usuario | Campos cambiados |
-| Cambio de contraseña | user_id, IP, timestamp |
-| Acceso a reportes globales | user_id, tipo de reporte |
-| Vinculación / desvinculación padre-alumno | IDs involucrados |
+| Evento                                    | Qué se registra                        |
+|-------------------------------------------|----------------------------------------|
+| Login exitoso / fallido                   | user_id, IP, timestamp                 |
+| Cambio de nota                            | ID, valor anterior, valor nuevo, quién |
+| Creación / modificación de usuario        | Campos cambiados                       |
+| Cambio de contraseña                      | user_id, IP, timestamp                 |
+| Acceso a reportes globales                | user_id, tipo de reporte               |
+| Vinculación / desvinculación padre-alumno | IDs involucrados                       |
 
 ---
 
@@ -141,7 +142,8 @@ SESSION_DOMAIN=.cienciascolegio.pe
 
 ## Datos de Menores de Edad — Política de Acceso
 
-- El acceso a datos de un alumno está restringido por Policy a: sus padres vinculados, TOE, Auxiliar, Coordinador Académico, Psicología y Dirección
+- El acceso a datos de un alumno está restringido por Policy a: sus padres vinculados, TOE, Auxiliar, Coordinador
+  Académico, Psicología y Dirección
 - La vinculación padre-alumno es gestionada exclusivamente por el administrador (superadmin), no por autoregistro
 - Ningún usuario puede acceder a información de alumnos que no le corresponden
 
@@ -150,6 +152,7 @@ SESSION_DOMAIN=.cienciascolegio.pe
 ## Confidencialidad de Registros Psicológicos
 
 La tabla `atenciones_psicologia` contiene datos altamente sensibles:
+
 - Acceso restringido exclusivamente al rol `psicologia` y `superadmin` (Dirección)
 - El campo `notas_privadas` **nunca** es expuesto a: docentes, auxiliares, TOE, administrativos ni padres
 - Las Policies de Laravel deben verificar el rol antes de cualquier consulta a esta tabla

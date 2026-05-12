@@ -1,16 +1,19 @@
 # Guía de Despliegue — CienciasNET (Colegio Ciencias)
 
 Dos opciones de despliegue:
-- **Opción A: Instalación Manual** — Control total sobre cada componente. Requiere instalar PHP, PostgreSQL, Nginx y Node.js manualmente.
-- **Opción B: Despliegue con Docker** — Un solo comando. Todo empaquetado en contenedores. Más rápido, limpio y reproducible.
+
+- **Opción A: Instalación Manual** — Control total sobre cada componente. Requiere instalar PHP, PostgreSQL, Nginx y
+  Node.js manualmente.
+- **Opción B: Despliegue con Docker** — Un solo comando. Todo empaquetado en contenedores. Más rápido, limpio y
+  reproducible.
 
 ---
 
 ## Servidor Recomendado
 
-| Plan | vCPU | RAM | Disco | Precio/mes |
-|---|---|---|---|---|
-| **Hetzner CX32** | 4 | 8 GB | 80 GB SSD | ~$10 |
+| Plan             | vCPU | RAM  | Disco     | Precio/mes |
+|------------------|------|------|-----------|------------|
+| **Hetzner CX32** | 4    | 8 GB | 80 GB SSD | ~$10       |
 
 Ubuntu 22.04 LTS. Suficiente para Laravel + React (Vite) + PostgreSQL para el colegio completo.
 
@@ -215,7 +218,7 @@ name: Deploy CienciasNET
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -315,12 +318,12 @@ CienciasNET/
 
 ### Servicios
 
-| Servicio | Imagen/Base | Rol |
-|---|---|---|
-| `db` | `postgres:16-alpine` | PostgreSQL con volume `pgdata` |
-| `backend` | `php:8.2-fpm-alpine` | Laravel API. Volume `storage` para archivos |
-| `queue` | Mismo que backend | Colas Laravel (emails) |
-| `frontend` | `nginx:alpine` | Sirve build estático. Proxy `/api/` al backend |
+| Servicio   | Imagen/Base          | Rol                                            |
+|------------|----------------------|------------------------------------------------|
+| `db`       | `postgres:16-alpine` | PostgreSQL con volume `pgdata`                 |
+| `backend`  | `php:8.2-fpm-alpine` | Laravel API. Volume `storage` para archivos    |
+| `queue`    | Mismo que backend    | Colas Laravel (emails)                         |
+| `frontend` | `nginx:alpine`       | Sirve build estático. Proxy `/api/` al backend |
 
 ---
 
@@ -334,47 +337,51 @@ nano .env
 
 Variables clave a configurar:
 
-| Variable | Valor por defecto | Notas |
-|---|---|---|
-| `DB_PASSWORD` | `change_me` | **Cambiar** por contraseña segura |
-| `VITE_API_URL` | `https://api.cienciascolegio.pe` | URL de la API |
-| `FRONTEND_PORT` | `8080` | Puerto interno para Nginx host |
-| `MAIL_HOST` | `smtp.gmail.com` | Servidor SMTP |
-| `MAIL_USERNAME` | — | Credenciales de correo |
-| `MAIL_PASSWORD` | — | Password de aplicación |
+| Variable        | Valor por defecto                | Notas                             |
+|-----------------|----------------------------------|-----------------------------------|
+| `DB_PASSWORD`   | `change_me`                      | **Cambiar** por contraseña segura |
+| `VITE_API_URL`  | `https://api.cienciascolegio.pe` | URL de la API                     |
+| `FRONTEND_PORT` | `8080`                           | Puerto interno para Nginx host    |
+| `MAIL_HOST`     | `smtp.gmail.com`                 | Servidor SMTP                     |
+| `MAIL_USERNAME` | —                                | Credenciales de correo            |
+| `MAIL_PASSWORD` | —                                | Password de aplicación            |
 
 ---
 
 ### Configuración de Correo con Gmail
 
-El colegio usa su cuenta Gmail existente para las notificaciones a padres. Gmail permite enviar correos desde aplicaciones externas mediante SMTP, pero requiere pasos previos de seguridad:
+El colegio usa su cuenta Gmail existente para las notificaciones a padres. Gmail permite enviar correos desde
+aplicaciones externas mediante SMTP, pero requiere pasos previos de seguridad:
 
 **Requisitos en la cuenta Gmail del colegio:**
 
 1. Activar **verificación en 2 pasos** en [myaccount.google.com/security](https://myaccount.google.com/security)
 2. Generar un **App Password** en [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords):
-   - Seleccionar app: "Correo"
-   - Seleccionar dispositivo: "Otra (CienciasNET)"
-   - Copiar el password de 16 caracteres generado
+    - Seleccionar app: "Correo"
+    - Seleccionar dispositivo: "Otra (CienciasNET)"
+    - Copiar el password de 16 caracteres generado
 3. Usar ese password como valor de `MAIL_PASSWORD` en `.env`
 
-**IMPORTANTE:** `MAIL_FROM_ADDRESS` debe ser igual a `MAIL_USERNAME`. Gmail no permite enviar correos desde una dirección diferente a la cuenta autenticada.
+**IMPORTANTE:** `MAIL_FROM_ADDRESS` debe ser igual a `MAIL_USERNAME`. Gmail no permite enviar correos desde una
+dirección diferente a la cuenta autenticada.
 
-**Prefijo en asuntos:** Todos los correos automáticos llevan el prefijo `[CienciasNET]` en el asunto para que los padres los identifiquen fácilmente (ej: `[CienciasNET] Registro de ingreso — Juan Pérez`). Esto se configura en `MAIL_SUBJECT_PREFIX`.
+**Prefijo en asuntos:** Todos los correos automáticos llevan el prefijo `[CienciasNET]` en el asunto para que los padres
+los identifiquen fácilmente (ej: `[CienciasNET] Registro de ingreso — Juan Pérez`). Esto se configura en
+`MAIL_SUBJECT_PREFIX`.
 
 **Variables en `.env`:**
 
-| Variable | Ejemplo | Notas |
-|---|---|---|
-| `MAIL_MAILER` | `smtp` | |
-| `MAIL_HOST` | `smtp.gmail.com` | |
-| `MAIL_PORT` | `587` | |
-| `MAIL_USERNAME` | `colegio.ciencias@gmail.com` | Cuenta Gmail del colegio |
-| `MAIL_PASSWORD` | `aaaa_bbbb_cccc_dddd` | App Password de 16 caracteres |
-| `MAIL_ENCRYPTION` | `tls` | |
-| `MAIL_FROM_ADDRESS` | `mismo que MAIL_USERNAME` | Gmail no permite spoofing |
-| `MAIL_FROM_NAME` | `Colegio Ciencias` | Nombre visible en la bandeja |
-| `MAIL_SUBJECT_PREFIX` | `[CienciasNET] ` | Prefijo en todos los asuntos |
+| Variable              | Ejemplo                      | Notas                         |
+|-----------------------|------------------------------|-------------------------------|
+| `MAIL_MAILER`         | `smtp`                       |                               |
+| `MAIL_HOST`           | `smtp.gmail.com`             |                               |
+| `MAIL_PORT`           | `587`                        |                               |
+| `MAIL_USERNAME`       | `colegio.ciencias@gmail.com` | Cuenta Gmail del colegio      |
+| `MAIL_PASSWORD`       | `aaaa_bbbb_cccc_dddd`        | App Password de 16 caracteres |
+| `MAIL_ENCRYPTION`     | `tls`                        |                               |
+| `MAIL_FROM_ADDRESS`   | `mismo que MAIL_USERNAME`    | Gmail no permite spoofing     |
+| `MAIL_FROM_NAME`      | `Colegio Ciencias`           | Nombre visible en la bandeja  |
+| `MAIL_SUBJECT_PREFIX` | `[CienciasNET] `             | Prefijo en todos los asuntos  |
 
 ---
 
@@ -481,7 +488,7 @@ name: Deploy CienciasNET (Docker)
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   deploy:
