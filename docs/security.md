@@ -1,6 +1,6 @@
 # Seguridad — CienciasNET
 
-Al gestionar datos académicos de **menores de edad**, la seguridad es prioritaria en todas las capas.
+Al gestionar datos de **menores de edad** (escolares) y registros psicológicos confidenciales, la seguridad es prioritaria en todas las capas.
 
 ---
 
@@ -9,7 +9,7 @@ Al gestionar datos académicos de **menores de edad**, la seguridad es prioritar
 - Tokens SPA en la tabla `personal_access_tokens` de PostgreSQL
 - Expiración: 8 horas para alumnos/padres, 4 horas para administradores
 - Logout invalida el token en servidor (no solo en el cliente)
-- Token expirado → respuesta 401 → Next.js redirige al login automáticamente
+- Token expirado → respuesta 401 → React redirige al login automáticamente
 
 ```php
 // config/sanctum.php
@@ -79,7 +79,7 @@ Route::middleware('auth:sanctum')->get('/archivos/{ruta}', function (string $rut
 
 - **HTTPS obligatorio** en producción (Let's Encrypt, renovación cada 90 días)
 - **HSTS:** `Strict-Transport-Security: max-age=31536000; includeSubDomains`
-- **CORS** solo acepta el dominio del frontend de la academia
+- **CORS** solo acepta el dominio del frontend del colegio
 - **PostgreSQL** no expuesto a internet: solo escucha en `127.0.0.1:5432`
 - **Firewall VPS:** solo puertos 80, 443 y SSH abiertos
 
@@ -131,8 +131,8 @@ DB_DATABASE=cienciasnet
 DB_USERNAME=cienciasnet_user
 DB_PASSWORD=[contraseña única]
 
-SANCTUM_STATEFUL_DOMAINS=ciencias.dominio.pe
-SESSION_DOMAIN=.dominio.pe
+SANCTUM_STATEFUL_DOMAINS=cienciascolegio.pe
+SESSION_DOMAIN=.cienciascolegio.pe
 ```
 
 **Nunca** commitear `.env` al repositorio. Solo `.env.example` con variables sin valores.
@@ -141,10 +141,20 @@ SESSION_DOMAIN=.dominio.pe
 
 ## Datos de Menores de Edad — Política de Acceso
 
-- El acceso a datos de un alumno está restringido por Policy a: el alumno, su padre vinculado, el docente de su grupo, coordinador y administración
-- La vinculación padre-alumno es gestionada exclusivamente por el administrador, no por autoregistro
-- Las fotos de alumnos se sirven solo con token válido (nunca son públicas)
+- El acceso a datos de un alumno está restringido por Policy a: sus padres vinculados, TOE, Auxiliar, Coordinador Académico, Psicología y Dirección
+- La vinculación padre-alumno es gestionada exclusivamente por el administrador (superadmin), no por autoregistro
 - Ningún usuario puede acceder a información de alumnos que no le corresponden
+
+---
+
+## Confidencialidad de Registros Psicológicos
+
+La tabla `atenciones_psicologia` contiene datos altamente sensibles:
+- Acceso restringido exclusivamente al rol `psicologia` y `superadmin` (Dirección)
+- El campo `notas_privadas` **nunca** es expuesto a: docentes, auxiliares, TOE, administrativos ni padres
+- Las Policies de Laravel deben verificar el rol antes de cualquier consulta a esta tabla
+- No se registra en `audit_logs` el contenido de `notas_privadas` (solo metadatos: quién accedió y cuándo)
+- Las derivaciones a UGEL desde TOE no incluyen las notas privadas de psicología
 
 ---
 

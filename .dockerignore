@@ -1,0 +1,54 @@
+# Dependencias
+node_modules/
+vendor/
+
+# Build
+dist/
+/public/build/
+/public/hot/
+
+# Laravel
+storage/app/public/fotos/*
+storage/app/public/separatas/*
+storage/app/public/comprobantes/*
+storage/app/public/temp/*
+!storage/app/public/fotos/.gitkeep
+!storage/app/public/separatas/.gitkeep
+!storage/app/public/comprobantes/.gitkeep
+!storage/app/public/temp/.gitkeep
+storage/*.key
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+!storage/framework/.gitkeep
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Entorno
+.env
+.env.*
+!.env.example
+!.env.docker.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+coverage/
+.phpunit.result.cache

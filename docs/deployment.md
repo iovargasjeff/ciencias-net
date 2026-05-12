@@ -1,4 +1,10 @@
-# Guía de Despliegue — CienciasNET (VPS Hetzner)
+# Guía de Despliegue — CienciasNET (Colegio Ciencias)
+
+Dos opciones de despliegue:
+- **Opción A: Instalación Manual** — Control total sobre cada componente. Requiere instalar PHP, PostgreSQL, Nginx y Node.js manualmente.
+- **Opción B: Despliegue con Docker** — Un solo comando. Todo empaquetado en contenedores. Más rápido, limpio y reproducible.
+
+---
 
 ## Servidor Recomendado
 
@@ -6,11 +12,13 @@
 |---|---|---|---|---|
 | **Hetzner CX32** | 4 | 8 GB | 80 GB SSD | ~$10 |
 
-Ubuntu 22.04 LTS. Suficiente para Laravel + Next.js + PostgreSQL para hasta 500 alumnos.
+Ubuntu 22.04 LTS. Suficiente para Laravel + React (Vite) + PostgreSQL para el colegio completo.
 
 ---
 
-## 1. Preparación
+# Opción A: Instalación Manual
+
+## A.1. Preparación
 
 ```bash
 ssh root@IP_DEL_VPS
@@ -21,7 +29,7 @@ usermod -aG sudo cienciasnet
 
 ---
 
-## 2. Instalar Nginx
+## A.2. Instalar Nginx
 
 ```bash
 apt install nginx -y
@@ -30,7 +38,7 @@ systemctl enable nginx && systemctl start nginx
 
 ---
 
-## 3. Instalar PHP 8.2 + Intervention Image + extensiones
+## A.3. Instalar PHP 8.2 + extensiones
 
 ```bash
 add-apt-repository ppa:ondrej/php -y && apt update
@@ -38,20 +46,12 @@ apt install php8.2-fpm php8.2-cli php8.2-pgsql php8.2-mbstring \
   php8.2-xml php8.2-curl php8.2-zip php8.2-intl php8.2-bcmath \
   php8.2-gd php8.2-imagick -y
 
-# php8.2-gd y php8.2-imagick son necesarios para Intervention Image v3
 php -v
-```
-
-Después de instalar Laravel, agregar Intervention Image:
-```bash
-composer require intervention/image
-# Publicar configuración
-php artisan vendor:publish --provider="Intervention\Image\Laravel\Providers\ImageServiceProvider"
 ```
 
 ---
 
-## 4. Instalar PostgreSQL 16
+## A.4. Instalar PostgreSQL 16
 
 ```bash
 apt install -y postgresql-common
@@ -65,11 +65,9 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE cienciasnet TO cienci
 sudo -u postgres psql -c "ALTER DATABASE cienciasnet OWNER TO cienciasnet_user;"
 ```
 
-PostgreSQL solo escucha en `127.0.0.1` por defecto — seguro sin configuración adicional.
-
 ---
 
-## 5. Instalar Composer y Node.js
+## A.5. Instalar Composer y Node.js
 
 ```bash
 curl -sS https://getcomposer.org/installer | php
@@ -77,12 +75,11 @@ mv composer.phar /usr/local/bin/composer
 
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install nodejs -y
-npm install -g pm2
 ```
 
 ---
 
-## 6. Configurar Nginx
+## A.6. Configurar Nginx
 
 `/etc/nginx/sites-available/cienciasnet`:
 
@@ -90,13 +87,13 @@ npm install -g pm2
 # Backend Laravel API
 server {
     listen 443 ssl http2;
-    server_name api.ciencias.dominio.pe;
+    server_name api.cienciascolegio.pe;
 
     root /var/www/CienciasNET/backend/public;
     index index.php;
 
-    ssl_certificate /etc/letsencrypt/live/api.ciencias.dominio.pe/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.ciencias.dominio.pe/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/api.cienciascolegio.pe/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.cienciascolegio.pe/privkey.pem;
 
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header X-Frame-Options "SAMEORIGIN" always;
@@ -113,7 +110,6 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
     }
 
-    # IMPORTANTE: bloquear acceso directo a /storage/
     location ^~ /storage/ {
         deny all;
     }
@@ -121,32 +117,34 @@ server {
     location ~ /\.ht { deny all; }
 }
 
-# Frontend Next.js
+# Frontend React (estáticos)
 server {
     listen 443 ssl http2;
-    server_name ciencias.dominio.pe;
+    server_name cienciascolegio.pe;
 
-    ssl_certificate /etc/letsencrypt/live/ciencias.dominio.pe/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/ciencias.dominio.pe/privkey.pem;
+    root /var/www/CienciasNET/frontend/dist;
+    index index.html;
+
+    ssl_certificate /etc/letsencrypt/live/cienciascolegio.pe/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cienciascolegio.pe/privkey.pem;
 
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
 
     location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_cache_bypass $http_upgrade;
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2?)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
     }
 }
 
 server {
     listen 80;
-    server_name ciencias.dominio.pe api.ciencias.dominio.pe;
+    server_name cienciascolegio.pe api.cienciascolegio.pe;
     return 301 https://$host$request_uri;
 }
 ```
@@ -158,63 +156,57 @@ nginx -t && systemctl reload nginx
 
 ---
 
-## 7. SSL con Let's Encrypt
+## A.7. SSL con Let's Encrypt
 
 ```bash
 apt install certbot python3-certbot-nginx -y
-certbot --nginx -d ciencias.dominio.pe -d api.ciencias.dominio.pe
+certbot --nginx -d cienciascolegio.pe -d api.cienciascolegio.pe
 ```
 
 ---
 
-## 8. Deploy del Backend Laravel
+## A.8. Deploy del Backend Laravel
 
 ```bash
 cd /var/www/CienciasNET/backend
 composer install --no-dev --optimize-autoloader
 cp .env.example .env
 php artisan key:generate
-nano .env   # Configurar DB_CONNECTION=pgsql, DB_HOST, DB_PORT, DB_DATABASE, etc.
+nano .env
 
 php artisan migrate --force
 php artisan db:seed --force
-
-# Crear enlace simbólico para almacenamiento
 php artisan storage:link
 
-# Crear carpetas de almacenamiento
 mkdir -p storage/app/public/fotos
 mkdir -p storage/app/public/separatas
 mkdir -p storage/app/public/comprobantes
 mkdir -p storage/app/public/temp
 
-# Optimizar para producción
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Permisos correctos
 chown -R www-data:www-data storage bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 ```
 
 ---
 
-## 9. Deploy del Frontend Next.js
+## A.9. Deploy del Frontend React + Vite
 
 ```bash
 cd /var/www/CienciasNET/frontend
 npm install
-cp .env.example .env.local
-nano .env.local  # NEXT_PUBLIC_API_URL=https://api.ciencias.dominio.pe
+cp .env.example .env
+nano .env  # VITE_API_URL=https://api.cienciascolegio.pe
 npm run build
-pm2 start npm --name "cienciasnet-frontend" -- start
-pm2 save && pm2 startup
+chown -R www-data:www-data dist/
 ```
 
 ---
 
-## 10. CI/CD con GitHub Actions
+## A.10. CI/CD con GitHub Actions
 
 `.github/workflows/deploy.yml`:
 
@@ -247,57 +239,326 @@ jobs:
             cd /var/www/CienciasNET/frontend
             git pull origin main
             npm install && npm run build
-            pm2 restart cienciasnet-frontend
 ```
-
-**Secrets requeridos en GitHub → Settings → Secrets:**
-- `VPS_HOST` — IP del VPS
-- `VPS_USER` — `cienciasnet`
-- `VPS_SSH_KEY` — Clave SSH privada
 
 ---
 
-## 11. Backups Automáticos de PostgreSQL
+## A.11. Backups Automáticos de PostgreSQL
 
 ```bash
 mkdir -p /backups/postgresql
 crontab -e
 
-# Backup diario a las 3:00 AM hora Lima (UTC-5 = 08:00 UTC)
 0 8 * * * PGPASSWORD='contraseña' pg_dump -U cienciasnet_user -h 127.0.0.1 cienciasnet | gzip > /backups/postgresql/cienciasnet_$(date +\%Y\%m\%d).sql.gz
-
-# Eliminar backups de más de 30 días
 30 8 * * * find /backups/postgresql/ -name "*.sql.gz" -mtime +30 -delete
 ```
 
 ---
 
-## 12. Limpieza de Archivos Temporales
+## A.12. Limpieza de Archivos Temporales
 
 ```bash
-# Agregar al crontab: limpiar /storage/app/public/temp/ cada día
 0 9 * * * find /var/www/CienciasNET/backend/storage/app/public/temp/ -mtime +1 -delete
 ```
 
 ---
 
-## Comandos Útiles
+## A.13. Comandos Útiles (Manual)
 
 ```bash
-# Logs de Laravel en tiempo real
 tail -f /var/www/CienciasNET/backend/storage/logs/laravel.log
-
-# Estado del frontend (Next.js)
-pm2 status
-pm2 logs cienciasnet-frontend
-
-# Reiniciar PHP-FPM
+systemctl status nginx
 systemctl restart php8.2-fpm
-
-# Conectar a PostgreSQL
 sudo -u postgres psql cienciasnet
-
-# Ver espacio en disco (importante para archivos)
 df -h /var/www/CienciasNET/backend/storage/
 du -sh /var/www/CienciasNET/backend/storage/app/public/*/
+```
+
+---
+
+# Opción B: Despliegue con Docker
+
+## B.1. Requisitos en el VPS
+
+```bash
+ssh root@IP_DEL_VPS
+apt update && apt upgrade -y
+adduser cienciasnet
+usermod -aG sudo cienciasnet
+
+apt install nginx certbot python3-certbot-nginx -y
+systemctl enable nginx && systemctl start nginx
+
+curl -fsSL https://get.docker.com | bash
+apt install docker-compose-plugin -y
+usermod -aG docker cienciasnet
+
+docker --version
+docker compose version
+```
+
+---
+
+## B.2. Estructura de Archivos Docker
+
+```
+CienciasNET/
+├── docker-compose.yml          # Orquesta los 4 servicios
+├── .env                        # Variables de entorno (copiar de .env.docker.example)
+├── backend/
+│   ├── Dockerfile              # PHP 8.2-FPM + extensiones + Composer
+│   └── entrypoint.sh           # Espera BD → migraciones → seeders → inicia
+└── frontend/
+    ├── Dockerfile              # Multi-stage: node build → nginx serve
+    └── nginx.conf              # SPA routing + proxy /api/ → backend
+```
+
+### Servicios
+
+| Servicio | Imagen/Base | Rol |
+|---|---|---|
+| `db` | `postgres:16-alpine` | PostgreSQL con volume `pgdata` |
+| `backend` | `php:8.2-fpm-alpine` | Laravel API. Volume `storage` para archivos |
+| `queue` | Mismo que backend | Colas Laravel (emails) |
+| `frontend` | `nginx:alpine` | Sirve build estático. Proxy `/api/` al backend |
+
+---
+
+## B.3. Variables de Entorno
+
+```bash
+cd /var/www/CienciasNET
+cp .env.docker.example .env
+nano .env
+```
+
+Variables clave a configurar:
+
+| Variable | Valor por defecto | Notas |
+|---|---|---|
+| `DB_PASSWORD` | `change_me` | **Cambiar** por contraseña segura |
+| `VITE_API_URL` | `https://api.cienciascolegio.pe` | URL de la API |
+| `FRONTEND_PORT` | `8080` | Puerto interno para Nginx host |
+| `MAIL_HOST` | `smtp.gmail.com` | Servidor SMTP |
+| `MAIL_USERNAME` | — | Credenciales de correo |
+| `MAIL_PASSWORD` | — | Password de aplicación |
+
+---
+
+### Configuración de Correo con Gmail
+
+El colegio usa su cuenta Gmail existente para las notificaciones a padres. Gmail permite enviar correos desde aplicaciones externas mediante SMTP, pero requiere pasos previos de seguridad:
+
+**Requisitos en la cuenta Gmail del colegio:**
+
+1. Activar **verificación en 2 pasos** en [myaccount.google.com/security](https://myaccount.google.com/security)
+2. Generar un **App Password** en [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords):
+   - Seleccionar app: "Correo"
+   - Seleccionar dispositivo: "Otra (CienciasNET)"
+   - Copiar el password de 16 caracteres generado
+3. Usar ese password como valor de `MAIL_PASSWORD` en `.env`
+
+**IMPORTANTE:** `MAIL_FROM_ADDRESS` debe ser igual a `MAIL_USERNAME`. Gmail no permite enviar correos desde una dirección diferente a la cuenta autenticada.
+
+**Prefijo en asuntos:** Todos los correos automáticos llevan el prefijo `[CienciasNET]` en el asunto para que los padres los identifiquen fácilmente (ej: `[CienciasNET] Registro de ingreso — Juan Pérez`). Esto se configura en `MAIL_SUBJECT_PREFIX`.
+
+**Variables en `.env`:**
+
+| Variable | Ejemplo | Notas |
+|---|---|---|
+| `MAIL_MAILER` | `smtp` | |
+| `MAIL_HOST` | `smtp.gmail.com` | |
+| `MAIL_PORT` | `587` | |
+| `MAIL_USERNAME` | `colegio.ciencias@gmail.com` | Cuenta Gmail del colegio |
+| `MAIL_PASSWORD` | `aaaa_bbbb_cccc_dddd` | App Password de 16 caracteres |
+| `MAIL_ENCRYPTION` | `tls` | |
+| `MAIL_FROM_ADDRESS` | `mismo que MAIL_USERNAME` | Gmail no permite spoofing |
+| `MAIL_FROM_NAME` | `Colegio Ciencias` | Nombre visible en la bandeja |
+| `MAIL_SUBJECT_PREFIX` | `[CienciasNET] ` | Prefijo en todos los asuntos |
+
+---
+
+## B.4. Build y Deploy
+
+```bash
+cd /var/www/CienciasNET
+
+# Clonar el repositorio (primera vez)
+git clone git@github.com:iovargasjeff/CienciasNET.git .
+cp .env.docker.example .env && nano .env
+
+# Construir y levantar todos los servicios
+docker compose up -d --build
+
+# Verificar que todo esté corriendo
+docker compose ps
+docker compose logs -f
+```
+
+El primer deploy tarda 2-3 minutos (build de imágenes + migraciones). Los siguientes son casi instantáneos.
+
+---
+
+## B.5. Configurar Nginx del Host
+
+El Nginx del host actúa como reverse proxy hacia los contenedores:
+
+`/etc/nginx/sites-available/cienciasnet`:
+
+```nginx
+# Frontend (contenedor cienciasnet-frontend)
+server {
+    listen 443 ssl http2;
+    server_name cienciascolegio.pe;
+
+    ssl_certificate /etc/letsencrypt/live/cienciascolegio.pe/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cienciascolegio.pe/privkey.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# API (contenedor cienciasnet-backend por PHP-FPM)
+server {
+    listen 443 ssl http2;
+    server_name api.cienciascolegio.pe;
+
+    ssl_certificate /etc/letsencrypt/live/api.cienciascolegio.pe/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.cienciascolegio.pe/privkey.pem;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name cienciascolegio.pe api.cienciascolegio.pe;
+    return 301 https://$host$request_uri;
+}
+```
+
+```bash
+ln -s /etc/nginx/sites-available/cienciasnet /etc/nginx/sites-enabled/
+nginx -t && systemctl reload nginx
+```
+
+---
+
+## B.6. SSL con Let's Encrypt
+
+```bash
+certbot --nginx -d cienciascolegio.pe -d api.cienciascolegio.pe
+```
+
+---
+
+## B.7. CI/CD con Docker
+
+`.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy CienciasNET (Docker)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/CienciasNET
+            git pull origin main
+            docker compose up -d --build
+            docker compose exec -T backend php artisan migrate --force
+            docker compose exec -T backend php artisan config:cache
+            docker compose exec -T backend php artisan route:cache
+```
+
+---
+
+## B.8. Backups PostgreSQL (Docker)
+
+```bash
+mkdir -p /backups/postgresql
+crontab -e
+```
+
+```cron
+# Backup diario a las 3:00 AM hora Lima (UTC-5 = 08:00 UTC)
+0 8 * * * docker exec cienciasnet-db pg_dump -U cienciasnet_user cienciasnet | gzip > /backups/postgresql/cienciasnet_$(date +\%Y\%m\%d).sql.gz
+
+# Eliminar backups de más de 30 días
+30 8 * * * find /backups/postgresql/ -name "*.sql.gz" -mtime +30 -delete
+```
+
+```bash
+# Restaurar backup
+gunzip -c /backups/postgresql/cienciasnet_20250101.sql.gz | docker exec -i cienciasnet-db psql -U cienciasnet_user cienciasnet
+```
+
+---
+
+## B.9. Comandos Útiles (Docker)
+
+```bash
+# Estado de los contenedores
+docker compose ps
+
+# Ver logs en tiempo real (todos)
+docker compose logs -f
+
+# Ver logs de un servicio específico
+docker compose logs -f backend
+docker compose logs -f frontend
+docker compose logs -f queue
+
+# Reiniciar un servicio
+docker compose restart backend
+
+# Ejecutar comandos Artisan
+docker compose exec backend php artisan migrate:status
+docker compose exec backend php artisan tinker
+
+# Conectar a PostgreSQL dentro del contenedor
+docker compose exec db psql -U cienciasnet_user cienciasnet
+
+# Ver espacio en disco de volúmenes
+docker system df
+
+# Actualizar a nueva versión (después de git pull)
+docker compose up -d --build
+
+# Detener todo
+docker compose down
+
+# Detener y eliminar volúmenes (⚠️ borra la BD)
+docker compose down -v
 ```

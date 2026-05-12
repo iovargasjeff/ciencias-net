@@ -1,0 +1,122 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: cienciasnet-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-cienciasnet}
+      POSTGRES_USER: ${DB_USERNAME:-cienciasnet_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change_me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - cienciasnet
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-cienciasnet_user} -d ${DB_DATABASE:-cienciasnet}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: cienciasnet-backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_NAME: CienciasNET
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: ${APP_URL:-https://api.cienciascolegio.pe}
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-cienciasnet}
+      DB_USERNAME: ${DB_USERNAME:-cienciasnet_user}
+      DB_PASSWORD: ${DB_PASSWORD:-change_me}
+      MAIL_MAILER: ${MAIL_MAILER:-smtp}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION:-tls}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-${MAIL_USERNAME}}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Colegio Ciencias}
+      MAIL_SUBJECT_PREFIX: ${MAIL_SUBJECT_PREFIX:-[CienciasNET] }
+      SANCTUM_STATEFUL_DOMAINS: ${SANCTUM_STATEFUL_DOMAINS:-cienciascolegio.pe}
+      SESSION_DOMAIN: ${SESSION_DOMAIN:-.cienciascolegio.pe}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://cienciascolegio.pe}
+    volumes:
+      - storage:/var/www/storage/app/public
+    networks:
+      - cienciasnet
+    healthcheck:
+      test: ["CMD", "php-fpm-healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  queue:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: production
+    container_name: cienciasnet-queue
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: production
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-cienciasnet}
+      DB_USERNAME: ${DB_USERNAME:-cienciasnet_user}
+      DB_PASSWORD: ${DB_PASSWORD:-change_me}
+      MAIL_MAILER: ${MAIL_MAILER:-smtp}
+      MAIL_HOST: ${MAIL_HOST:-smtp.gmail.com}
+      MAIL_PORT: ${MAIL_PORT:-587}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_ENCRYPTION: ${MAIL_ENCRYPTION:-tls}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-${MAIL_USERNAME}}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Colegio Ciencias}
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    networks:
+      - cienciasnet
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-https://api.cienciascolegio.pe}
+    container_name: cienciasnet-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-8080}:80"
+    networks:
+      - cienciasnet
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pgdata:
+    driver: local
+  storage:
+    driver: local
+
+networks:
+  cienciasnet:
+    driver: bridge

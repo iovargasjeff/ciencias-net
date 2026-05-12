@@ -101,7 +101,7 @@ Con 80 GB en el Hetzner CX32, el almacenamiento de archivos **no es un problema 
 
 ## Visión a Futuro
 
-CienciasNET puede replicarse para otras academias preuniversitarias del Perú. El primer cliente (Academia CIENCIAS) valida el producto en producción real. A partir del segundo cliente el tiempo de desarrollo se reduce significativamente y el equipo puede evaluar:
+CienciasNET puede replicarse para otros colegios del Perú. El primer cliente (Colegio Ciencias) valida el producto en producción real. A partir del segundo cliente el tiempo de desarrollo se reduce significativamente y el equipo puede evaluar:
 
-- Repositorios independientes por academia (enfoque actual)
-- Multi-tenancy con una sola instalación y múltiples academias (cuando el volumen de clientes lo justifique)
+- Repositorios independientes por colegio (enfoque actual)
+- Multi-tenancy con una sola instalación y múltiples colegios (cuando el volumen de clientes lo justifique)
