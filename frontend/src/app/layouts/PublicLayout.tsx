@@ -9,7 +9,7 @@ export function PublicLayout() {
           <GraduationCap size={30} weight="duotone" aria-hidden />
           <span>CienciasNET</span>
         </Link>
-        <Link className="button button-secondary" to="/portal">Abrir portal</Link>
+        <Link className="button button-secondary" to="/login">Abrir portal</Link>
       </header>
       <main><Outlet /></main>
     </div>

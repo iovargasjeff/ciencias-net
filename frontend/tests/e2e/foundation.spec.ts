@@ -3,6 +3,11 @@ import { expect, test } from '@playwright/test'
 
 test('loads without console errors and has no serious accessibility violations', async ({ page }) => {
   const errors: string[] = []
+  await page.route('**/api/v1/auth/session', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ data: null }),
+  }))
   page.on('console', message => {
     if (message.type() === 'error') errors.push(message.text())
   })
@@ -15,12 +20,16 @@ test('loads without console errors and has no serious accessibility violations',
   expect(errors).toEqual([])
 })
 
-test('renders portal states and keeps station context separate', async ({ page }) => {
+test('protects the human portal and keeps station context separate', async ({ page }) => {
+  await page.route('**/api/v1/auth/session', route => route.fulfill({
+    status: 401,
+    contentType: 'application/json',
+    body: JSON.stringify({ error: { code: 'unauthenticated', message: 'Debes iniciar sesión.', fields: {} } }),
+  }))
   await page.goto('/portal')
-  await expect(page.getByRole('heading', { name: 'Portal humano' })).toBeVisible()
-  await expect(page.getByRole('alert')).toContainText('No se pudo cargar')
+  await expect(page).toHaveURL(/\/login$/)
 
   await page.goto('/estacion')
   await expect(page.getByText('Sesión técnica limitada')).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Estación de asistencia' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Activación de estación' })).toBeVisible()
 })

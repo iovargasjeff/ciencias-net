@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { expect, it } from 'vitest'
 import { App } from '@/app/App'
+import { FoundationsPage } from '@/features/home/FoundationsPage'
 
 it('renders the public foundation', () => {
   render(<MemoryRouter><App /></MemoryRouter>)
@@ -9,7 +10,7 @@ it('renders the public foundation', () => {
 })
 
 it('renders accessible operational states', () => {
-  render(<MemoryRouter initialEntries={['/portal']}><App /></MemoryRouter>)
+  render(<FoundationsPage context="Portal humano" />)
   expect(screen.getByRole('status', { name: /cargando/i })).toBeInTheDocument()
   expect(screen.getByRole('alert')).toHaveTextContent(/no se pudo cargar/i)
 })

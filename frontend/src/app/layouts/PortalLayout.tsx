@@ -1,7 +1,18 @@
 import { House, SignOut, UserCircle } from '@phosphor-icons/react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { logout } from '@/features/auth/api'
+import { useAuth } from '@/features/auth/AuthContext'
 
 export function PortalLayout() {
+  const auth = useAuth()
+  const navigate = useNavigate()
+
+  async function closeSession() {
+    await logout()
+    auth.clearSession()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <div className="workspace">
       <aside className="sidebar">
@@ -9,7 +20,7 @@ export function PortalLayout() {
         <nav aria-label="Navegación principal">
           <Link className="nav-link nav-link-active" to="/portal"><House aria-hidden /> Inicio</Link>
         </nav>
-        <Link className="nav-link" to="/"><SignOut aria-hidden /> Salir</Link>
+        <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
       </aside>
       <main className="workspace-content"><Outlet /></main>
     </div>

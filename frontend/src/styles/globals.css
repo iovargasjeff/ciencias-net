@@ -51,6 +51,21 @@ button:focus-visible, a:focus-visible { outline: 3px solid #86a2ff; outline-offs
 .station-header { padding: 0 0 2rem; }
 .status-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .75rem; border-radius: 999px; background: #dce6ff; color: #2443a7; font-weight: 700; font-size: .8rem; }
 .spin { animation: spin 1s linear infinite; }
+.auth-card { width: min(92vw, 470px); margin: clamp(2rem, 8vw, 6rem) auto; padding: clamp(1.4rem, 5vw, 2.5rem); display: grid; gap: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 22px 70px #24304d18; }
+.auth-card h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 2.5rem); letter-spacing: -.04em; }
+.auth-card p { margin: 0; color: var(--muted); line-height: 1.6; }
+.auth-form { display: grid; gap: .8rem; }
+.auth-form label { display: grid; gap: .4rem; font-weight: 700; }
+.auth-form input { width: 100%; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: .75rem; background: white; font: inherit; }
+.auth-form input:focus { outline: 3px solid #86a2ff66; border-color: var(--primary); }
+.check-field { grid-template-columns: auto 1fr; align-items: center; }
+.check-field input { width: auto; }
+.field-error, .form-error { color: #b42318; font-size: .88rem; }
+.form-success { padding: .75rem; border-radius: .75rem; color: #067647 !important; background: #ecfdf3; }
+.nav-button { width: 100%; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+.context-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.context-card { display: flex; align-items: center; gap: .8rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: 0 16px 50px #24304d12; }
+.context-card strong { flex: 1; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 @media (max-width: 760px) {
@@ -59,6 +74,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #86a2ff; outline-offs
   .sidebar { flex-direction: row; align-items: center; padding: .8rem 1rem; }
   .sidebar nav { margin-left: auto; flex: initial; }
   .sidebar > .nav-link { display: none; }
+  .sidebar > .nav-button { display: inline-flex; width: auto; }
   .state-grid { grid-template-columns: 1fr; }
   .station-header { align-items: flex-start; gap: 1rem; }
 }
