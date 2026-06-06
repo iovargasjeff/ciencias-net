@@ -3,7 +3,7 @@
 > **Referencia técnica detallada vigente.** Conserva diagramas, contratos, matriz de acceso, estructura modular y árbol
 > esperado del repositorio. Los documentos especializados de `docs/architecture/` aclaran o amplían sus secciones.
 
-## Stack: Laravel 11 API + React 18 / Vite SPA
+## Stack: Laravel 13 API + React / Vite SPA
 
 Arquitectura desacoplada tipo Monorepo. Laravel expone una API REST consumida por React (SPA con Vite). La misma API
 puede servir en el futuro a una app móvil.
@@ -17,21 +17,26 @@ puede servir en el futuro a una app móvil.
 │                      VPS Hetzner CX32                        │
 │                  Ubuntu 22.04 LTS                            │
 │                                                              │
-│  ┌──────────────────┐   HTTPS    ┌───────────────────────-┐  │
-│  │   Nginx (static) │ ◄───────►  │   Laravel 11 API       │  │
-│  │   React build    │            │   PHP-FPM 8.2          │  │
-│  │   /dist/         │            └───────────┬────────────┘  │
-│  └──────────────────┘                        │               │
-│                                 ┌────────────▼────────────┐  │
-│                                 │     PostgreSQL 16       │  │
-│                                 │     Puerto 5432         │  │
-│                                 │   (solo localhost)      │  │
-│                                 └─────────────────────────┘  │
+│  ┌──────────────────┐   HTTPS    ┌────────────────────────┐  │
+│  │   Nginx (static) │ ◄───────►  │   Laravel 13 API       │  │
+│  │   React build    │            │   PHP-FPM 8.3          │  │
+│  │   /dist/         │            └──────┬──────┬──────┬───┘  │
+│  └──────────────────┘                   │      │      │ S3 API│
+│                              ┌──────────▼───┐  │  ┌───▼─────┐│
+│                              │ PostgreSQL 16│  │  │R2 privado││
+│                              │ puerto 5432  │  │  │biometría ││
+│                              │ red privada  │  │  └─────────┘│
+│                              └──────────────┘  │ privada      │
+│                                         ┌─────▼──────────┐   │
+│                                         │ Python FastAPI │   │
+│                                         │ servicio facial│   │
+│                                         └────────────────┘   │
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐    │
 │  │  Nginx — Reverse Proxy + SSL (Let's Encrypt)         │    │
 │  │  cienciascolegio.pe        → React build (static)    │    │
-│  │  api.cienciascolegio.pe    → PHP-FPM (Laravel)       │    │ 
+│  │  api.cienciascolegio.pe    → PHP-FPM (Laravel)       │    │
+│  │  Servicio facial Python    → solo red privada         │    │
 │  └──────────────────────────────────────────────────────┘    │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -198,7 +203,7 @@ Infrastructure  ──────────────────►  Domai
 ```
 CienciasNET/
 │
-├── backend/                              ← Laravel 11 API
+├── backend/                              ← Laravel 13 API
 │   ├── app/
 │   │   ├── Modules/
 │   │   │   ├── Auth/                     # Login, roles, recuperación
@@ -238,7 +243,7 @@ CienciasNET/
 │   │   │   ├── 2025_01_01_000016_create_liquidaciones_descuento_docentes_table.php
 │   │   │   ├── 2025_01_01_000017_create_conceptos_pago_table.php
 │   │   │   ├── 2025_01_01_000018_create_beneficios_alumnos_table.php
-│   │   │   ├── 2025_01_01_000019_create_pagos_table.php
+│   │   │   ├── 2025_01_01_000019_create_obligaciones_pago_table.php
 │   │   │   ├── 2025_01_01_000020_create_movimientos_pago_table.php
 │   │   │   ├── 2025_01_01_000021_create_incidencias_table.php
 │   │   │   ├── 2025_01_01_000022_create_atenciones_psicologia_table.php
@@ -260,7 +265,7 @@ CienciasNET/
 │   ├── .env.example
 │   └── composer.json
 │
-├── frontend/                             ← React 18 + Vite SPA
+├── frontend/                             ← React + Vite SPA
 │   ├── public/
 │   │   └── favicon.ico
 │   ├── src/

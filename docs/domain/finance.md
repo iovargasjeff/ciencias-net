@@ -26,6 +26,5 @@
 - Registrar anulación o devolución.
 - Consultar estado de cuenta, morosos y reporte de caja.
 
-> La tabla histórica llamada `pagos` representa realmente obligaciones. Renombrarla a `obligaciones_pago` debe decidirse
-> antes de implementar migraciones.
-
+La entidad que representa la deuda se denomina definitivamente `obligaciones_pago`. Los pagos reales se registran en
+`movimientos_pago`.

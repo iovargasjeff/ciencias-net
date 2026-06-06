@@ -12,6 +12,9 @@ Los comandos, configuraciones Nginx, opciones manual/Docker, variables y tareas 
 - Cloudflare R2 privado para biometría.
 - Almacenamiento privado del backend sin `storage:link`.
 
+Docker Compose es el entorno principal y reproducible para desarrollo, integración y despliegue inicial. La instalación
+manual queda como alternativa operativa, no como flujo recomendado del equipo.
+
 ## Principios
 
 - Solo puertos necesarios expuestos.

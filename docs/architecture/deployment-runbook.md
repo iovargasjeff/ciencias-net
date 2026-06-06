@@ -52,7 +52,7 @@ systemctl enable nginx && systemctl start nginx
 
 ---
 
-## A.3. Instalar PHP 8.2 + extensiones
+## A.3. Instalar PHP 8.3 + extensiones
 
 ```bash
 add-apt-repository ppa:ondrej/php -y && apt update
@@ -338,7 +338,7 @@ CienciasNET/
 ├── docker-compose.yml          # Orquesta los servicios
 ├── .env                        # Variables de entorno (copiar de .env.docker.example)
 ├── backend/
-│   ├── Dockerfile              # PHP 8.2-FPM + extensiones + Composer
+│   ├── Dockerfile              # PHP 8.3-FPM + extensiones + Composer
 │   └── entrypoint.sh           # Espera BD → migraciones → seeders → inicia
 ├── facial-service/
 │   ├── Dockerfile              # Python + API facial

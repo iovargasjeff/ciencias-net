@@ -1,0 +1,32 @@
+# Proposal: add-teacher-attendance-payroll
+
+**ID:** FE-011  
+**Fase:** Fase 2: Facial y asistencia  
+**Owner:** Kiara  
+**Reviewer:** Vincenzo  
+**Dependencias:** FE-003, Backend BE-012/BE-013
+
+## Why
+
+Permitir a Yanina revisar asistencia docente y cerrar planilla.
+
+## In Scope
+
+- asistencia, clases canceladas y sustitutos
+- tarifas y descuentos
+- revisión/cierre y reporte mensual
+
+## Out of Scope
+
+- Capacidades pertenecientes a otros changes.
+- Cambiar reglas compartidas sin actualizar `docs/`.
+
+## Impact
+
+- Proyecto: `frontend`.
+- Capacidades: asistencia, clases canceladas y sustitutos, tarifas y descuentos, revisión/cierre y reporte mensual.
+
+## Source Documents
+
+- `../../../../docs/domain/attendance.md`
+- `../../../../docs/domain/use-case-catalog.md`

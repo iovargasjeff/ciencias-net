@@ -2,17 +2,22 @@
 
 ## Plataforma prevista
 
-- PHP 8.2+ y Laravel 11 API.
+- PHP 8.3+ y Laravel 13 API.
 - PostgreSQL 16 mediante Eloquent y Query Builder.
 - Laravel Sanctum para sesión SPA y credenciales técnicas.
 - Spatie Laravel Permission para roles y permisos.
 - Colas Laravel para correos, notificaciones y tareas diferidas.
 - Pest para pruebas y Scribe/OpenAPI para contrato HTTP.
 
+Laravel ya proporciona rutas API, controladores, Form Requests, API Resources, paginación, manejo de excepciones,
+Sanctum, middleware y Policies. Se utilizarán estas capacidades antes de crear abstracciones propias. Scribe genera y
+publica OpenAPI a partir de endpoints verificados; OpenSpec planifica el cambio, pero no sustituye el contrato HTTP.
+
 ## Organización
 
-El backend se organiza por módulos de dominio. Cada módulo contiene casos de uso, modelos, Policies, validación,
-persistencia y presentación HTTP relacionados. Las abstracciones compartidas deben ser pequeñas y justificadas.
+El backend se organiza por módulos de dominio con arquitectura modular pragmática. Los módulos complejos pueden separar
+Application, Domain, Infrastructure y Presentation; los CRUD simples no deben crear capas vacías. Cada abstracción debe
+eliminar complejidad real o proteger una regla/integración.
 
 ### Estructura esperada por módulo
 

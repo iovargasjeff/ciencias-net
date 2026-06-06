@@ -133,7 +133,7 @@ Una ruta protegida valida sesión, contexto y permiso antes de renderizar. Una r
 ## Sistema visual
 
 - shadcn/ui aporta componentes consistentes, pero se adaptan a la identidad del colegio.
-- Lucide es la librería única de iconos para evitar mezclas visuales.
+- Phosphor Icons es la librería única de iconos para evitar mezclas visuales.
 - Todas las pantallas incluyen estados loading, vacío, error, éxito y sin permiso.
 - Diseño responsive desde móvil hasta escritorio.
 - Accesibilidad mínima WCAG AA: teclado, foco visible, contraste, labels y reducción de movimiento.

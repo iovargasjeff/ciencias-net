@@ -33,9 +33,9 @@ users ──► perfiles_faciales ──► archivos_biometricos
 cuentas_tecnicas ──► estaciones_biometricas ──► camaras_estacion ──► eventos_reconocimiento ◄── users
 eventos_reconocimiento ──► movimientos_asistencia
 
-alumnos ──► pagos ──► conceptos_pago
-alumnos ──► beneficios_alumnos ──► pagos
-pagos ──► movimientos_pago
+alumnos ──► obligaciones_pago ──► conceptos_pago
+alumnos ──► beneficios_alumnos ──► obligaciones_pago
+obligaciones_pago ──► movimientos_pago
 alumnos ──► incidencias
 incidencias ──► atenciones_psicologia
 
@@ -629,7 +629,7 @@ Para `porcentaje`, `valor` debe estar entre 0 y 100. Para `monto_fijo`, debe ser
 valor puede ser nulo porque el descuento equivale al total aplicable. Cada deuda referencia como máximo un beneficio;
 si existen beneficios coincidentes, Yanina selecciona el aplicable antes de generarla.
 
-### `pagos`
+### `obligaciones_pago`
 
 | Campo                          | Tipo                                 | Notas                                      |
 |--------------------------------|--------------------------------------|--------------------------------------------|
@@ -674,16 +674,15 @@ exige motivo, registra valores anteriores/nuevos en auditoría y notifica a padr
 fecha límite vencida antes de registrar el pago, la deuda vuelve a ser elegible para pronto pago. Las deudas `pagado` o
 anuladas y sus movimientos nunca se modifican; cualquier corrección usa anulación/devolución y un nuevo registro.
 
-Aunque la tabla conserva por ahora el nombre `pagos`, cada fila representa una obligación o deuda emitida, no el dinero
-recibido. Los pagos reales están en `movimientos_pago`. Renombrarla a `obligaciones_pago` queda pendiente de aprobación
-antes de implementar migraciones.
+Cada fila de `obligaciones_pago` representa una obligación o deuda emitida. El dinero recibido y sus correcciones se
+registran como movimientos inmutables en `movimientos_pago`.
 
 ### `movimientos_pago`
 
 | Campo           | Tipo                                      | Notas                                  |
 |-----------------|-------------------------------------------|----------------------------------------|
 | id              | UUID PK                                   |                                        |
-| pago_id         | UUID FK → pagos.id                        | Obligación afectada                    |
+| obligacion_pago_id | UUID FK → obligaciones_pago.id                        | Obligación afectada                    |
 | tipo            | ENUM('pago','anulacion','devolucion')        |                                        |
 | monto           | NUMERIC(8,2)                              | Siempre positivo                       |
 | medio_pago      | ENUM('efectivo','transferencia','yape','plin','otro') | Obligatorio para pago        |

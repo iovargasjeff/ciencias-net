@@ -146,7 +146,7 @@ A continuación se documentan las decisiones tomadas y los requerimientos espec�
 |---|---------------------------------------|---------------------------------------------------------|
 | 1 | Lista definitiva de módulos para v1.0 | ✅ 8 módulos aprobados                                   |
 | 2 | Roles del sistema                     | ✅ 10 roles específicos definidos                        |
-| 3 | Stack tecnológico                     | ✅ Laravel 11 + React 18/Vite + PostgreSQL 16 (Monorepo) |
+| 3 | Stack tecnológico                     | ✅ Laravel 13 + React/Vite + PostgreSQL 16 (Monorepo) |
 | 4 | Notificaciones                        | ✅ Panel responsive y correo electrónico                 |
 | 5 | Esquema de base de datos              | ✅ UUID en dominio; BIGSERIAL en auditoría. Spatie para roles |
 | 6 | Modalidad de entrega                  | ✅ Pago único + mantenimiento mensual                    |

@@ -148,7 +148,7 @@ Se registra en `audit_logs` (PostgreSQL):
 | Cambio de contraseña                      | user_id, IP, timestamp                 |
 | Acceso a reportes globales                | user_id, tipo de reporte               |
 | Cambio de concepto o beneficio financiero | valores anteriores/nuevos, Yanina      |
-| Movimiento o ajuste de pago               | pago_id, tipo, monto, motivo, Yanina    |
+| Movimiento o ajuste de pago               | obligacion_pago_id, tipo, monto, motivo, Yanina    |
 | Cambio de tarifa docente                  | docente_id, tarifa anterior/nueva, Yanina |
 | Ajuste de descuento docente               | liquidacion_id, monto, motivo, Yanina   |
 | Vinculación / desvinculación padre-alumno | IDs involucrados                       |

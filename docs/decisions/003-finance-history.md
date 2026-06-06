@@ -8,5 +8,5 @@
 - La cuenta específica con `gestionar_finanzas` puede ajustar deudas pendientes con motivo y auditoría.
 - Deudas pagadas/anuladas y movimientos históricos son inmutables.
 
-Permanece pendiente decidir si la entidad histórica `pagos` se renombrará a `obligaciones_pago` antes de las migraciones.
-
+La entidad que representa una deuda se denomina definitivamente `obligaciones_pago`. Los pagos reales permanecen en
+`movimientos_pago`.

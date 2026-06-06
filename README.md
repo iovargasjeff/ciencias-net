@@ -8,8 +8,8 @@ planilla docente, finanzas, evaluaciones, incidencias, Psicología, materiales, 
 El repositorio se encuentra en fase de definición y scaffolding. La documentación compartida nueva es autoritativa; los
 documentos anteriores se conservan en `docs/legacy/` únicamente como referencia histórica.
 
-Backend y frontend serán proyectos independientes dentro del monorepo y tendrán OpenSpec, reglas y planes de ejecución
-separados. Esa estructura se creará después de terminar y aprobar la documentación compartida.
+Backend y frontend son proyectos independientes dentro del monorepo y ya cuentan con OpenSpec, reglas y planes de
+ejecución separados. La Fase 0 de ambos planes prepara bases clonables antes de repartir features funcionales.
 
 ## Arquitectura prevista
 
@@ -17,7 +17,7 @@ separados. Esa estructura se creará después de terminar y aprobar la documenta
 React + TypeScript + Vite
         │ HTTPS / Sanctum SPA
         ▼
-Laravel 11 API ──► PostgreSQL 16
+Laravel 13 API ──► PostgreSQL 16
         │
         ├──► Colas y correo
         ├──► Archivos privados / Cloudflare R2
@@ -71,7 +71,7 @@ Documentos principales:
 - React + TypeScript + Vite.
 - React Router con layouts y rutas protegidas.
 - Tailwind CSS y shadcn/ui.
-- Lucide React como librería de iconos.
+- Phosphor Icons para React como librería de iconos.
 - TanStack Query, Axios, React Hook Form y Zod.
 - GSAP para animaciones complejas justificadas; CSS para transiciones comunes.
 - Vitest, Testing Library y Playwright.
@@ -80,7 +80,7 @@ Las rutas protegidas mejoran la experiencia, pero el backend siempre vuelve a va
 
 ## Backend previsto
 
-- Laravel 11 API y PHP 8.2+.
+- Laravel 13 API y PHP 8.3+.
 - PostgreSQL 16 y migraciones Laravel.
 - Sanctum: sesión/cookie para personas y credenciales técnicas para integraciones.
 - Spatie Laravel Permission y Policies.
@@ -88,7 +88,7 @@ Las rutas protegidas mejoran la experiencia, pero el backend siempre vuelve a va
 
 ## OpenSpec por proyecto
 
-La siguiente fase creará:
+Cada proyecto administra su propio flujo:
 
 ```text
 backend/
@@ -104,6 +104,16 @@ frontend/
 
 Cada proyecto planificará y archivará sus propias capacidades. El frontend dependerá de documentación compartida,
 contratos API publicados y specs backend aceptadas, nunca de changes backend activos.
+
+- [Plan backend](backend/openspec/EXECUTION_PLAN.md)
+- [Plan frontend](frontend/openspec/EXECUTION_PLAN.md)
+
+### Inicio recomendado
+
+1. Ejecutar en paralelo `BE-001`, `OPS-001` y `FE-001`.
+2. Continuar con convenciones API, sistema visual y calidad de ambos proyectos.
+3. Verificar que un clon limpio pueda levantar, probar y compilar toda la base.
+4. Recién entonces asignar e iniciar features funcionales de la Fase 1.
 
 ## Decisiones clave
 
