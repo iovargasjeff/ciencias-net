@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
 use App\Http\Controllers\Api\V1\Stations\StationController;
 use App\Http\Controllers\Api\V1\StudentAttendance\StudentAttendanceController;
+use App\Http\Controllers\Api\V1\TeacherAttendance\TeacherAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -81,6 +82,11 @@ Route::prefix('v1')->group(function (): void {
         Route::get('student-attendance/alerts', [StudentAttendanceController::class, 'alerts']);
         Route::get('recognition-events', [StudentAttendanceController::class, 'recognitionEvents']);
         Route::post('recognition-events/{recognitionEventId}/review', [StudentAttendanceController::class, 'reviewRecognition']);
+
+        Route::get('teacher-attendance', [TeacherAttendanceController::class, 'index']);
+        Route::post('teacher-attendance/adjustments', [TeacherAttendanceController::class, 'adjustment']);
+        Route::post('class-sessions/{classSessionId}/cancellation', [TeacherAttendanceController::class, 'cancel']);
+        Route::put('class-sessions/{classSessionId}/substitute', [TeacherAttendanceController::class, 'substitute']);
 
         Route::get('biometric-consents', [BiometricController::class, 'index']);
         Route::post('biometric-consents', [BiometricController::class, 'store']);
