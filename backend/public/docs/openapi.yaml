@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
               required:
                 - image
                 - camera_id
@@ -547,7 +547,7 @@ paths:
                 relationship:
                   type: string
                   description: ''
-                  example: padre
+                  example: madre
                   enum:
                     - padre
                     - madre
@@ -709,7 +709,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -783,7 +783,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -791,7 +791,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: active
+                  example: closed
                   enum:
                     - draft
                     - active
@@ -1075,7 +1075,7 @@ paths:
                 enrolled_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
               required:
                 - student_id
                 - section_id
@@ -1212,7 +1212,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: exit
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1249,7 +1249,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: entry
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1257,7 +1257,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
       security: []
     parameters:
       -
@@ -1379,7 +1379,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
               required:
                 - label
                 - device_identifier
@@ -1450,7 +1450,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: entry
+                  example: absence
                   enum:
                     - entry
                     - exit
@@ -1459,7 +1459,7 @@ paths:
                 occurred_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 reason:
                   type: string
                   description: validation.max.
@@ -1489,7 +1489,7 @@ paths:
                 date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
               required:
                 - date
       security: []
@@ -1678,7 +1678,7 @@ paths:
                 outcome:
                   type: string
                   description: ''
-                  example: confirmed
+                  example: rejected
                   enum:
                     - confirmed
                     - rejected
@@ -1798,7 +1798,7 @@ paths:
                 effective_from:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 effective_until:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -1861,7 +1861,7 @@ paths:
                 period_start:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 period_end:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -1916,7 +1916,7 @@ paths:
                 period_start:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 period_end:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -1924,7 +1924,7 @@ paths:
                 format:
                   type: string
                   description: ''
-                  example: pdf
+                  example: xlsx
                   enum:
                     - pdf
                     - xlsx
@@ -1964,11 +1964,11 @@ paths:
                 date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 adjustment_type:
                   type: string
                   description: ''
-                  example: add
+                  example: subtract
                   enum:
                     - add
                     - subtract
@@ -2258,7 +2258,7 @@ paths:
                 assessment_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T22:10:33'
+                  example: '2026-06-07T22:12:29'
                 channel:
                   type: string
                   description: ''

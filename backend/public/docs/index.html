@@ -674,8 +674,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "camera_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
-    --form "captured_at=2026-06-07T22:10:33"\
-    --form "image=@/tmp/phpDfhaep" </code></pre></div>
+    --form "captured_at=2026-06-07T22:12:29"\
+    --form "image=@/tmp/phpMfHDKI" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -690,7 +690,7 @@ const headers = {
 
 const body = new FormData();
 body.append('camera_id', '6ff8f7f6-1eb3-3525-be4a-3932c805afed');
-body.append('captured_at', '2026-06-07T22:10:33');
+body.append('captured_at', '2026-06-07T22:12:29');
 body.append('image', document.querySelector('input[name="image"]').files[0]);
 
 fetch(url, {
@@ -768,7 +768,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. validation.image validation.max. Example: <code>/tmp/phpDfhaep</code></p>
+<p>Must be a file. validation.image validation.max. Example: <code>/tmp/phpMfHDKI</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>camera_id</code></b>&nbsp;&nbsp;
@@ -789,10 +789,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="captured_at"                data-endpoint="POSTapi-v1-station-captures"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
         </form>
 
@@ -2477,7 +2477,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"parent_account_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"student_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
-    \"relationship\": \"padre\"
+    \"relationship\": \"madre\"
 }"
 </code></pre></div>
 
@@ -2495,7 +2495,7 @@ const headers = {
 let body = {
     "parent_account_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "student_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
-    "relationship": "padre"
+    "relationship": "madre"
 };
 
 fetch(url, {
@@ -2594,10 +2594,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="relationship"                data-endpoint="POSTapi-v1-family-links"
-               value="padre"
+               value="madre"
                data-component="body">
     <br>
-<p>Example: <code>padre</code></p>
+<p>Example: <code>madre</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>padre</code></li> <li><code>madre</code></li> <li><code>apoderado</code></li></ul>
         </div>
@@ -3086,7 +3086,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"b\",
-    \"start_date\": \"2026-06-07T22:10:33\",
+    \"start_date\": \"2026-06-07T22:12:29\",
     \"end_date\": \"2052-06-30\",
     \"status\": \"closed\"
 }"
@@ -3105,7 +3105,7 @@ const headers = {
 
 let body = {
     "name": "b",
-    "start_date": "2026-06-07T22:10:33",
+    "start_date": "2026-06-07T22:12:29",
     "end_date": "2052-06-30",
     "status": "closed"
 };
@@ -3194,10 +3194,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="POSTapi-v1-academic-periods"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -3373,9 +3373,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"b\",
-    \"start_date\": \"2026-06-07T22:10:33\",
+    \"start_date\": \"2026-06-07T22:12:29\",
     \"end_date\": \"2052-06-30\",
-    \"status\": \"active\"
+    \"status\": \"closed\"
 }"
 </code></pre></div>
 
@@ -3392,9 +3392,9 @@ const headers = {
 
 let body = {
     "name": "b",
-    "start_date": "2026-06-07T22:10:33",
+    "start_date": "2026-06-07T22:12:29",
     "end_date": "2052-06-30",
-    "status": "active"
+    "status": "closed"
 };
 
 fetch(url, {
@@ -3494,10 +3494,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="start_date"                data-endpoint="PATCHapi-v1-academic-periods--academicPeriodId-"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -3518,10 +3518,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="status"                data-endpoint="PATCHapi-v1-academic-periods--academicPeriodId-"
-               value="active"
+               value="closed"
                data-component="body">
     <br>
-<p>Example: <code>active</code></p>
+<p>Example: <code>closed</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>active</code></li> <li><code>closed</code></li></ul>
         </div>
@@ -4452,7 +4452,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"section_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
     \"academic_period_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\",
-    \"enrolled_at\": \"2026-06-07T22:10:33\"
+    \"enrolled_at\": \"2026-06-07T22:12:29\"
 }"
 </code></pre></div>
 
@@ -4471,7 +4471,7 @@ let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "section_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
     "academic_period_id": "977e5426-8d13-3824-86aa-b092f8ae52c5",
-    "enrolled_at": "2026-06-07T22:10:33"
+    "enrolled_at": "2026-06-07T22:12:29"
 };
 
 fetch(url, {
@@ -4582,10 +4582,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="enrolled_at"                data-endpoint="POSTapi-v1-enrollments"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
         </form>
 
@@ -4995,7 +4995,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"location\": \"n\",
-    \"mode\": \"exit\"
+    \"mode\": \"mixed\"
 }"
 </code></pre></div>
 
@@ -5013,7 +5013,7 @@ const headers = {
 let body = {
     "name": "b",
     "location": "n",
-    "mode": "exit"
+    "mode": "mixed"
 };
 
 fetch(url, {
@@ -5112,10 +5112,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="mode"                data-endpoint="POSTapi-v1-stations"
-               value="exit"
+               value="mixed"
                data-component="body">
     <br>
-<p>Example: <code>exit</code></p>
+<p>Example: <code>mixed</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>mixed</code></li></ul>
         </div>
@@ -5140,8 +5140,8 @@ Must be one of:
     --data "{
     \"name\": \"b\",
     \"location\": \"n\",
-    \"mode\": \"entry\",
-    \"active\": false
+    \"mode\": \"mixed\",
+    \"active\": true
 }"
 </code></pre></div>
 
@@ -5159,8 +5159,8 @@ const headers = {
 let body = {
     "name": "b",
     "location": "n",
-    "mode": "entry",
-    "active": false
+    "mode": "mixed",
+    "active": true
 };
 
 fetch(url, {
@@ -5272,10 +5272,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="mode"                data-endpoint="PATCHapi-v1-stations--stationId-"
-               value="entry"
+               value="mixed"
                data-component="body">
     <br>
-<p>Example: <code>entry</code></p>
+<p>Example: <code>mixed</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>mixed</code></li></ul>
         </div>
@@ -5299,7 +5299,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -5685,7 +5685,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"label\": \"b\",
     \"device_identifier\": \"n\",
-    \"active\": true
+    \"active\": false
 }"
 </code></pre></div>
 
@@ -5703,7 +5703,7 @@ const headers = {
 let body = {
     "label": "b",
     "device_identifier": "n",
-    "active": true
+    "active": false
 };
 
 fetch(url, {
@@ -5828,7 +5828,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -5965,8 +5965,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"event_type\": \"entry\",
-    \"occurred_at\": \"2026-06-07T22:10:33\",
+    \"event_type\": \"absence\",
+    \"occurred_at\": \"2026-06-07T22:12:29\",
     \"reason\": \"g\"
 }"
 </code></pre></div>
@@ -5984,8 +5984,8 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "event_type": "entry",
-    "occurred_at": "2026-06-07T22:10:33",
+    "event_type": "absence",
+    "occurred_at": "2026-06-07T22:12:29",
     "reason": "g"
 };
 
@@ -6073,10 +6073,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="event_type"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="entry"
+               value="absence"
                data-component="body">
     <br>
-<p>Example: <code>entry</code></p>
+<p>Example: <code>absence</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>absence</code></li> <li><code>late</code></li></ul>
         </div>
@@ -6087,10 +6087,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -6123,7 +6123,7 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date\": \"2026-06-07T22:10:33\"
+    \"date\": \"2026-06-07T22:12:29\"
 }"
 </code></pre></div>
 
@@ -6139,7 +6139,7 @@ const headers = {
 };
 
 let body = {
-    "date": "2026-06-07T22:10:33"
+    "date": "2026-06-07T22:12:29"
 };
 
 fetch(url, {
@@ -6214,10 +6214,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-student-attendance-day-closures"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
         </form>
 
@@ -6839,7 +6839,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"outcome\": \"confirmed\",
+    \"outcome\": \"rejected\",
     \"matched_student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"reason\": \"g\"
 }"
@@ -6857,7 +6857,7 @@ const headers = {
 };
 
 let body = {
-    "outcome": "confirmed",
+    "outcome": "rejected",
     "matched_student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "reason": "g"
 };
@@ -6947,10 +6947,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="outcome"                data-endpoint="POSTapi-v1-recognition-events--recognitionEventId--review"
-               value="confirmed"
+               value="rejected"
                data-component="body">
     <br>
-<p>Example: <code>confirmed</code></p>
+<p>Example: <code>rejected</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>confirmed</code></li> <li><code>rejected</code></li> <li><code>reassigned</code></li></ul>
         </div>
@@ -7229,7 +7229,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hourly_rate\": \"642559\",
-    \"effective_from\": \"2026-06-07T22:10:33\",
+    \"effective_from\": \"2026-06-07T22:12:29\",
     \"effective_until\": \"2052-06-30\"
 }"
 </code></pre></div>
@@ -7248,7 +7248,7 @@ const headers = {
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hourly_rate": "642559",
-    "effective_from": "2026-06-07T22:10:33",
+    "effective_from": "2026-06-07T22:12:29",
     "effective_until": "2052-06-30"
 };
 
@@ -7348,10 +7348,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from"                data-endpoint="POSTapi-v1-teacher-rates"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>effective_until</code></b>&nbsp;&nbsp;
@@ -7499,7 +7499,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-07T22:10:33\",
+    \"period_start\": \"2026-06-07T22:12:29\",
     \"period_end\": \"2052-06-30\",
     \"teacher_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
@@ -7519,7 +7519,7 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-07T22:10:33",
+    "period_start": "2026-06-07T22:12:29",
     "period_end": "2052-06-30",
     "teacher_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
@@ -7598,10 +7598,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-payroll-liquidations"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -7755,9 +7755,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-07T22:10:33\",
+    \"period_start\": \"2026-06-07T22:12:29\",
     \"period_end\": \"2052-06-30\",
-    \"format\": \"pdf\",
+    \"format\": \"xlsx\",
     \"teacher_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
     ]
@@ -7776,9 +7776,9 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-07T22:10:33",
+    "period_start": "2026-06-07T22:12:29",
     "period_end": "2052-06-30",
-    "format": "pdf",
+    "format": "xlsx",
     "teacher_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
     ]
@@ -7856,10 +7856,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-teacher-attendance-reports"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -7880,10 +7880,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="format"                data-endpoint="POSTapi-v1-teacher-attendance-reports"
-               value="pdf"
+               value="xlsx"
                data-component="body">
     <br>
-<p>Example: <code>pdf</code></p>
+<p>Example: <code>xlsx</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pdf</code></li> <li><code>xlsx</code></li></ul>
         </div>
@@ -7921,8 +7921,8 @@ Must be one of:
     --header "Accept: application/json" \
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"date\": \"2026-06-07T22:10:33\",
-    \"adjustment_type\": \"add\",
+    \"date\": \"2026-06-07T22:12:29\",
+    \"adjustment_type\": \"subtract\",
     \"minutes\": 67,
     \"reason\": \"z\"
 }"
@@ -7941,8 +7941,8 @@ const headers = {
 
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "date": "2026-06-07T22:10:33",
-    "adjustment_type": "add",
+    "date": "2026-06-07T22:12:29",
+    "adjustment_type": "subtract",
     "minutes": 67,
     "reason": "z"
 };
@@ -8031,10 +8031,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>adjustment_type</code></b>&nbsp;&nbsp;
@@ -8043,10 +8043,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="adjustment_type"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="add"
+               value="subtract"
                data-component="body">
     <br>
-<p>Example: <code>add</code></p>
+<p>Example: <code>subtract</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>add</code></li> <li><code>subtract</code></li></ul>
         </div>
@@ -8736,7 +8736,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --form "student_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
     --form "consent_id=6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"\
-    --form "images[]=@/tmp/phplmGPbB" </code></pre></div>
+    --form "images[]=@/tmp/phpkaliJK" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -8995,7 +8995,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"title\": \"g\",
     \"assessment_type\": \"practice\",
     \"max_score\": \"642559\",
-    \"assessment_date\": \"2026-06-07T22:10:33\",
+    \"assessment_date\": \"2026-06-07T22:12:29\",
     \"channel\": \"sciences\",
     \"total_questions\": 4
 }"
@@ -9017,7 +9017,7 @@ let body = {
     "title": "g",
     "assessment_type": "practice",
     "max_score": "642559",
-    "assessment_date": "2026-06-07T22:10:33",
+    "assessment_date": "2026-06-07T22:12:29",
     "channel": "sciences",
     "total_questions": 4
 };
@@ -9144,10 +9144,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="assessment_date"                data-endpoint="POSTapi-v1-assessments"
-               value="2026-06-07T22:10:33"
+               value="2026-06-07T22:12:29"
                data-component="body">
     <br>
-<p>validation.date. Example: <code>2026-06-07T22:10:33</code></p>
+<p>validation.date. Example: <code>2026-06-07T22:12:29</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>channel</code></b>&nbsp;&nbsp;
