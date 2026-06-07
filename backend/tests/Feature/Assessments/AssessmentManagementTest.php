@@ -1,0 +1,150 @@
+<?php
+
+namespace Tests\Feature\Assessments;
+
+use App\Models\CargaAcademica;
+use App\Models\Curso;
+use App\Models\Docente;
+use App\Models\Examen;
+use App\Models\Seccion;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
+
+class AssessmentManagementTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Role::create(['name' => 'docente']);
+        Role::create(['name' => 'coordinador_academico']);
+        Role::create(['name' => 'superadmin']);
+    }
+
+    private function createCargaAcademica(Docente $docente = null): CargaAcademica
+    {
+        $periodo = \App\Models\PeriodoAcademico::factory()->create();
+        $grado = \App\Models\Grado::firstOrCreate([
+            'nombre' => '1ro Secundaria', 
+            'nivel' => 'secundaria',
+            'periodo_academico_id' => $periodo->id,
+            'orden' => 1
+        ]);
+        $seccion = \App\Models\Seccion::create(['grado_id' => $grado->id, 'periodo_academico_id' => $periodo->id, 'letra' => 'A', 'nombre' => '1ro A', 'vacantes' => 30, 'turno' => 'mañana']);
+        $curso = \App\Models\Curso::factory()->create();
+        if (!$docente) {
+            $docente = Docente::factory()->create(['user_id' => User::factory()->create()->id]);
+        }
+        return CargaAcademica::create([
+            'seccion_id' => $seccion->id,
+            'curso_id' => $curso->id,
+            'docente_id' => $docente->id,
+            'vigente_desde' => now(),
+            'asignado_por' => $docente->user_id,
+        ]);
+    }
+
+    public function test_docente_cannot_create_assessment_outside_their_carga_academica(): void
+    {
+        $docenteUser = User::factory()->create();
+        $docenteUser->assignRole('docente');
+        Docente::factory()->create(['user_id' => $docenteUser->id]);
+
+        $otherCarga = $this->createCargaAcademica(); // Belongs to another docente
+
+        $payload = [
+            'teaching_assignment_id' => $otherCarga->id,
+            'title'                  => 'Examen Parcial',
+            'assessment_type'        => 'exam',
+            'max_score'              => '20.00',
+            'assessment_date'        => '2026-06-15',
+            'channel'                => 'general',
+            'total_questions'        => 40,
+        ];
+
+        $response = $this->actingAs($docenteUser)->postJson('/api/v1/assessments', $payload);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_docente_can_create_assessment_inside_their_carga_academica(): void
+    {
+        $docenteUser = User::factory()->create();
+        $docenteUser->assignRole('docente');
+        $docente = Docente::factory()->create(['user_id' => $docenteUser->id]);
+
+        $carga = $this->createCargaAcademica($docente);
+
+        $payload = [
+            'teaching_assignment_id' => $carga->id,
+            'title'                  => 'Examen Parcial',
+            'assessment_type'        => 'exam',
+            'max_score'              => '20.00',
+            'assessment_date'        => '2026-06-15',
+            'channel'                => 'general',
+            'total_questions'        => 40,
+        ];
+
+        $response = $this->actingAs($docenteUser)->postJson('/api/v1/assessments', $payload);
+
+        if ($response->status() !== 201) {
+            $response->dd();
+        }
+
+        $response->assertStatus(201)
+            ->assertJsonPath('data.title', 'Examen Parcial')
+            ->assertJsonPath('data.status', 'borrador');
+
+        $this->assertDatabaseHas('examenes', [
+            'carga_academica_id' => $carga->id,
+            'titulo'             => 'Examen Parcial',
+            'periodo_nombre'     => 'exam',
+            'estado'             => 'borrador',
+        ]);
+    }
+
+    public function test_coordinador_can_create_assessment_anywhere(): void
+    {
+        $coordinador = User::factory()->create();
+        $coordinador->assignRole('coordinador_academico');
+
+        $carga = $this->createCargaAcademica();
+
+        $payload = [
+            'teaching_assignment_id' => $carga->id,
+            'title'                  => 'Simulacro',
+            'assessment_type'        => 'practice',
+            'max_score'              => '100.00',
+            'assessment_date'        => '2026-06-16',
+            'channel'                => 'sciences',
+            'total_questions'        => 60,
+        ];
+
+        $response = $this->actingAs($coordinador)->postJson('/api/v1/assessments', $payload);
+
+        $response->assertStatus(201);
+    }
+
+    public function test_closing_an_assessment_updates_status_and_logs(): void
+    {
+        $carga = $this->createCargaAcademica();
+        $examen = Examen::create([
+            'estado' => 'publicado',
+            'carga_academica_id' => $carga->id,
+            'titulo' => 'Test',
+            'fecha_aplicacion' => now(),
+            'periodo_nombre' => 'exam',
+            'total_preguntas' => 40,
+            'puntaje_maximo' => 20,
+        ]);
+        $user = User::factory()->create();
+
+        $useCase = new \App\UseCases\Assessments\CloseAssessment();
+        $useCase->execute($examen, $user->id);
+
+        $this->assertEquals('cerrado', $examen->fresh()->estado);
+    }
+}

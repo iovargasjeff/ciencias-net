@@ -53,8 +53,8 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-004 | `[~]` | `add-evaluation-content-schema` | Jefferson | André | DB-001 |
-| BE-018 | `[ ]` | `add-assessment-management` | Jefferson | André | BE-006, DB-004 |
+| DB-004 | `[x]` | `add-evaluation-content-schema` | Jefferson | André | DB-001 |
+| BE-018 | `[x]` | `add-assessment-management` | Jefferson | André | BE-006, DB-004 |
 | BE-019 | `[ ]` | `add-result-entry-import` | Jefferson | André | BE-018 |
 | BE-020 | `[ ]` | `add-result-publication-ranking-reports` | Jefferson | André | BE-019 |
 | BE-021 | `[ ]` | `add-materials-management` | Jefferson | André | BE-006, DB-004 |

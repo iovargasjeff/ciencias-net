@@ -54,5 +54,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
+        
+        // Assessments
+        Route::get('assessments', [\App\Http\Controllers\Api\V1\Assessments\AssessmentController::class, 'index']);
+        Route::post('assessments', [\App\Http\Controllers\Api\V1\Assessments\AssessmentController::class, 'store'])->name('api.v1.assessments.store');
     });
 });
