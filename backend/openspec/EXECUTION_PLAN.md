@@ -37,7 +37,7 @@
 | BE-010 | `[~]` | `add-student-attendance-events` | André | Jefferson | BE-008, BE-009 |
 | BE-011 | `[~]` | `add-student-attendance-closure-review` | André | Jefferson | BE-010 |
 | BE-012 | `[~]` | `add-teacher-attendance-sessions` | André | Jefferson | BE-006, BE-010 |
-| BE-013 | `[ ]` | `add-teacher-payroll-liquidation` | André | Jefferson | BE-012 |
+| BE-013 | `[~]` | `add-teacher-payroll-liquidation` | André | Jefferson | BE-012 |
 
 ## Fase 3: Finanzas
 

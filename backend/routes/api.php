@@ -84,6 +84,12 @@ Route::prefix('v1')->group(function (): void {
         Route::post('recognition-events/{recognitionEventId}/review', [StudentAttendanceController::class, 'reviewRecognition']);
 
         Route::get('teacher-attendance', [TeacherAttendanceController::class, 'index']);
+        Route::get('teacher-rates', [TeacherAttendanceController::class, 'rates']);
+        Route::post('teacher-rates', [TeacherAttendanceController::class, 'storeRate']);
+        Route::get('payroll-liquidations', [TeacherAttendanceController::class, 'liquidations']);
+        Route::post('payroll-liquidations', [TeacherAttendanceController::class, 'storeLiquidation'])->middleware('idempotent');
+        Route::post('payroll-liquidations/{liquidationId}/closure', [TeacherAttendanceController::class, 'closeLiquidation']);
+        Route::post('teacher-attendance/reports', [TeacherAttendanceController::class, 'report'])->middleware('idempotent');
         Route::post('teacher-attendance/adjustments', [TeacherAttendanceController::class, 'adjustment']);
         Route::post('class-sessions/{classSessionId}/cancellation', [TeacherAttendanceController::class, 'cancel']);
         Route::put('class-sessions/{classSessionId}/substitute', [TeacherAttendanceController::class, 'substitute']);
