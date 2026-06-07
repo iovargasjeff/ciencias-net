@@ -16,7 +16,9 @@ class ComunicadoLectura extends Model
     protected $table = 'comunicado_lecturas';
 
     public $incrementing = false;
+
     protected $primaryKey = null; // PK compuesta gestionada manualmente
+
     public $timestamps = false;
 
     protected $fillable = ['comunicado_id', 'user_id', 'leido_en', 'archivado_en'];
@@ -24,7 +26,7 @@ class ComunicadoLectura extends Model
     protected function casts(): array
     {
         return [
-            'leido_en'     => 'datetime',
+            'leido_en' => 'datetime',
             'archivado_en' => 'datetime',
         ];
     }

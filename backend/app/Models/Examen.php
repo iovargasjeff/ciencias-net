@@ -24,8 +24,8 @@ class Examen extends Model
     {
         return [
             'fecha_aplicacion' => 'date',
-            'puntaje_maximo'   => 'decimal:2',
-            'publicado_en'     => 'datetime',
+            'puntaje_maximo' => 'decimal:2',
+            'publicado_en' => 'datetime',
         ];
     }
 

@@ -15,6 +15,7 @@ class Notificacion extends Model
 
     // Solo tiene created_at, no updated_at
     public $timestamps = false;
+
     const CREATED_AT = 'created_at';
 
     protected $fillable = [
@@ -25,9 +26,9 @@ class Notificacion extends Model
     protected function casts(): array
     {
         return [
-            'datos'      => 'array',
+            'datos' => 'array',
             'enviada_en' => 'datetime',
-            'leida_en'   => 'datetime',
+            'leida_en' => 'datetime',
             'created_at' => 'datetime',
         ];
     }

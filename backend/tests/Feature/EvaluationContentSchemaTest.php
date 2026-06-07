@@ -39,48 +39,48 @@ uses(RefreshDatabase::class);
 function buildAcademicContext(): array
 {
     $operator = User::factory()->create();
-    $period   = PeriodoAcademico::factory()->create(['creado_por' => $operator->id]);
-    $grade    = Grado::create([
+    $period = PeriodoAcademico::factory()->create(['creado_por' => $operator->id]);
+    $grade = Grado::create([
         'periodo_academico_id' => $period->id,
         'nombre' => 'Tercero',
-        'nivel'  => 'Secundaria',
-        'orden'  => 3,
+        'nivel' => 'Secundaria',
+        'orden' => 3,
         'activo' => true,
     ]);
     $section = Seccion::create([
         'grado_id' => $grade->id,
-        'nombre'   => 'A',
-        'turno'    => 'manana',
-        'activo'   => true,
+        'nombre' => 'A',
+        'turno' => 'manana',
+        'activo' => true,
     ]);
-    $course  = Curso::factory()->create();
+    $course = Curso::factory()->create();
     $teacher = Docente::factory()->create();
-    $load    = CargaAcademica::create([
-        'seccion_id'    => $section->id,
-        'curso_id'      => $course->id,
-        'docente_id'    => $teacher->id,
+    $load = CargaAcademica::create([
+        'seccion_id' => $section->id,
+        'curso_id' => $course->id,
+        'docente_id' => $teacher->id,
         'vigente_desde' => now()->toDateString(),
-        'activo'        => true,
-        'asignado_por'  => $operator->id,
+        'activo' => true,
+        'asignado_por' => $operator->id,
     ]);
-    $student    = Alumno::factory()->create();
+    $student = Alumno::factory()->create();
     $enrollment = Matricula::create([
-        'alumno_id'      => $student->id,
-        'seccion_id'     => $section->id,
-        'codigo'         => 'MAT-TEST-001',
-        'fecha'          => now()->toDateString(),
-        'estado'         => 'activo',
+        'alumno_id' => $student->id,
+        'seccion_id' => $section->id,
+        'codigo' => 'MAT-TEST-001',
+        'fecha' => now()->toDateString(),
+        'estado' => 'activo',
         'registrado_por' => $operator->id,
     ]);
     $exam = Examen::create([
         'carga_academica_id' => $load->id,
-        'titulo'             => 'Semanal 1 - I Bimestre',
-        'fecha_aplicacion'   => now()->toDateString(),
-        'periodo_nombre'     => 'I Bimestre',
-        'canal'              => 'general',
-        'total_preguntas'    => 40,
-        'puntaje_maximo'     => 20.00,
-        'estado'             => 'listo',
+        'titulo' => 'Semanal 1 - I Bimestre',
+        'fecha_aplicacion' => now()->toDateString(),
+        'periodo_nombre' => 'I Bimestre',
+        'canal' => 'general',
+        'total_preguntas' => 40,
+        'puntaje_maximo' => 20.00,
+        'estado' => 'listo',
     ]);
 
     return compact('operator', 'period', 'grade', 'section', 'course', 'teacher', 'load', 'student', 'enrollment', 'exam');
@@ -94,10 +94,10 @@ it('allows registering a nota for a valid enrollment-examen pair', function () {
     ['enrollment' => $enrollment, 'exam' => $exam, 'operator' => $operator] = buildAcademicContext();
 
     $nota = Nota::create([
-        'examen_id'      => $exam->id,
-        'matricula_id'   => $enrollment->id,
-        'puntaje'        => 15.50,
-        'estado'         => 'registrada',
+        'examen_id' => $exam->id,
+        'matricula_id' => $enrollment->id,
+        'puntaje' => 15.50,
+        'estado' => 'registrada',
         'registrado_por' => $operator->id,
     ]);
 
@@ -109,18 +109,18 @@ it('rejects a duplicate nota for the same examen and matricula', function () {
     ['enrollment' => $enrollment, 'exam' => $exam, 'operator' => $operator] = buildAcademicContext();
 
     Nota::create([
-        'examen_id'      => $exam->id,
-        'matricula_id'   => $enrollment->id,
-        'puntaje'        => 15.50,
-        'estado'         => 'registrada',
+        'examen_id' => $exam->id,
+        'matricula_id' => $enrollment->id,
+        'puntaje' => 15.50,
+        'estado' => 'registrada',
         'registrado_por' => $operator->id,
     ]);
 
     expect(fn () => Nota::create([
-        'examen_id'      => $exam->id,
-        'matricula_id'   => $enrollment->id,
-        'puntaje'        => 18.00,
-        'estado'         => 'registrada',
+        'examen_id' => $exam->id,
+        'matricula_id' => $enrollment->id,
+        'puntaje' => 18.00,
+        'estado' => 'registrada',
         'registrado_por' => $operator->id,
     ]))->toThrow(QueryException::class);
 });
@@ -133,10 +133,10 @@ it('allows a nota with null puntaje for ausente estado', function () {
     ['enrollment' => $enrollment, 'exam' => $exam, 'operator' => $operator] = buildAcademicContext();
 
     $nota = Nota::create([
-        'examen_id'      => $exam->id,
-        'matricula_id'   => $enrollment->id,
-        'puntaje'        => null,
-        'estado'         => 'ausente',
+        'examen_id' => $exam->id,
+        'matricula_id' => $enrollment->id,
+        'puntaje' => null,
+        'estado' => 'ausente',
         'registrado_por' => $operator->id,
     ]);
 
@@ -150,20 +150,20 @@ it('allows a nota with null puntaje for ausente estado', function () {
 
 it('registers a comunicado reading for a user', function () {
     $publisher = User::factory()->create();
-    $reader    = User::factory()->create();
+    $reader = User::factory()->create();
     $comunicado = Comunicado::create([
-        'titulo'            => 'Reunión de Padres',
-        'contenido'         => 'Se convoca a todos los padres...',
-        'publicado_por'     => $publisher->id,
-        'destinatarios'     => ['roles' => ['padre']],
-        'importante'        => false,
+        'titulo' => 'Reunión de Padres',
+        'contenido' => 'Se convoca a todos los padres...',
+        'publicado_por' => $publisher->id,
+        'destinatarios' => ['roles' => ['padre']],
+        'importante' => false,
         'fecha_publicacion' => now(),
     ]);
 
     $lectura = ComunicadoLectura::create([
         'comunicado_id' => $comunicado->id,
-        'user_id'       => $reader->id,
-        'leido_en'      => now(),
+        'user_id' => $reader->id,
+        'leido_en' => now(),
     ]);
 
     expect($lectura->comunicado_id)->toBe($comunicado->id)
@@ -171,28 +171,28 @@ it('registers a comunicado reading for a user', function () {
 });
 
 it('rejects a duplicate reading for the same comunicado and user', function () {
-    $publisher  = User::factory()->create();
-    $reader     = User::factory()->create();
+    $publisher = User::factory()->create();
+    $reader = User::factory()->create();
     $comunicado = Comunicado::create([
-        'titulo'            => 'Aviso Importante',
-        'contenido'         => 'Contenido del aviso',
-        'publicado_por'     => $publisher->id,
-        'destinatarios'     => ['roles' => ['padre']],
-        'importante'        => true,
+        'titulo' => 'Aviso Importante',
+        'contenido' => 'Contenido del aviso',
+        'publicado_por' => $publisher->id,
+        'destinatarios' => ['roles' => ['padre']],
+        'importante' => true,
         'fecha_publicacion' => now(),
     ]);
 
     ComunicadoLectura::create([
         'comunicado_id' => $comunicado->id,
-        'user_id'       => $reader->id,
-        'leido_en'      => now(),
+        'user_id' => $reader->id,
+        'leido_en' => now(),
     ]);
 
     // Segundo intento debe violar la PK compuesta
     expect(fn () => ComunicadoLectura::create([
         'comunicado_id' => $comunicado->id,
-        'user_id'       => $reader->id,
-        'leido_en'      => now(),
+        'user_id' => $reader->id,
+        'leido_en' => now(),
     ]))->toThrow(QueryException::class);
 });
 
@@ -208,10 +208,10 @@ it('rejects a negative puntaje on PostgreSQL via CHECK constraint', function () 
     ['enrollment' => $enrollment, 'exam' => $exam, 'operator' => $operator] = buildAcademicContext();
 
     expect(fn () => Nota::create([
-        'examen_id'      => $exam->id,
-        'matricula_id'   => $enrollment->id,
-        'puntaje'        => -1.00,
-        'estado'         => 'registrada',
+        'examen_id' => $exam->id,
+        'matricula_id' => $enrollment->id,
+        'puntaje' => -1.00,
+        'estado' => 'registrada',
         'registrado_por' => $operator->id,
     ]))->toThrow(QueryException::class);
 });
@@ -236,13 +236,13 @@ it('creates a notificacion with only created_at', function () {
     $user = User::factory()->create();
 
     $notif = Notificacion::create([
-        'user_id'   => $user->id,
-        'tipo'      => 'nota_publicada',
-        'titulo'    => 'Nota publicada',
+        'user_id' => $user->id,
+        'tipo' => 'nota_publicada',
+        'titulo' => 'Nota publicada',
         'contenido' => 'Tus notas del I Bimestre ya están disponibles.',
-        'datos'     => ['examen_id' => 'abc-123'],
-        'canal'     => 'panel',
-        'estado'    => 'pendiente',
+        'datos' => ['examen_id' => 'abc-123'],
+        'canal' => 'panel',
+        'estado' => 'pendiente',
     ]);
 
     expect($notif->estado)->toBe('pendiente')

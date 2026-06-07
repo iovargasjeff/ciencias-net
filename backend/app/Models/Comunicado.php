@@ -22,8 +22,8 @@ class Comunicado extends Model
     protected function casts(): array
     {
         return [
-            'destinatarios'    => 'array',
-            'importante'       => 'boolean',
+            'destinatarios' => 'array',
+            'importante' => 'boolean',
             'fecha_publicacion' => 'datetime',
         ];
     }

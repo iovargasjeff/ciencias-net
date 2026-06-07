@@ -238,7 +238,7 @@ return new class extends Migration
             DB::statement("ALTER TABLE notificaciones ADD CONSTRAINT notificaciones_estado_valido CHECK (estado IN ('pendiente','enviada','fallida','leida'))");
 
             // índices parciales para consultas frecuentes
-            DB::statement("CREATE INDEX notas_ranking_parcial ON notas (examen_id, puesto_ranking) WHERE puesto_ranking IS NOT NULL");
+            DB::statement('CREATE INDEX notas_ranking_parcial ON notas (examen_id, puesto_ranking) WHERE puesto_ranking IS NOT NULL');
             DB::statement("CREATE INDEX notificaciones_pendientes_idx ON notificaciones (user_id, created_at) WHERE estado = 'pendiente'");
             DB::statement("CREATE INDEX examenes_publicados_idx ON examenes (carga_academica_id, fecha_aplicacion) WHERE estado IN ('publicado','cerrado')");
         }
