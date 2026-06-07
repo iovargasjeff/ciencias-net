@@ -8,6 +8,7 @@ use App\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 uses(RefreshDatabase::class);
@@ -16,6 +17,16 @@ beforeEach(function (): void {
     $this->seed(RolesAndPermissionsSeeder::class);
     config(['biometrics.storage_disk' => 'local']);
     config(['biometrics.storage_prefix' => 'private/biometrics-test']);
+    config(['facial-service.url' => 'http://facial-api.test']);
+    config(['facial-service.token' => 'test-token']);
+    Http::fake([
+        'facial-api.test/v1/enrollments' => Http::response([
+            'embedding' => base64_encode(random_bytes(32)),
+            'quality' => 0.95,
+            'liveness' => 0.9,
+            'model_version' => 'test-model-v1',
+        ]),
+    ]);
     Storage::fake('local');
 });
 

@@ -14,12 +14,15 @@ use App\Models\ConsentimientoBiometrico;
 use App\Models\PerfilFacial;
 use App\Support\AuditLogger;
 use App\Support\Biometrics\BiometricEmbeddingEncryptor;
+use App\Support\Facial\FacialServiceClient;
+use App\Support\Facial\FacialServiceUnavailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BiometricController extends Controller
 {
@@ -105,6 +108,7 @@ class BiometricController extends Controller
     public function enroll(
         EnrollBiometricProfileRequest $request,
         BiometricEmbeddingEncryptor $encryptor,
+        FacialServiceClient $facialService,
         AuditLogger $audit,
     ): JsonResponse {
         $student = Alumno::with('user')->findOrFail($request->string('student_id'));
@@ -122,7 +126,7 @@ class BiometricController extends Controller
         $prefix = trim((string) config('biometrics.storage_prefix'), '/');
         $hashes = [];
 
-        $profile = DB::transaction(function () use ($request, $student, $encryptor, $audit, $disk, $prefix, &$hashes): PerfilFacial {
+        $profile = DB::transaction(function () use ($request, $student, $encryptor, $facialService, $audit, $disk, $prefix, &$hashes): PerfilFacial {
             PerfilFacial::where('user_id', $student->user_id)
                 ->where('activo', true)
                 ->update(['activo' => false, 'ultima_actualizacion_en' => now(), 'updated_at' => now()]);
@@ -132,16 +136,17 @@ class BiometricController extends Controller
                 $hashes[] = $hash;
             }
 
-            $embeddingPayload = json_encode([
-                'kind' => 'enrollment-image-digest',
-                'hashes' => $hashes,
-            ], JSON_THROW_ON_ERROR);
+            try {
+                $embeddingResult = $facialService->createEmbedding($request->file('images', []));
+            } catch (FacialServiceUnavailable) {
+                throw new HttpException(503, 'El servicio facial no está disponible.');
+            }
 
             $profile = PerfilFacial::create([
                 'user_id' => $student->user_id,
-                'embedding_cifrado' => $encryptor->encrypt($embeddingPayload),
-                'modelo_version' => 'pending-facial-service-v1',
-                'calidad' => 1.0000,
+                'embedding_cifrado' => $encryptor->encrypt($embeddingResult['embedding']),
+                'modelo_version' => $embeddingResult['model_version'],
+                'calidad' => $embeddingResult['quality'],
                 'activo' => true,
                 'enrolado_por' => $request->user()->id,
                 'enrolado_en' => now(),
