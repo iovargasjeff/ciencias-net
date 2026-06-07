@@ -20,51 +20,51 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-005 | `[ ]` | `add-account-role-administration` | Kiara | Vincenzo | FE-002, FE-003, Backend BE-004 |
-| FE-006 | `[ ]` | `add-family-links-administration` | Kiara | Vincenzo | FE-003, Backend BE-005 |
-| FE-007 | `[ ]` | `add-academic-structure-administration` | Kiara | Vincenzo | FE-002, FE-003, Backend BE-006 |
-| FE-008 | `[ ]` | `add-family-student-portal-shell` | Vincenzo | Kiara | FE-003, Backend BE-005/BE-006/BE-007 |
+| FE-005 | `[ ]` | `add-account-role-administration` | Kiara | Jefferson | FE-002, FE-003 |
+| FE-006 | `[ ]` | `add-family-links-administration` | Kiara | Jefferson | FE-003 |
+| FE-007 | `[ ]` | `add-academic-structure-administration` | Kiara | Jefferson | FE-002, FE-003 |
+| FE-008 | `[ ]` | `add-family-student-portal-shell` | Kiara | Jefferson | FE-003 |
 
 ## Fase 2: Facial y asistencia
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-009 | `[ ]` | `add-web-station-activation-capture` | Vincenzo | Kiara | FE-003, Backend BE-009/BE-010 |
-| FE-009A | `[ ]` | `add-biometric-station-administration` | Kiara | Vincenzo | FE-003, Backend BE-007/BE-009 |
-| FE-010 | `[ ]` | `add-student-attendance-supervision` | Kiara | Vincenzo | FE-002, FE-003, Backend BE-011 |
-| FE-011 | `[ ]` | `add-teacher-attendance-payroll` | Kiara | Vincenzo | FE-003, Backend BE-012/BE-013 |
+| FE-009 | `[ ]` | `add-web-station-activation-capture` | Vincenzo | Jefferson | FE-003 |
+| FE-009A | `[ ]` | `add-biometric-station-administration` | Vincenzo | Jefferson | FE-003 |
+| FE-010 | `[ ]` | `add-student-attendance-supervision` | Vincenzo | Jefferson | FE-002, FE-003 |
+| FE-011 | `[ ]` | `add-teacher-attendance-payroll` | Vincenzo | Jefferson | FE-003 |
 
 ## Fase 3: Finanzas
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-012 | `[ ]` | `add-finance-configuration-benefits` | Kiara | Vincenzo | FE-003, Backend BE-014 |
-| FE-013 | `[ ]` | `add-obligations-payments-administration` | Kiara | Vincenzo | FE-003, Backend BE-015/BE-016 |
-| FE-014 | `[ ]` | `add-finance-state-portals` | Vincenzo | Kiara | FE-008, Backend BE-017 |
+| FE-012 | `[ ]` | `add-finance-configuration-benefits` | Kiara | Jefferson | FE-003 |
+| FE-013 | `[ ]` | `add-obligations-payments-administration` | Kiara | Jefferson | FE-003 |
+| FE-014 | `[ ]` | `add-finance-state-portals` | Kiara | Jefferson | FE-008 |
 
 ## Fase 4: Evaluación y contenido
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-015 | `[ ]` | `add-assessment-result-entry` | Vincenzo | Kiara | FE-003, Backend BE-018/BE-019 |
-| FE-016 | `[ ]` | `add-result-publication-reports-portals` | Vincenzo | Kiara | FE-008, Backend BE-020 |
-| FE-017 | `[ ]` | `add-materials-portal` | Kiara | Vincenzo | FE-002, Backend BE-021 |
-| FE-018 | `[ ]` | `add-schedules-calendar-portals` | Kiara | Vincenzo | FE-002, Backend BE-022 |
-| FE-019 | `[ ]` | `add-communications-notifications` | Kiara | Vincenzo | FE-002, Backend BE-023 |
+| FE-015 | `[ ]` | `add-assessment-result-entry` | Vincenzo | Jefferson | FE-003 |
+| FE-016 | `[ ]` | `add-result-publication-reports-portals` | Vincenzo | Jefferson | FE-008 |
+| FE-017 | `[ ]` | `add-materials-portal` | Vincenzo | Jefferson | FE-002 |
+| FE-018 | `[ ]` | `add-schedules-calendar-portals` | Vincenzo | Jefferson | FE-002 |
+| FE-019 | `[ ]` | `add-communications-notifications` | Vincenzo | Jefferson | FE-002 |
 
 ## Fase 5: Incidencias y Psicología
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-020 | `[ ]` | `add-incidents-workflow` | Kiara | Vincenzo | FE-003, Backend BE-024 |
-| FE-021 | `[ ]` | `add-private-psychology-portal` | Kiara | Vincenzo | FE-003, Backend BE-025 |
+| FE-020 | `[ ]` | `add-incidents-workflow` | Kiara | Jefferson | FE-003 |
+| FE-021 | `[ ]` | `add-private-psychology-portal` | Kiara | Jefferson | FE-003 |
 
 ## Fase 6: Calidad y release
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-022 | `[ ]` | `harden-accessibility-performance` | Kiara | Vincenzo | FE-005..FE-021 |
-| FE-023 | `[ ]` | `verify-frontend-release-e2e` | Vincenzo | Kiara | FE-004, FE-022, Backend BE-028 |
+| FE-022 | `[ ]` | `harden-accessibility-performance` | Vincenzo | Jefferson | FE-005..FE-021 |
+| FE-023 | `[ ]` | `verify-frontend-release-e2e` | Vincenzo | Jefferson | FE-004, FE-022 |
 
 ## Regla de ejecución
 

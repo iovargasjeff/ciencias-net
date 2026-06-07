@@ -13,6 +13,15 @@ documentos anteriores se conservan en `docs/legacy/` únicamente como referencia
 Backend y frontend son proyectos independientes dentro del monorepo y ya cuentan con OpenSpec, reglas y planes de
 ejecución separados. La Fase 0 de ambos planes prepara bases clonables antes de repartir features funcionales.
 
+## Acceso Local de Prueba
+
+Al ejecutar en entorno local, ten en cuenta las siguientes reglas y credenciales:
+
+- **Dominio estricto (CORS):** Debes acceder al frontend **únicamente** a través de `http://localhost:5173`. Si usas `127.0.0.1`, el inicio de sesión fallará por políticas de seguridad.
+- **Usuario de prueba:** Si la base de datos se pobló correctamente usando los seeders (`php artisan migrate:fresh --seed`), puedes probar el sistema con:
+  - **Email:** `coordinacion@example.test`
+  - **Contraseña:** `password`
+
 ## Arquitectura prevista
 
 ```text

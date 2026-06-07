@@ -20,6 +20,7 @@
 
 - Tailwind CSS y shadcn/ui como base.
 - Phosphor Icons para React es la única librería de iconos.
+- **Regla Estricta de UI:** Queda prohibido instalar nuevas dependencias en el `package.json` relacionadas a UI, componentes extra, o importar tipografías ajenas. Todo debe reutilizar los tokens de Tailwind y shadcn/ui. Cualquier excepción o necesidad de una nueva librería debe ser aprobada explícitamente por el arquitecto (Jefferson) para evitar un exceso de dependencias.
 - CSS para transiciones comunes; GSAP solo para secuencias complejas justificadas.
 - Respetar `prefers-reduced-motion`.
 - Cada pantalla cubre loading, vacío, error, éxito y sin permiso.

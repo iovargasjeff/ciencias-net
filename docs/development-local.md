@@ -14,9 +14,10 @@ PHP, Composer, PostgreSQL, Python y Node.js no son obligatorios en el host. Se e
 ## Primer arranque
 
 ```bash
-git clone <repositorio>
+git clone https://github.com/iovargasjeff/ciencias-net
 cd ciencias-net
 docker compose up -d --build
+docker compose exec backend php artisan migrate:fresh --seed
 docker compose ps
 ```
 
@@ -82,3 +83,29 @@ docker compose build --no-cache <servicio>
 
 No instalar paquetes manualmente dentro de un contenedor en ejecución como solución permanente; actualizar el manifiesto
 y lockfile correspondiente.
+
+## Flujo de Trabajo en GitHub (Feature Branches)
+
+Para mantener el código ordenado y profesional, todo el equipo y los agentes de IA deben seguir el patrón de "Ramas por Funcionalidad" (Feature Branches):
+
+1. **Ramas por Change (Feature):**
+   Nunca se trabaja directamente en la rama `main`. Cada vez que inicies un change (ej. `BE-004`), creas una nueva rama a partir de `main` con un nombre descriptivo:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/BE-004-add-roles
+   ```
+
+2. **Pull Requests (PR):**
+   Al terminar la funcionalidad, subes tu rama a GitHub y abres un **Pull Request**. No uses Issues para esto, el EXECUTION_PLAN.md ya organiza las tareas. El PR sirve para que el "Reviewer" (Jefferson o André) lea el código y apruebe los cambios.
+
+3. **Merge y Eliminación:**
+   Una vez aprobado, fusionas (Merge) el PR hacia `main`. ¡Inmediatamente después, **eliminas la rama** `feature/BE-004-add-roles`! Las ramas nacen para una tarea específica y mueren al terminarla.
+
+4. **Sincronización:**
+   Tus compañeros (que estaban haciendo otras tareas) solo deben volver a `main` y descargar lo nuevo para estar al día:
+   ```bash
+   git checkout main
+   git pull origin main
+   docker compose up -d --build
+   ```
