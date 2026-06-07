@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\SessionController;
 use App\Http\Controllers\Api\V1\Biometrics\BiometricController;
 use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
+use App\Http\Controllers\Api\V1\Stations\StationController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -13,13 +14,19 @@ Route::prefix('v1')->group(function (): void {
         'data' => ['status' => 'ok'],
     ]))->name('api.v1.health');
 
+    Route::post('station-activations', [StationController::class, 'activate'])->middleware('throttle:station-activation');
+
+    Route::middleware(['station.session'])->group(function (): void {
+        Route::get('station/session', [StationController::class, 'session']);
+        Route::post('station/captures', [StationController::class, 'capture'])->middleware('throttle:station-capture');
+    });
+
     Route::prefix('auth')->group(function (): void {
         Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:human-login');
         Route::post('/forgot-password', [PasswordRecoveryController::class, 'requestLink'])
             ->middleware('throttle:password-recovery');
         Route::post('/reset-password', [PasswordRecoveryController::class, 'reset'])
             ->middleware('throttle:password-recovery');
-
         Route::middleware(['auth:sanctum', 'active.account'])->group(function (): void {
             Route::get('/session', [SessionController::class, 'show']);
             Route::post('/logout', [SessionController::class, 'destroy']);
@@ -55,6 +62,14 @@ Route::prefix('v1')->group(function (): void {
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
+
+        Route::get('stations', [StationController::class, 'index']);
+        Route::post('stations', [StationController::class, 'store']);
+        Route::patch('stations/{stationId}', [StationController::class, 'update']);
+        Route::post('stations/{stationId}/activation-codes', [StationController::class, 'activationCode'])->middleware('throttle:station-activation');
+        Route::post('stations/{stationId}/revocation', [StationController::class, 'revoke']);
+        Route::get('stations/{stationId}/cameras', [StationController::class, 'cameras']);
+        Route::post('stations/{stationId}/cameras', [StationController::class, 'storeCamera']);
 
         Route::get('biometric-consents', [BiometricController::class, 'index']);
         Route::post('biometric-consents', [BiometricController::class, 'store']);
