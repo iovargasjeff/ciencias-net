@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Academic\AcademicController;
 use App\Http\Controllers\Api\V1\Auth\PasswordRecoveryController;
 use App\Http\Controllers\Api\V1\Auth\SessionController;
+use App\Http\Controllers\Api\V1\Biometrics\BiometricController;
 use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
 use Illuminate\Support\Facades\Route;
@@ -54,5 +55,10 @@ Route::prefix('v1')->group(function (): void {
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
+
+        Route::get('biometric-consents', [BiometricController::class, 'index']);
+        Route::post('biometric-consents', [BiometricController::class, 'store']);
+        Route::post('biometric-consents/{consentId}/revocation', [BiometricController::class, 'revoke']);
+        Route::post('biometric-enrollments', [BiometricController::class, 'enroll']);
     });
 });

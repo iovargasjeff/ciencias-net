@@ -314,7 +314,7 @@ it('creates teacher attendance and payroll persistence with historical uniquenes
 });
 
 it('rolls back all biometric attendance tables cleanly', function () {
-    Artisan::call('migrate:rollback', ['--step' => 1]);
+    Artisan::call('migrate:rollback', ['--step' => 2]);
 
     expect(Schema::hasTable('liquidaciones_descuento_docentes'))->toBeFalse()
         ->and(Schema::hasTable('cuentas_tecnicas'))->toBeFalse();

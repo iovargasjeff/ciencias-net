@@ -13,11 +13,11 @@ class ConsentimientoBiometrico extends Model
 
     protected $table = 'consentimientos_biometricos';
 
-    protected $fillable = ['user_id', 'estado', 'otorgado_por', 'documento_version', 'otorgado_en', 'revocado_en', 'motivo_revocacion'];
+    protected $fillable = ['user_id', 'estado', 'otorgado_por', 'documento_version', 'fundamento_legal', 'otorgado_en', 'expira_en', 'revocado_en', 'motivo_revocacion'];
 
     protected function casts(): array
     {
-        return ['otorgado_en' => 'datetime', 'revocado_en' => 'datetime'];
+        return ['otorgado_en' => 'datetime', 'expira_en' => 'datetime', 'revocado_en' => 'datetime'];
     }
 
     public function user(): BelongsTo
