@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Academic\AcademicController;
+use App\Http\Controllers\Api\V1\Assessments\AssessmentController;
 use App\Http\Controllers\Api\V1\Auth\PasswordRecoveryController;
 use App\Http\Controllers\Api\V1\Auth\SessionController;
 use App\Http\Controllers\Api\V1\Biometrics\BiometricController;
@@ -98,5 +99,8 @@ Route::prefix('v1')->group(function (): void {
         Route::post('biometric-consents', [BiometricController::class, 'store']);
         Route::post('biometric-consents/{consentId}/revocation', [BiometricController::class, 'revoke']);
         Route::post('biometric-enrollments', [BiometricController::class, 'enroll']);
+
+        Route::get('assessments', [AssessmentController::class, 'index']);
+        Route::post('assessments', [AssessmentController::class, 'store'])->name('api.v1.assessments.store');
     });
 });
