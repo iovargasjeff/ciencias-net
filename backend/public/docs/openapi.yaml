@@ -37,6 +37,101 @@ paths:
       tags:
         - Endpoints
       security: []
+  /api/v1/station-activations:
+    post:
+      summary: ''
+      operationId: postApiV1StationActivations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activation_code:
+                  type: string
+                  description: validation.max.
+                  example: b
+                device_name:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+              required:
+                - activation_code
+                - device_name
+      security: []
+  /api/v1/station/session:
+    get:
+      summary: ''
+      operationId: getApiV1StationSession
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes activar la estación.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes activar la estación.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/station/captures:
+    post:
+      summary: ''
+      operationId: postApiV1StationCaptures
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: 'Must be a file. validation.image validation.max.'
+                camera_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the camaras_estacion table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                captured_at:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+              required:
+                - image
+                - camera_id
+                - captured_at
+      security: []
   /api/v1/auth/login:
     post:
       summary: ''
@@ -323,7 +418,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                 reason:
                   type: string
                   description: validation.max.
@@ -452,7 +547,7 @@ paths:
                 relationship:
                   type: string
                   description: ''
-                  example: madre
+                  example: padre
                   enum:
                     - padre
                     - madre
@@ -614,7 +709,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T22:10:33'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -688,7 +783,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T22:10:33'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -696,7 +791,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: draft
+                  example: active
                   enum:
                     - draft
                     - active
@@ -767,7 +862,7 @@ paths:
                 level:
                   type: string
                   description: ''
-                  example: inicial
+                  example: secundaria
                   enum:
                     - inicial
                     - primaria
@@ -980,7 +1075,7 @@ paths:
                 enrolled_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T22:10:33'
               required:
                 - student_id
                 - section_id
@@ -1056,4 +1151,1132 @@ paths:
                 - course_id
                 - section_id
                 - academic_period_id
+      security: []
+  /api/v1/stations:
+    get:
+      summary: ''
+      operationId: getApiV1Stations
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Stations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: validation.max.
+                  example: b
+                location:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+                mode:
+                  type: string
+                  description: ''
+                  example: exit
+                  enum:
+                    - entry
+                    - exit
+                    - mixed
+              required:
+                - name
+                - location
+                - mode
+      security: []
+  '/api/v1/stations/{stationId}':
+    patch:
+      summary: ''
+      operationId: patchApiV1StationsStationId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: validation.max.
+                  example: b
+                location:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+                mode:
+                  type: string
+                  description: ''
+                  example: entry
+                  enum:
+                    - entry
+                    - exit
+                    - mixed
+                active:
+                  type: boolean
+                  description: ''
+                  example: false
+      security: []
+    parameters:
+      -
+        in: path
+        name: stationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/stations/{stationId}/activation-codes':
+    post:
+      summary: ''
+      operationId: postApiV1StationsStationIdActivationCodes
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: stationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/stations/{stationId}/revocation':
+    post:
+      summary: ''
+      operationId: postApiV1StationsStationIdRevocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: stationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/stations/{stationId}/cameras':
+    get:
+      summary: ''
+      operationId: getApiV1StationsStationIdCameras
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1StationsStationIdCameras
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: validation.max.
+                  example: b
+                device_identifier:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+                active:
+                  type: boolean
+                  description: ''
+                  example: true
+              required:
+                - label
+                - device_identifier
+      security: []
+    parameters:
+      -
+        in: path
+        name: stationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/student-attendance:
+    get:
+      summary: ''
+      operationId: getApiV1StudentAttendance
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/student-attendance/manual-events:
+    post:
+      summary: ''
+      operationId: postApiV1StudentAttendanceManualEvents
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                event_type:
+                  type: string
+                  description: ''
+                  example: entry
+                  enum:
+                    - entry
+                    - exit
+                    - absence
+                    - late
+                occurred_at:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: g
+              required:
+                - student_id
+                - event_type
+                - occurred_at
+                - reason
+      security: []
+  /api/v1/student-attendance/day-closures:
+    post:
+      summary: ''
+      operationId: postApiV1StudentAttendanceDayClosures
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+              required:
+                - date
+      security: []
+  /api/v1/student-attendance/anomalies:
+    get:
+      summary: ''
+      operationId: getApiV1StudentAttendanceAnomalies
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/student-attendance/anomalies/{anomalyId}/resolution':
+    post:
+      summary: ''
+      operationId: postApiV1StudentAttendanceAnomaliesAnomalyIdResolution
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: anomalyId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/student-attendance/absences/{attendanceId}/justification':
+    post:
+      summary: ''
+      operationId: postApiV1StudentAttendanceAbsencesAttendanceIdJustification
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: attendanceId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/student-attendance/alerts:
+    get:
+      summary: ''
+      operationId: getApiV1StudentAttendanceAlerts
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/recognition-events:
+    get:
+      summary: ''
+      operationId: getApiV1RecognitionEvents
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/recognition-events/{recognitionEventId}/review':
+    post:
+      summary: ''
+      operationId: postApiV1RecognitionEventsRecognitionEventIdReview
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outcome:
+                  type: string
+                  description: ''
+                  example: confirmed
+                  enum:
+                    - confirmed
+                    - rejected
+                    - reassigned
+                matched_student_id:
+                  type: string
+                  description: 'This field is required when <code>outcome</code> is <code>reassigned</code>. validation.uuid The <code>id</code> of an existing record in the alumnos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: g
+              required:
+                - outcome
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: recognitionEventId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/teacher-attendance:
+    get:
+      summary: ''
+      operationId: getApiV1TeacherAttendance
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/teacher-rates:
+    get:
+      summary: ''
+      operationId: getApiV1TeacherRates
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1TeacherRates
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teacher_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                hourly_rate:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                effective_from:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                effective_until:
+                  type: string
+                  description: 'validation.date validation.after_or_equal.'
+                  example: '2052-06-30'
+                  nullable: true
+              required:
+                - teacher_id
+                - hourly_rate
+                - effective_from
+      security: []
+  /api/v1/payroll-liquidations:
+    get:
+      summary: ''
+      operationId: getApiV1PayrollLiquidations
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1PayrollLiquidations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                period_start:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                period_end:
+                  type: string
+                  description: 'validation.date validation.after_or_equal.'
+                  example: '2052-06-30'
+                teacher_ids:
+                  type: array
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
+                  example:
+                    - a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  items:
+                    type: string
+              required:
+                - period_start
+                - period_end
+                - teacher_ids
+      security: []
+  '/api/v1/payroll-liquidations/{liquidationId}/closure':
+    post:
+      summary: ''
+      operationId: postApiV1PayrollLiquidationsLiquidationIdClosure
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: liquidationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/teacher-attendance/reports:
+    post:
+      summary: ''
+      operationId: postApiV1TeacherAttendanceReports
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                period_start:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                period_end:
+                  type: string
+                  description: 'validation.date validation.after_or_equal.'
+                  example: '2052-06-30'
+                format:
+                  type: string
+                  description: ''
+                  example: pdf
+                  enum:
+                    - pdf
+                    - xlsx
+                teacher_ids:
+                  type: array
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
+                  example:
+                    - a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  items:
+                    type: string
+              required:
+                - period_start
+                - period_end
+                - format
+                - teacher_ids
+      security: []
+  /api/v1/teacher-attendance/adjustments:
+    post:
+      summary: ''
+      operationId: postApiV1TeacherAttendanceAdjustments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teacher_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                date:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                adjustment_type:
+                  type: string
+                  description: ''
+                  example: add
+                  enum:
+                    - add
+                    - subtract
+                minutes:
+                  type: integer
+                  description: validation.min.
+                  example: 67
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: z
+              required:
+                - teacher_id
+                - date
+                - adjustment_type
+                - minutes
+                - reason
+      security: []
+  '/api/v1/class-sessions/{classSessionId}/cancellation':
+    post:
+      summary: ''
+      operationId: postApiV1ClassSessionsClassSessionIdCancellation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: classSessionId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/class-sessions/{classSessionId}/substitute':
+    put:
+      summary: ''
+      operationId: putApiV1ClassSessionsClassSessionIdSubstitute
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teacher_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+              required:
+                - teacher_id
+      security: []
+    parameters:
+      -
+        in: path
+        name: classSessionId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/biometric-consents:
+    get:
+      summary: ''
+      operationId: getApiV1BiometricConsents
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1BiometricConsents
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                legal_basis:
+                  type: string
+                  description: validation.max.
+                  example: g
+                expires_at:
+                  type: string
+                  description: 'validation.date validation.after.'
+                  example: '2052-07-01'
+                  nullable: true
+              required:
+                - student_id
+                - legal_basis
+      security: []
+  '/api/v1/biometric-consents/{consentId}/revocation':
+    post:
+      summary: ''
+      operationId: postApiV1BiometricConsentsConsentIdRevocation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: consentId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/biometric-enrollments:
+    post:
+      summary: ''
+      operationId: postApiV1BiometricEnrollments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                consent_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the consentimientos_biometricos table.'
+                  example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+                images:
+                  type: array
+                  description: 'Must be a file. validation.image validation.max.'
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - student_id
+                - consent_id
+                - images
+      security: []
+  /api/v1/assessments:
+    get:
+      summary: ''
+      operationId: getApiV1Assessments
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Assessments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teaching_assignment_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the carga_academica table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                title:
+                  type: string
+                  description: 'validation.min validation.max.'
+                  example: g
+                assessment_type:
+                  type: string
+                  description: ''
+                  example: practice
+                  enum:
+                    - exam
+                    - practice
+                    - project
+                    - participation
+                    - other
+                max_score:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                assessment_date:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T22:10:33'
+                channel:
+                  type: string
+                  description: ''
+                  example: sciences
+                  enum:
+                    - general
+                    - sciences
+                    - humanities
+                  nullable: true
+                total_questions:
+                  type: integer
+                  description: validation.min.
+                  example: 4
+                  nullable: true
+              required:
+                - teaching_assignment_id
+                - title
+                - assessment_type
+                - max_score
+                - assessment_date
       security: []
