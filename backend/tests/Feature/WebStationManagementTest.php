@@ -5,11 +5,24 @@ use App\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
     $this->seed(RolesAndPermissionsSeeder::class);
+    config(['facial-service.url' => 'http://facial-api.test']);
+    config(['facial-service.token' => 'internal-token']);
+    Http::fake([
+        'facial-api.test/v1/identifications' => Http::response([
+            'matched' => false,
+            'candidate_id' => null,
+            'confidence' => 0.0,
+            'quality' => 0.8,
+            'liveness' => 0.8,
+            'model_version' => 'test-model-v1',
+        ]),
+    ]);
 });
 
 function stationManager(): User
@@ -124,7 +137,8 @@ it('allows technical station session and capture but blocks human routes', funct
             'captured_at' => now()->toISOString(),
             'image' => UploadedFile::fake()->image('capture.jpg'),
         ])->assertCreated()
-        ->assertJsonPath('data.camera_id', $cameraId);
+        ->assertJsonPath('data.camera_id', $cameraId)
+        ->assertJsonPath('data.status', 'pending_review');
 
     expect(EventoReconocimiento::where('idempotency_key', 'capture-station-001')->exists())->toBeTrue();
 

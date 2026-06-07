@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Biometrics\BiometricController;
 use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
 use App\Http\Controllers\Api\V1\Stations\StationController;
+use App\Http\Controllers\Api\V1\StudentAttendance\StudentAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -18,7 +19,7 @@ Route::prefix('v1')->group(function (): void {
 
     Route::middleware(['station.session'])->group(function (): void {
         Route::get('station/session', [StationController::class, 'session']);
-        Route::post('station/captures', [StationController::class, 'capture'])->middleware('throttle:station-capture');
+        Route::post('station/captures', [StationController::class, 'capture'])->middleware(['throttle:station-capture', 'idempotent']);
     });
 
     Route::prefix('auth')->group(function (): void {
@@ -70,6 +71,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('stations/{stationId}/revocation', [StationController::class, 'revoke']);
         Route::get('stations/{stationId}/cameras', [StationController::class, 'cameras']);
         Route::post('stations/{stationId}/cameras', [StationController::class, 'storeCamera']);
+
+        Route::get('student-attendance', [StudentAttendanceController::class, 'index']);
+        Route::post('student-attendance/manual-events', [StudentAttendanceController::class, 'manual'])->middleware('idempotent');
 
         Route::get('biometric-consents', [BiometricController::class, 'index']);
         Route::post('biometric-consents', [BiometricController::class, 'store']);

@@ -12,11 +12,17 @@ use App\Http\Requests\Stations\UpdateStationRequest;
 use App\Http\Resources\StationCameraResource;
 use App\Http\Resources\StationResource;
 use App\Models\ActivacionEstacion;
+use App\Models\Alumno;
 use App\Models\CamaraEstacion;
 use App\Models\CuentaTecnica;
 use App\Models\EstacionBiometrica;
 use App\Models\EventoReconocimiento;
+use App\Models\PerfilFacial;
+use App\Support\Attendance\StudentAttendanceProcessor;
 use App\Support\AuditLogger;
+use App\Support\Biometrics\BiometricEmbeddingEncryptor;
+use App\Support\Facial\FacialServiceClient;
+use App\Support\Facial\FacialServiceUnavailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -142,8 +148,12 @@ class StationController extends Controller
         return response()->json(['data' => new StationResource($request->attributes->get('station'))]);
     }
 
-    public function capture(SubmitStationCaptureRequest $request): JsonResponse
-    {
+    public function capture(
+        SubmitStationCaptureRequest $request,
+        FacialServiceClient $facialService,
+        BiometricEmbeddingEncryptor $encryptor,
+        StudentAttendanceProcessor $processor,
+    ): JsonResponse {
         $station = $request->attributes->get('station');
         $account = $request->attributes->get('technical_account');
         $camera = CamaraEstacion::whereKey($request->string('camera_id'))->where('estacion_id', $station->id)->firstOrFail();
@@ -162,11 +172,52 @@ class StationController extends Controller
             'recibido_en' => now(),
         ]);
 
+        try {
+            $result = $facialService->identify($request->file('image'), $this->facialCandidates($encryptor), $request->header('Idempotency-Key'));
+        } catch (FacialServiceUnavailable) {
+            return response()->json(['data' => [
+                'id' => $event->id,
+                'station_id' => $station->id,
+                'camera_id' => $camera->id,
+                'status' => $event->estado,
+                'captured_at' => $event->capturado_en->toISOString(),
+            ]], 201);
+        }
+
+        $event->update([
+            'confianza' => $result['confidence'],
+            'prueba_vida_superada' => $result['liveness'] >= 0.65,
+            'motivo_estado' => $result['matched'] ? null : 'sin_coincidencia_automatica',
+        ]);
+
+        $student = null;
+        if ($result['matched'] && is_string($result['candidate_id'] ?? null)) {
+            $student = Alumno::where('user_id', $result['candidate_id'])->first();
+        }
+
+        if ($student !== null && $result['confidence'] >= 0.85 && $event->prueba_vida_superada) {
+            $movement = $processor->processFacialEvent($event->fresh(), $student, $camera);
+
+            return response()->json(['data' => [
+                'id' => $event->id,
+                'attendance_id' => $movement->asistencia_alumno_id,
+                'movement_id' => $movement->id,
+                'student_id' => $student->id,
+                'status' => 'accepted',
+                'event_type' => match ($movement->tipo) {
+                    'ingreso' => 'entry',
+                    'salida' => 'exit',
+                    default => 're_entry',
+                },
+                'confidence' => (float) $event->fresh()->confianza,
+            ]], 201);
+        }
+
         return response()->json(['data' => [
             'id' => $event->id,
             'station_id' => $station->id,
             'camera_id' => $camera->id,
-            'status' => $event->estado,
+            'status' => 'pending_review',
             'captured_at' => $event->capturado_en->toISOString(),
         ]], 201);
     }
@@ -208,6 +259,27 @@ class StationController extends Controller
         ]);
 
         return response()->json(['data' => new StationCameraResource($camera)], 201);
+    }
+
+    private function facialCandidates(BiometricEmbeddingEncryptor $encryptor): array
+    {
+        return PerfilFacial::query()
+            ->with('user.alumno')
+            ->where('activo', true)
+            ->get()
+            ->filter(fn (PerfilFacial $profile): bool => $profile->user?->alumno !== null)
+            ->map(function (PerfilFacial $profile) use ($encryptor): array {
+                $encrypted = is_resource($profile->embedding_cifrado)
+                    ? stream_get_contents($profile->embedding_cifrado)
+                    : (string) $profile->embedding_cifrado;
+
+                return [
+                    'id' => $profile->user_id,
+                    'embedding' => $encryptor->decrypt($encrypted),
+                ];
+            })
+            ->values()
+            ->all();
     }
 
     private function stationCookie(string $token): Cookie
