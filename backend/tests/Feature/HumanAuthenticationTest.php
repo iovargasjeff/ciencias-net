@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -89,6 +90,16 @@ it('publishes the Sanctum CSRF cookie endpoint', function () {
 });
 
 it('rejects a stateful mutation without a CSRF token', function () {
+    $this->instance(ValidateCsrfToken::class,
+        new class($this->app, app('encrypter')) extends PreventRequestForgery
+        {
+            protected function runningUnitTests(): bool
+            {
+                return false;
+            }
+        }
+    );
+
     $user = User::factory()->create(['password' => 'correct-password']);
 
     $this->withHeader('Origin', 'http://localhost:5173')
