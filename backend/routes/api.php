@@ -74,6 +74,13 @@ Route::prefix('v1')->group(function (): void {
 
         Route::get('student-attendance', [StudentAttendanceController::class, 'index']);
         Route::post('student-attendance/manual-events', [StudentAttendanceController::class, 'manual'])->middleware('idempotent');
+        Route::post('student-attendance/day-closures', [StudentAttendanceController::class, 'closeDay'])->middleware('idempotent');
+        Route::get('student-attendance/anomalies', [StudentAttendanceController::class, 'anomalies']);
+        Route::post('student-attendance/anomalies/{anomalyId}/resolution', [StudentAttendanceController::class, 'resolveAnomaly']);
+        Route::post('student-attendance/absences/{attendanceId}/justification', [StudentAttendanceController::class, 'justifyAbsence']);
+        Route::get('student-attendance/alerts', [StudentAttendanceController::class, 'alerts']);
+        Route::get('recognition-events', [StudentAttendanceController::class, 'recognitionEvents']);
+        Route::post('recognition-events/{recognitionEventId}/review', [StudentAttendanceController::class, 'reviewRecognition']);
 
         Route::get('biometric-consents', [BiometricController::class, 'index']);
         Route::post('biometric-consents', [BiometricController::class, 'store']);

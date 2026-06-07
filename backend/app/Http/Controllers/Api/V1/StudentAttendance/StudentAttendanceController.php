@@ -3,16 +3,28 @@
 namespace App\Http\Controllers\Api\V1\StudentAttendance;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StudentAttendance\CloseStudentAttendanceDayRequest;
 use App\Http\Requests\StudentAttendance\CreateManualStudentAttendanceEventRequest;
+use App\Http\Requests\StudentAttendance\ReasonRequest;
+use App\Http\Requests\StudentAttendance\ReviewRecognitionEventRequest;
+use App\Http\Resources\RecognitionEventResource;
+use App\Http\Resources\StudentAttendanceAnomalyResource;
 use App\Http\Resources\StudentAttendanceMovementResource;
 use App\Http\Resources\StudentAttendanceResource;
+use App\Jobs\CloseStudentAttendanceDayJob;
+use App\Jobs\GenerateStudentAttendanceAlertsJob;
 use App\Models\Alumno;
+use App\Models\AnomaliaAsistencia;
 use App\Models\AsistenciaAlumno;
+use App\Models\CamaraEstacion;
+use App\Models\EventoReconocimiento;
 use App\Support\Attendance\StudentAttendanceProcessor;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class StudentAttendanceController extends Controller
 {
@@ -57,5 +69,102 @@ class StudentAttendanceController extends Controller
         ]);
 
         return response()->json(['data' => new StudentAttendanceMovementResource($movement)], 201);
+    }
+
+    public function closeDay(CloseStudentAttendanceDayRequest $request, AuditLogger $audit): JsonResponse
+    {
+        $result = app()->call([new CloseStudentAttendanceDayJob((string) $request->date('date'), $request->user()->id), 'handle']);
+        $audit->record($request, 'student_attendance.day_closed', $request->user(), subject: (string) $request->date('date'), newValues: $result);
+
+        return response()->json(['data' => ['status' => 'queued', ...$result]], 202);
+    }
+
+    public function anomalies(Request $request)
+    {
+        abort_unless($request->user()?->hasAnyRole(['superadmin', 'auxiliar']) === true, 403);
+
+        return StudentAttendanceAnomalyResource::collection(
+            AnomaliaAsistencia::query()->whereNotNull('asistencia_alumno_id')->latest('created_at')->paginate(min($request->integer('per_page', 20), 100))
+        );
+    }
+
+    public function resolveAnomaly(ReasonRequest $request, string $anomalyId, AuditLogger $audit): JsonResponse
+    {
+        abort_unless($request->user()?->hasAnyRole(['superadmin', 'auxiliar']) === true, 403);
+
+        $anomaly = AnomaliaAsistencia::whereNotNull('asistencia_alumno_id')->findOrFail($anomalyId);
+        if ($anomaly->estado !== 'pendiente') {
+            throw new ConflictHttpException('La anomalía ya fue resuelta.');
+        }
+
+        $anomaly->update([
+            'estado' => 'resuelta',
+            'resuelto_por' => $request->user()->id,
+            'resolucion' => $request->string('reason')->toString(),
+            'resuelto_en' => now(),
+        ]);
+        $audit->record($request, 'student_attendance.anomaly_resolved', $request->user(), $anomaly);
+
+        return response()->json(['data' => new StudentAttendanceAnomalyResource($anomaly)]);
+    }
+
+    public function justifyAbsence(ReasonRequest $request, string $attendanceId, AuditLogger $audit): JsonResponse
+    {
+        $attendance = AsistenciaAlumno::findOrFail($attendanceId);
+        if ($attendance->estado !== 'falta_injustificada') {
+            throw new ConflictHttpException('Solo se justifican faltas injustificadas.');
+        }
+
+        $attendance->update(['estado' => 'falta_justificada']);
+        $audit->record($request, 'student_attendance.absence_justified', $request->user(), $attendance, newValues: ['reason' => 'redacted']);
+
+        return response()->json(['data' => new StudentAttendanceResource($attendance)]);
+    }
+
+    public function recognitionEvents(Request $request)
+    {
+        abort_unless($request->user()?->hasAnyRole(['superadmin', 'auxiliar']) === true, 403);
+
+        return RecognitionEventResource::collection(
+            EventoReconocimiento::query()->where('estado', 'pendiente_revision')->latest('capturado_en')->paginate(min($request->integer('per_page', 20), 100))
+        );
+    }
+
+    public function reviewRecognition(
+        ReviewRecognitionEventRequest $request,
+        string $recognitionEventId,
+        StudentAttendanceProcessor $processor,
+        AuditLogger $audit,
+    ): JsonResponse {
+        $event = EventoReconocimiento::with('camara')->findOrFail($recognitionEventId);
+        if ($event->estado !== 'pendiente_revision') {
+            throw new ConflictHttpException('El evento ya fue revisado.');
+        }
+
+        DB::transaction(function () use ($request, $event, $processor): void {
+            if ($request->string('outcome')->toString() === 'rejected') {
+                $event->update(['estado' => 'rechazado', 'motivo_estado' => $request->string('reason')->toString(), 'revisado_por' => $request->user()->id, 'revisado_en' => now()]);
+
+                return;
+            }
+
+            $student = $request->filled('matched_student_id')
+                ? Alumno::findOrFail($request->string('matched_student_id'))
+                : Alumno::where('user_id', $event->user_id)->firstOrFail();
+            $camera = $event->camara ?? CamaraEstacion::findOrFail($event->camara_estacion_id);
+            $processor->processFacialEvent($event, $student, $camera);
+            $event->update(['revisado_por' => $request->user()->id, 'revisado_en' => now()]);
+        });
+
+        $audit->record($request, 'student_attendance.recognition_reviewed', $request->user(), $event, newValues: ['outcome' => $request->string('outcome')->toString()]);
+
+        return response()->json(['data' => new RecognitionEventResource($event->refresh())]);
+    }
+
+    public function alerts(Request $request): JsonResponse
+    {
+        abort_unless($request->user()?->hasAnyRole(['superadmin', 'auxiliar', 'toe']) === true, 403);
+
+        return response()->json(['data' => dispatch_sync(new GenerateStudentAttendanceAlertsJob)]);
     }
 }
