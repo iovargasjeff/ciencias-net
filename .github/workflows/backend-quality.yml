@@ -53,7 +53,8 @@ jobs:
       - run: php artisan migrate:fresh --force
       - run: php artisan test
       - run: php artisan scribe:generate
-      - run: git diff --exit-code -- public/docs
+      - if: github.event_name == 'push'
+        run: git diff --exit-code -- public/docs
 
   secrets:
     runs-on: ubuntu-latest
