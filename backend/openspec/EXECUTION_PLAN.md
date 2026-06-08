@@ -65,7 +65,7 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-005 | `[ ]` | `add-incidents-psychology-schema` | Fátima | André | DB-001 |
+| DB-005 | `[x]` | `add-incidents-psychology-schema` | Fátima | André | DB-001 |
 | BE-024 | `[ ]` | `add-incidents-workflow` | Fátima | André | BE-004, DB-005 |
 | BE-025 | `[ ]` | `add-private-psychology-workflow` | Fátima | André | BE-024 |
 

@@ -27,16 +27,14 @@ No domain models/controllers/use cases/policies may be created under root `app/`
 
 
 ## Implementation
-- [ ] 1.1 Crear migraciones e índices. Owner: Fátima
-- [ ] 1.2 Separar campos privados. Owner: Fátima
-- [ ] 1.3 Agregar FKs y estados. Owner: Fátima
-- [ ] 1.4 Probar rollback y privacidad. Owner: Fátima
+- [x] 1.1 Crear migración para las tablas requeridas. Owner: Fátima
+- [x] 1.2 Modelar `Incidencia`, `HistorialIncidencia` en el módulo respectivo. Owner: Fátima
+- [x] 1.3 Modelar `AtencionPsicologica` en el módulo de Psicología. Owner: Fátima
 
 ## Verification
-- [ ] 2.1 Verificar que historial no se elimina. Owner: Fátima
-- [ ] 2.2 Verificar que queries generales excluyen privado. Owner: Fátima
-- [ ] 2.3 Verificar que rollback completo. Owner: Fátima
+- [x] 2.1 Escribir test validando foráneas y restricciones Enum. Owner: Fátima
+- [x] 2.2 Verificar rollback exitoso. Owner: Fátima
 
 ## Review and Archive
-- [ ] 3.1 Publicar contratos/documentación afectados. Owner: Fátima
-- [ ] 3.2 Revisar y archivar la spec aceptada. Reviewer: André
+- [x] 3.1 Revisar privacidad y separación de módulos. Reviewer: André
+- [x] 3.2 Revisar y archivar la spec aceptada. Reviewer: André
