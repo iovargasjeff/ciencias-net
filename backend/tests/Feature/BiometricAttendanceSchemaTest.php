@@ -1,13 +1,13 @@
 <?php
 
-use App\Models\Alumno;
-use App\Models\CargaAcademica;
-use App\Models\Curso;
-use App\Models\Docente;
-use App\Models\Grado;
-use App\Models\PeriodoAcademico;
-use App\Models\Seccion;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
+use App\Modules\Academico\Infrastructure\Models\Curso;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Academico\Infrastructure\Models\Grado;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\Seccion;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;

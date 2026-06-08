@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Notificacion;
-use App\Models\User;
+use App\Modules\Notificaciones\Infrastructure\Models\Notificacion;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Notificacion> */

@@ -95,3 +95,53 @@ button:focus-visible, a:focus-visible { outline: 3px solid #86a2ff; outline-offs
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* Glassmorphism Design System (FE-009 Improvements) */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-input {
+  background: rgba(3, 7, 18, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.glass-input:focus {
+  border-color: rgba(99, 102, 241, 0.5) !important;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25) !important;
+  outline: none !important;
+}
+
+@keyframes scan-line {
+  0% { top: 5%; opacity: 0.3; }
+  50% { top: 95%; opacity: 1; }
+  100% { top: 5%; opacity: 0.3; }
+}
+
+.animate-scan-line {
+  animation: scan-line 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Kiosk background atmospheric layout */
+.kiosk-bg {
+  background: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.18) 0%, transparent 50%),
+              radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 45%),
+              radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.1) 0%, transparent 45%),
+              #030712 !important;
+}
+

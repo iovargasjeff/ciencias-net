@@ -3,7 +3,7 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Docente;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Docente> */

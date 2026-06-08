@@ -3,7 +3,7 @@
 namespace App\Modules\Finanzas\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Modules\Finanzas\Domain\Models\LiquidacionDescuentoDocente;
 use App\Modules\Finanzas\Domain\Models\TarifaDocente;
 use App\Modules\Finanzas\Domain\Services\TeacherPayrollLiquidationService;

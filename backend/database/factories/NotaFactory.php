@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Matricula;
-use App\Models\Nota;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\Matricula;
+use App\Modules\Academico\Infrastructure\Models\Nota;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

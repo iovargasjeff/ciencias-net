@@ -29,7 +29,7 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-009 | `[ ]` | `add-web-station-activation-capture` | Vincenzo | Jefferson | FE-003 |
+| FE-009 | `[x]` | `add-web-station-activation-capture` | Vincenzo | Jefferson | FE-003 |
 | FE-009A | `[ ]` | `add-biometric-station-administration` | Vincenzo | Jefferson | FE-003 |
 | FE-010 | `[ ]` | `add-student-attendance-supervision` | Vincenzo | Jefferson | FE-002, FE-003 |
 | FE-011 | `[ ]` | `add-teacher-attendance-payroll` | Vincenzo | Jefferson | FE-003 |

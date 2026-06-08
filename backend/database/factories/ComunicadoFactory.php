@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Comunicado;
-use App\Models\User;
+use App\Modules\Comunicados\Infrastructure\Models\Comunicado;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Comunicado> */

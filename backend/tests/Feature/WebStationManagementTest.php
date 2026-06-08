@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

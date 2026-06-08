@@ -2,8 +2,8 @@
 
 namespace App\Modules\Asistencia\Domain\Services;
 
-use App\Models\Matricula;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\Matricula;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use Illuminate\Support\Carbon;

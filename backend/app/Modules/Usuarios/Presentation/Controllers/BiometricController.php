@@ -3,7 +3,7 @@
 namespace App\Modules\Usuarios\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;

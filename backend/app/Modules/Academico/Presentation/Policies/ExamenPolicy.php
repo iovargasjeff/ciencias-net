@@ -2,7 +2,7 @@
 
 namespace App\Modules\Academico\Presentation\Policies;
 
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ExamenPolicy

@@ -3,7 +3,7 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
 use App\Modules\Asistencia\Domain\Services\TeacherAttendanceSessionService;

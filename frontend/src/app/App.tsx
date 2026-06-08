@@ -7,6 +7,7 @@ import { PermissionRoute, ProtectedRoute, StationRoute } from '@/features/auth/g
 import { LoginPage } from '@/features/auth/LoginPage'
 import { RecoveryPage } from '@/features/auth/RecoveryPage'
 import { StationActivationPage } from '@/features/auth/StationActivationPage'
+import { StationCapturePage } from '@/features/stations/StationCapturePage'
 import { FoundationsPage } from '@/features/home/FoundationsPage'
 import { LandingPage } from '@/features/home/LandingPage'
 import { AcademicAdminPage } from '@/features/phase-one/AcademicAdminPage'
@@ -41,7 +42,7 @@ export function App() {
       <Route path="/estacion" element={<StationLayout />}>
         <Route index element={<StationActivationPage />} />
         <Route path="activar" element={<StationActivationPage />} />
-        <Route element={<StationRoute />}><Route path="captura" element={<FoundationsPage context="Estación de asistencia" />} /></Route>
+        <Route element={<StationRoute />}><Route path="captura" element={<StationCapturePage />} /></Route>
       </Route>
     </Routes>
   )

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Asistencia\Domain\Services;
 
-use App\Models\CargaAcademica;
-use App\Models\Docente;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
 use App\Modules\Asistencia\Domain\Models\SesionClase;

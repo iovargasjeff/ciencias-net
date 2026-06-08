@@ -33,8 +33,8 @@
 | DB-002 | `[x]` | `add-biometric-attendance-schema` | André | Jefferson | DB-001 |
 | BE-007 | `[x]` | `add-biometric-enrollment-consent` | André | Jefferson | DB-002 |
 | BE-008 | `[x]` | `add-facial-service-integration` | André | Jefferson | OPS-001, DB-002 |
-| BE-009 | `[x]` | `add-web-station-management` | André | Jefferson | BE-008 |
-| BE-010 | `[x]` | `add-student-attendance-events` | André | Jefferson | BE-009 |
+| BE-009 | `[x]` | `add-web-station-management` | André | Jefferson | BE-004, DB-002, BE-008 |
+| BE-010 | `[x]` | `add-student-attendance-events` | André | Jefferson | BE-008, BE-009 |
 | BE-011 | `[x]` | `add-student-attendance-closure-review` | André | Jefferson | BE-010 |
 | BE-012 | `[x]` | `add-teacher-attendance-sessions` | André | Jefferson | BE-006, BE-010 |
 | BE-013 | `[x]` | `add-teacher-payroll-liquidation` | André | Jefferson | BE-012 |
@@ -43,7 +43,7 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-003 | `[~]` | `add-finance-schema` | Fátima | Jefferson | DB-001 |
+| DB-003 | `[x]` | `add-finance-schema` | Fátima | Jefferson | DB-001 |
 | BE-014 | `[ ]` | `add-finance-configuration-benefits` | Fátima | Jefferson | BE-004, DB-003 |
 | BE-015 | `[ ]` | `add-obligation-generation-adjustments` | Fátima | Jefferson | BE-014 |
 | BE-016 | `[ ]` | `add-payment-movements-receipts` | Fátima | Jefferson | BE-015 |

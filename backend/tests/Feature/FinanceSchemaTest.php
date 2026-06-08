@@ -10,9 +10,9 @@
  * - Relaciones principales alumno → obligaciones → movimientos.
  */
 
-use App\Models\Alumno;
-use App\Models\PeriodoAcademico;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Finanzas\Infrastructure\Models\BeneficioAlumno;
 use App\Modules\Finanzas\Infrastructure\Models\ConceptoPago;
 use App\Modules\Finanzas\Infrastructure\Models\MovimientoPago;

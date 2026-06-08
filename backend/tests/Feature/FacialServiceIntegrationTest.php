@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Alumno;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;

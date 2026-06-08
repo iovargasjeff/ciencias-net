@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Alumno;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;

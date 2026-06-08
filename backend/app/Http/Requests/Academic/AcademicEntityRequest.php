@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Academic;
 
-use App\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Family;
 
-use App\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

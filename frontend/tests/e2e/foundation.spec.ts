@@ -31,5 +31,5 @@ test('protects the human portal and keeps station context separate', async ({ pa
 
   await page.goto('/estacion')
   await expect(page.getByText('Sesión técnica limitada')).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Activación de estación' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Activar Estación' })).toBeVisible()
 })
