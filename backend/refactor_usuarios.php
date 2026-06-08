@@ -16,18 +16,20 @@ $regex = new RegexIterator($iterator, '/^.+\.php$/i', RecursiveRegexIterator::GE
 
 foreach ($regex as $file) {
     $path = $file[0];
-    if (strpos($path, '/vendor/') !== false || strpos($path, '/storage/') !== false) continue;
-    
+    if (strpos($path, '/vendor/') !== false || strpos($path, '/storage/') !== false) {
+        continue;
+    }
+
     $content = file_get_contents($path);
     $changed = false;
-    
+
     foreach ($replacements as $old => $new) {
         if (strpos($content, $old) !== false) {
             $content = str_replace($old, $new, $content);
             $changed = true;
         }
     }
-    
+
     if ($changed) {
         file_put_contents($path, $content);
         echo "Updated $path\n";

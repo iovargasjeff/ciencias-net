@@ -3,12 +3,12 @@
 namespace App\Modules\Usuarios\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use App\Modules\Usuarios\Presentation\Requests\Biometrics\EnrollBiometricProfileRequest;
 use App\Modules\Usuarios\Presentation\Requests\Biometrics\GrantBiometricConsentRequest;

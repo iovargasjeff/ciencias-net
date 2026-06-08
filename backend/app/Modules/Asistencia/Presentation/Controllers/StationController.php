@@ -3,7 +3,6 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\ActivacionEstacion;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
 use App\Modules\Asistencia\Domain\Models\CuentaTecnica;
@@ -21,6 +20,7 @@ use App\Modules\Asistencia\Presentation\Resources\StationResource;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;

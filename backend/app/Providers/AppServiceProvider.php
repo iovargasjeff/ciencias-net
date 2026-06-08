@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 use App\Modules\Academico\Infrastructure\Models\Examen;
-use App\Modules\Academico\Presentation\Policies\ExamenPolicy;
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
-use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
-use App\Modules\Usuarios\Infrastructure\Models\User;
-use App\Modules\Usuarios\Presentation\Policies\UserPolicy;
 use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Presentation\Policies\ExamenPolicy;
 use App\Modules\Academico\Presentation\Policies\PeriodoAcademicoPolicy;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
+use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
+use App\Modules\Usuarios\Presentation\Policies\UserPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\Request;
@@ -34,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Factory::guessFactoryNamesUsing(function (string $modelName) {
             $basename = class_basename($modelName);
-            return 'Database\\Factories\\' . $basename . 'Factory';
+
+            return 'Database\\Factories\\'.$basename.'Factory';
         });
 
         Factory::guessModelNamesUsing(function (Factory $factory) {
@@ -48,9 +49,13 @@ class AppServiceProvider extends ServiceProvider
             if (isset($map[$modelName])) {
                 $module = $map[$modelName];
                 $domainClass = "App\\Modules\\{$module}\\Domain\\Models\\{$modelName}";
-                if (class_exists($domainClass)) return $domainClass;
+                if (class_exists($domainClass)) {
+                    return $domainClass;
+                }
+
                 return "App\\Modules\\{$module}\\Infrastructure\\Models\\{$modelName}";
             }
+
             return "App\\Models\\{$modelName}";
         });
         Gate::policy(Examen::class, ExamenPolicy::class);

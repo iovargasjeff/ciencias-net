@@ -1,10 +1,10 @@
 <?php
 
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;

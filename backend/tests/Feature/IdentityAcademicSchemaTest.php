@@ -1,11 +1,11 @@
 <?php
 
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Academico\Infrastructure\Models\Grado;
 use App\Modules\Academico\Infrastructure\Models\Matricula;
-use App\Modules\Usuarios\Infrastructure\Models\Padre;
 use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
 use App\Modules\Academico\Infrastructure\Models\Seccion;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Padre;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;

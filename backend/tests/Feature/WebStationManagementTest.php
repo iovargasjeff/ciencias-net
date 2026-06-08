@@ -1,7 +1,7 @@
 <?php
 
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;

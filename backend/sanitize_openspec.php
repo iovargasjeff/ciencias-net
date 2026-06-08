@@ -6,13 +6,13 @@ $archives = array_map('basename', glob('openspec/changes/archive/*', GLOB_ONLYDI
 
 foreach ($archives as $arch) {
     $changeName = preg_replace('/^\d{4}-\d{2}-\d{2}-/', '', $arch);
-    $plan = preg_replace('/\|\s*(\w+-\d+)\s*\|\s*`\[\s*\]`\s*\|\s*`' . preg_quote($changeName, '/') . '`\s*\|/', '| $1 | `[x]` | `'.$changeName.'` |', $plan);
+    $plan = preg_replace('/\|\s*(\w+-\d+)\s*\|\s*`\[\s*\]`\s*\|\s*`'.preg_quote($changeName, '/').'`\s*\|/', '| $1 | `[x]` | `'.$changeName.'` |', $plan);
 }
 
 file_put_contents($planPath, $plan);
 echo "EXECUTION_PLAN.md updated.\n";
 
-$block = <<<EOF
+$block = <<<'EOF'
 
 ## Source of Truth Check
 
@@ -43,18 +43,22 @@ EOF;
 
 $activeChanges = glob('openspec/changes/*', GLOB_ONLYDIR);
 foreach ($activeChanges as $dir) {
-    if (basename($dir) === 'archive') continue;
+    if (basename($dir) === 'archive') {
+        continue;
+    }
 
     foreach (['design.md', 'tasks.md'] as $file) {
-        $path = $dir . '/' . $file;
-        if (!file_exists($path)) continue;
+        $path = $dir.'/'.$file;
+        if (! file_exists($path)) {
+            continue;
+        }
 
         $content = file_get_contents($path);
 
         // Inject block if not present
         if (strpos($content, '## Source of Truth Check') === false) {
             // Find first line starting with #
-            $content = preg_replace('/^(# .+)$/m', "$1\n" . $block, $content, 1);
+            $content = preg_replace('/^(# .+)$/m', "$1\n".$block, $content, 1);
         }
 
         // Replace bad tasks

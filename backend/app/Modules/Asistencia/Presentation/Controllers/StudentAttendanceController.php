@@ -3,7 +3,6 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
@@ -19,6 +18,7 @@ use App\Modules\Asistencia\Presentation\Resources\RecognitionEventResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceAnomalyResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceMovementResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceResource;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

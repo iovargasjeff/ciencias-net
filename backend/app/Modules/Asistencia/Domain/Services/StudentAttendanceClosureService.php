@@ -3,9 +3,9 @@
 namespace App\Modules\Asistencia\Domain\Services;
 
 use App\Modules\Academico\Infrastructure\Models\Matricula;
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 

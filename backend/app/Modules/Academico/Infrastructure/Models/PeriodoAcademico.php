@@ -2,12 +2,9 @@
 
 namespace App\Modules\Academico\Infrastructure\Models;
 
-use App\Modules\Usuarios\Infrastructure\Models\User;
-
-use App\Modules\Academico\Infrastructure\Models\Grado;
-
 use App\Modules\Finanzas\Infrastructure\Models\ConceptoPago;
 use App\Modules\Finanzas\Infrastructure\Models\ConfiguracionFinanciera;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

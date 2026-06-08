@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Modules\Academico\Infrastructure\Models\Examen;
 use App\Modules\Academico\Infrastructure\Models\Matricula;
 use App\Modules\Academico\Infrastructure\Models\Nota;
 use App\Modules\Usuarios\Infrastructure\Models\User;
-use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Nota> */

@@ -1,17 +1,17 @@
 <?php
 
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
-use App\Modules\Usuarios\Infrastructure\Models\Padre;
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
 use App\Modules\Asistencia\Domain\Models\EstacionBiometrica;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
 use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
+use App\Modules\Asistencia\Infrastructure\Notifications\StudentAttendanceMovementNotification;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Padre;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
-use App\Modules\Asistencia\Infrastructure\Notifications\StudentAttendanceMovementNotification;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
