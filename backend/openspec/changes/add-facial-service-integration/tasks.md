@@ -14,3 +14,17 @@
 ## Review and Archive
 - [ ] 3.1 Publicar contratos/documentación afectados. Owner: André
 - [ ] 3.2 Revisar y archivar la spec aceptada. Reviewer: Jefferson
+
+
+## Source of Truth Check
+
+- Product docs reviewed: roles/permisos no cambian.
+- Architecture docs reviewed: facial integration and detailed system design.
+- API contracts reviewed: `../../../../docs/api/internal/facial-openapi.yaml`; unchanged.
+- Domain docs reviewed: Fase 2 attendance/facial OpenSpec artifacts.
+- Security docs reviewed: authentication/authorization for private facial service.
+- Conflicts found: no.
+
+## Backend Placement
+
+All backend domain code remains under existing modules; this iteration changes only the private FastAPI engine and Laravel facial-service exception import.

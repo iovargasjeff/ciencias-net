@@ -32,3 +32,15 @@
 - `docker compose exec backend php artisan test`: PASS, 38 tests / 151 assertions.
 - `cd backend && openspec validate --strict --all`: PASS, 36 items.
 - Pendiente: revisión del usuario antes de commit; no se archiva el change ni se marca `[x]` en `EXECUTION_PLAN.md` todavía.
+- 2026-06-08: Rama `feature/facial-recognition-engine`: se reemplazó el placeholder `cienciasnet-digest-face-v1` por `face_recognition` (`cienciasnet-face-recognition-v1`) en FastAPI, manteniendo `/v1/enrollments` y `/v1/identifications` sin cambios de contrato.
+- 2026-06-08: `facial-service` ahora usa `face_locations`, `face_encodings` y `face_distance`; exige exactamente un rostro por imagen, genera embeddings base64 de 128 floats y compara candidatos opacos enviados por Laravel.
+- 2026-06-08: Se corrigió `StationController` para capturar `App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable`, evitando que un timeout/falla facial salte el flujo de revisión/manual.
+- 2026-06-08: Context7/ctx7 usado para `face_recognition`: `/ageitgey/face_recognition`, docs de detección, encodings y comparación.
+- 2026-06-08: `docker compose build facial-api`: PASS; se agregó `setuptools==80.9.0` porque `face_recognition_models` requiere `pkg_resources` en `python:3.12-slim`.
+- 2026-06-08: Import runtime dentro de la imagen como `nobody`: PASS (`face_recognition import ok`, modelo `.dat` localizado).
+- 2026-06-08: `grep -RInE "psycopg|postgres|pyodbc|sqlalchemy|mysql|flask" facial-service`: sin resultados.
+- 2026-06-08: `docker compose exec backend php artisan test --filter=FacialServiceIntegrationTest`: PASS, 4 tests / 9 assertions.
+- 2026-06-08: `docker compose exec backend php artisan test --filter=StudentAttendanceEventsTest`: PASS, 4 tests / 30 assertions.
+- 2026-06-08: `docker compose exec backend php artisan test`: PASS, 83 tests / 328 assertions.
+- 2026-06-08: `cd backend && openspec validate --strict --all`: PASS, 30 items.
+- 2026-06-08: `docker compose exec backend php vendor/bin/pint --test`: PASS, 190 files.
