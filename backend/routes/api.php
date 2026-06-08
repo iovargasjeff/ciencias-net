@@ -9,11 +9,13 @@ use App\Modules\Asistencia\Presentation\Controllers\StudentAttendanceController;
 use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
 use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
+use App\Modules\Comunicados\Presentation\Controllers\CommunicationController;
 use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
 use App\Modules\Finanzas\Presentation\Controllers\PaymentObligationController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
 use App\Modules\Horarios\Presentation\Controllers\ScheduleController;
 use App\Modules\Materiales\Presentation\Controllers\MaterialController;
+use App\Modules\Notificaciones\Presentation\Controllers\NotificationController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Usuarios\Presentation\Controllers\FamilyLinkController;
@@ -90,6 +92,11 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/calendar-events', [ScheduleController::class, 'createCalendarEvent']);
 
         // Comunicados y Notificaciones
+        Route::get('/announcements', [CommunicationController::class, 'listAnnouncements']);
+        Route::post('/announcements', [CommunicationController::class, 'createAnnouncement']);
+        Route::put('/announcements/{announcement}/read', [CommunicationController::class, 'markAnnouncementRead']);
+        Route::put('/announcements/{announcement}/archive', [CommunicationController::class, 'archiveAnnouncement']);
+        Route::get('/notifications', [NotificationController::class, 'listNotifications']);
         // Estaciones
         Route::get('stations', [StationController::class, 'index']);
         Route::post('stations', [StationController::class, 'store']);
