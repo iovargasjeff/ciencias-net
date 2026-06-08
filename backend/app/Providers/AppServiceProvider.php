@@ -13,7 +13,9 @@ use App\Modules\Academico\Presentation\Policies\PeriodoAcademicoPolicy;
 use App\Modules\Comunicados\Infrastructure\Models\Comunicado;
 use App\Modules\Comunicados\Presentation\Policies\ComunicadoPolicy;
 use App\Modules\Finanzas\Domain\Repositories\ObligationRepositoryInterface;
+use App\Modules\Finanzas\Domain\Repositories\PaymentMovementRepositoryInterface;
 use App\Modules\Finanzas\Infrastructure\Repositories\EloquentObligationRepository;
+use App\Modules\Finanzas\Infrastructure\Repositories\EloquentPaymentMovementRepository;
 use App\Modules\Horarios\Infrastructure\Models\EventoCalendario;
 use App\Modules\Horarios\Infrastructure\Models\Horario;
 use App\Modules\Horarios\Presentation\Policies\EventoCalendarioPolicy;
@@ -44,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ObligationRepositoryInterface::class,
             EloquentObligationRepository::class
+        );
+        $this->app->bind(
+            PaymentMovementRepositoryInterface::class,
+            EloquentPaymentMovementRepository::class
         );
     }
 
