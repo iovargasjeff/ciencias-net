@@ -18,6 +18,7 @@ class ConceptoPago extends Model
 
     protected $fillable = [
         'nombre',
+        'codigo',
         'tipo',
         'periodo_academico_id',
         'periodo_anio',
@@ -27,6 +28,9 @@ class ConceptoPago extends Model
         'fecha_limite_pronto_pago',
         'estado',
         'bloqueado_en',
+        'vigente_desde',
+        'vigente_hasta',
+        'reemplaza_concepto_id',
         'creado_por',
     ];
 
@@ -37,6 +41,8 @@ class ConceptoPago extends Model
             'descuento_pronto_pago' => 'decimal:2',
             'fecha_limite_pronto_pago' => 'date',
             'bloqueado_en' => 'datetime',
+            'vigente_desde' => 'date',
+            'vigente_hasta' => 'date',
         ];
     }
 
@@ -53,5 +59,10 @@ class ConceptoPago extends Model
     public function obligacionesPago(): HasMany
     {
         return $this->hasMany(ObligacionPago::class, 'concepto_id');
+    }
+
+    public function reemplazaConcepto(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'reemplaza_concepto_id');
     }
 }

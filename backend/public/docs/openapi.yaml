@@ -55,11 +55,11 @@ paths:
               properties:
                 activation_code:
                   type: string
-                  description: 'Must not be greater than 191 characters.'
+                  description: validation.max.
                   example: b
                 device_name:
                   type: string
-                  description: 'Must not be greater than 150 characters.'
+                  description: validation.max.
                   example: 'n'
               required:
                 - activation_code
@@ -118,15 +118,15 @@ paths:
                 image:
                   type: string
                   format: binary
-                  description: 'Must be a file. Must be an image. Must not be greater than 5120 kilobytes.'
+                  description: 'Must be a file. validation.image validation.max.'
                 camera_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the camaras_estacion table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the camaras_estacion table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 captured_at:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:05'
               required:
                 - image
                 - camera_id
@@ -150,7 +150,7 @@ paths:
               properties:
                 email:
                   type: string
-                  description: 'Correo único de la cuenta humana. Must be a valid email address. Must not be greater than 191 characters.'
+                  description: 'Correo único de la cuenta humana. validation.email validation.max.'
                   example: usuario@example.test
                 password:
                   type: string
@@ -182,7 +182,7 @@ paths:
               properties:
                 email:
                   type: string
-                  description: 'Correo al que se enviarán instrucciones si existe. Must be a valid email address. Must not be greater than 191 characters.'
+                  description: 'Correo al que se enviarán instrucciones si existe. validation.email validation.max.'
                   example: usuario@example.test
               required:
                 - email
@@ -209,7 +209,7 @@ paths:
                   example: reset-token
                 email:
                   type: string
-                  description: 'Correo asociado al token. Must be a valid email address. Must not be greater than 191 characters.'
+                  description: 'Correo asociado al token. validation.email validation.max.'
                   example: usuario@example.test
                 password:
                   type: string
@@ -315,11 +315,11 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 150 characters.'
+                  description: validation.max.
                   example: b
                 email:
                   type: string
-                  description: 'Must be a valid email address. Must not be greater than 191 characters.'
+                  description: 'validation.email validation.max.'
                   example: zbailey@example.net
                 roles:
                   type: array
@@ -383,11 +383,11 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 150 characters.'
+                  description: validation.max.
                   example: b
                 email:
                   type: string
-                  description: 'Must be a valid email address. Must not be greater than 191 characters.'
+                  description: 'validation.email validation.max.'
                   example: zbailey@example.net
       security: []
     parameters:
@@ -421,7 +421,7 @@ paths:
                   example: true
                 reason:
                   type: string
-                  description: 'Motivo administrativo del cambio. Must not be greater than 500 characters.'
+                  description: 'Motivo administrativo del cambio. validation.max.'
                   example: 'Revisión administrativa completada.'
               required:
                 - active
@@ -538,11 +538,11 @@ paths:
               properties:
                 parent_account_id:
                   type: string
-                  description: 'Identificador de la cuenta familiar. Must be a valid UUID. The <code>id</code> of an existing record in the users table.'
+                  description: 'Identificador de la cuenta familiar. validation.uuid The <code>id</code> of an existing record in the users table.'
                   example: 11111111-1111-4111-8111-111111111111
                 student_id:
                   type: string
-                  description: 'Identificador del alumno vinculado. Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'Identificador del alumno vinculado. validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 22222222-2222-4222-8222-222222222222
                 relationship:
                   type: string
@@ -704,15 +704,15 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Nombre del periodo académico. Must not be greater than 100 characters.'
+                  description: 'Nombre del periodo académico. validation.max.'
                   example: 'Año académico 2026'
                 start_date:
                   type: string
-                  description: 'Fecha de inicio del periodo. Must be a valid date.'
+                  description: 'Fecha de inicio del periodo. validation.date.'
                   example: '2026-03-01'
                 end_date:
                   type: string
-                  description: 'Fecha de cierre del periodo. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+                  description: 'Fecha de cierre del periodo. validation.date validation.after_or_equal.'
                   example: '2026-12-20'
                 status:
                   type: string
@@ -778,15 +778,15 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Nombre del periodo académico. Must not be greater than 100 characters.'
+                  description: 'Nombre del periodo académico. validation.max.'
                   example: 'Año académico 2026'
                 start_date:
                   type: string
-                  description: 'Fecha de inicio del periodo. Must be a valid date.'
+                  description: 'Fecha de inicio del periodo. validation.date.'
                   example: '2026-03-01'
                 end_date:
                   type: string
-                  description: 'Fecha de cierre del periodo. Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+                  description: 'Fecha de cierre del periodo. validation.date validation.after_or_equal.'
                   example: '2026-12-20'
                 status:
                   type: string
@@ -857,7 +857,7 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Nombre del grado. Must not be greater than 100 characters.'
+                  description: 'Nombre del grado. validation.max.'
                   example: 'Quinto de secundaria'
                 level:
                   type: string
@@ -869,11 +869,11 @@ paths:
                     - secundaria
                 order:
                   type: integer
-                  description: 'Orden del grado dentro del nivel. Must be at least 1.'
+                  description: 'Orden del grado dentro del nivel. validation.min.'
                   example: 5
                 academic_period_id:
                   type: string
-                  description: 'Identificador del periodo académico. Must be a valid UUID. The <code>id</code> of an existing record in the periodos_academicos table.'
+                  description: 'Identificador del periodo académico. validation.uuid The <code>id</code> of an existing record in the periodos_academicos table.'
                   example: 33333333-3333-4333-8333-333333333333
               required:
                 - name
@@ -931,15 +931,15 @@ paths:
               properties:
                 grade_id:
                   type: string
-                  description: 'Identificador del grado. Must be a valid UUID. The <code>id</code> of an existing record in the grados table.'
+                  description: 'Identificador del grado. validation.uuid The <code>id</code> of an existing record in the grados table.'
                   example: 44444444-4444-4444-8444-444444444444
                 name:
                   type: string
-                  description: 'Nombre de la sección. Must not be greater than 50 characters.'
+                  description: 'Nombre de la sección. validation.max.'
                   example: A
                 capacity:
                   type: integer
-                  description: 'Capacidad máxima de alumnos. Must be at least 1.'
+                  description: 'Capacidad máxima de alumnos. validation.min.'
                   example: 30
               required:
                 - grade_id
@@ -997,15 +997,15 @@ paths:
               properties:
                 code:
                   type: string
-                  description: 'Código único del curso. Must not be greater than 30 characters.'
+                  description: 'Código único del curso. validation.max.'
                   example: MAT-5S
                 name:
                   type: string
-                  description: 'Nombre del curso. Must not be greater than 150 characters.'
+                  description: 'Nombre del curso. validation.max.'
                   example: Matemática
                 description:
                   type: string
-                  description: 'Descripción breve del curso. Must not be greater than 1000 characters.'
+                  description: 'Descripción breve del curso. validation.max.'
                   example: 'Curso anual de matemática para quinto de secundaria.'
               required:
                 - code
@@ -1062,19 +1062,19 @@ paths:
               properties:
                 student_id:
                   type: string
-                  description: 'Identificador del alumno. Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'Identificador del alumno. validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 55555555-5555-4555-8555-555555555555
                 section_id:
                   type: string
-                  description: 'Identificador de la sección. Must be a valid UUID. The <code>id</code> of an existing record in the secciones table.'
+                  description: 'Identificador de la sección. validation.uuid The <code>id</code> of an existing record in the secciones table.'
                   example: 66666666-6666-4666-8666-666666666666
                 academic_period_id:
                   type: string
-                  description: 'Identificador del periodo académico. Must be a valid UUID. The <code>id</code> of an existing record in the periodos_academicos table.'
+                  description: 'Identificador del periodo académico. validation.uuid The <code>id</code> of an existing record in the periodos_academicos table.'
                   example: 33333333-3333-4333-8333-333333333333
                 enrolled_at:
                   type: string
-                  description: 'Fecha de matrícula. Must be a valid date.'
+                  description: 'Fecha de matrícula. validation.date.'
                   example: '2026-03-05'
               required:
                 - student_id
@@ -1132,19 +1132,19 @@ paths:
               properties:
                 teacher_id:
                   type: string
-                  description: 'Identificador del docente. Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'Identificador del docente. validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example: 77777777-7777-4777-8777-777777777777
                 course_id:
                   type: string
-                  description: 'Identificador del curso. Must be a valid UUID. The <code>id</code> of an existing record in the cursos table.'
+                  description: 'Identificador del curso. validation.uuid The <code>id</code> of an existing record in the cursos table.'
                   example: 88888888-8888-4888-8888-888888888888
                 section_id:
                   type: string
-                  description: 'Identificador de la sección. Must be a valid UUID. The <code>id</code> of an existing record in the secciones table.'
+                  description: 'Identificador de la sección. validation.uuid The <code>id</code> of an existing record in the secciones table.'
                   example: 66666666-6666-4666-8666-666666666666
                 academic_period_id:
                   type: string
-                  description: 'Identificador del periodo académico. Must be a valid UUID. The <code>id</code> of an existing record in the periodos_academicos table.'
+                  description: 'Identificador del periodo académico. validation.uuid The <code>id</code> of an existing record in the periodos_academicos table.'
                   example: 33333333-3333-4333-8333-333333333333
               required:
                 - teacher_id
@@ -1203,16 +1203,16 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 100 characters.'
-                  example: b
+                  description: validation.max.
+                  example: m
                 location:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
-                  example: 'n'
+                  description: validation.max.
+                  example: t
                 mode:
                   type: string
                   description: ''
-                  example: entry
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1240,11 +1240,11 @@ paths:
               properties:
                 name:
                   type: string
-                  description: 'Must not be greater than 100 characters.'
+                  description: validation.max.
                   example: b
                 location:
                   type: string
-                  description: 'Must not be greater than 255 characters.'
+                  description: validation.max.
                   example: 'n'
                 mode:
                   type: string
@@ -1257,7 +1257,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
       security: []
     parameters:
       -
@@ -1305,7 +1305,7 @@ paths:
               properties:
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: b
               required:
                 - reason
@@ -1370,16 +1370,16 @@ paths:
               properties:
                 label:
                   type: string
-                  description: 'Must not be greater than 100 characters.'
+                  description: validation.max.
                   example: b
                 device_identifier:
                   type: string
-                  description: 'Must not be greater than 191 characters.'
+                  description: validation.max.
                   example: 'n'
                 active:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
               required:
                 - label
                 - device_identifier
@@ -1445,7 +1445,7 @@ paths:
               properties:
                 student_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 event_type:
                   type: string
@@ -1458,11 +1458,11 @@ paths:
                     - late
                 occurred_at:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:08'
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: g
               required:
                 - student_id
@@ -1488,8 +1488,8 @@ paths:
               properties:
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:08'
               required:
                 - date
       security: []
@@ -1545,7 +1545,7 @@ paths:
               properties:
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: b
               required:
                 - reason
@@ -1577,7 +1577,7 @@ paths:
               properties:
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: b
               required:
                 - reason
@@ -1685,11 +1685,11 @@ paths:
                     - reassigned
                 matched_student_id:
                   type: string
-                  description: 'This field is required when <code>outcome</code> is <code>reassigned</code>. Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'This field is required when <code>outcome</code> is <code>reassigned</code>. validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: g
               required:
                 - outcome
@@ -1756,26 +1756,26 @@ paths:
               properties:
                 teacher_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 date:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:09'
                 adjustment_type:
                   type: string
                   description: ''
-                  example: add
+                  example: subtract
                   enum:
                     - add
                     - subtract
                 minutes:
                   type: integer
-                  description: 'Must be at least 1.'
+                  description: validation.min.
                   example: 67
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: z
               required:
                 - teacher_id
@@ -1802,7 +1802,7 @@ paths:
               properties:
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: b
               required:
                 - reason
@@ -1834,7 +1834,7 @@ paths:
               properties:
                 teacher_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
               required:
                 - teacher_id
@@ -1843,6 +1843,325 @@ paths:
       -
         in: path
         name: classSessionId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/payment-concepts:
+    get:
+      summary: ''
+      operationId: getApiV1PaymentConcepts
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1PaymentConcepts
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: validation.max.
+                  example: b
+                name:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+                amount:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                academic_period_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the periodos_academicos table.'
+                  example: 947170af-7488-3f30-a16d-723355a9502f
+                  nullable: true
+                type:
+                  type: string
+                  description: ''
+                  example: matricula
+                  enum:
+                    - cuota_ingreso
+                    - matricula
+                    - mensualidad
+                    - otro
+                year:
+                  type: integer
+                  description: validation.between.
+                  example: 2000
+                month:
+                  type: integer
+                  description: validation.between.
+                  example: 1
+                  nullable: true
+                due_day:
+                  type: integer
+                  description: validation.between.
+                  example: 2
+                  nullable: true
+                recurrence:
+                  type: string
+                  description: ''
+                  example: monthly
+                  enum:
+                    - single
+                    - monthly
+                    - annual
+                  nullable: true
+                early_payment_discount:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                  nullable: true
+                early_payment_deadline:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-08T19:31:10'
+                  nullable: true
+              required:
+                - code
+                - name
+                - amount
+                - type
+                - year
+      security: []
+  '/api/v1/payment-concepts/{conceptId}':
+    patch:
+      summary: ''
+      operationId: patchApiV1PaymentConceptsConceptId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: validation.max.
+                  example: b
+                amount:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                type:
+                  type: string
+                  description: ''
+                  example: cuota_ingreso
+                  enum:
+                    - cuota_ingreso
+                    - matricula
+                    - mensualidad
+                    - otro
+                year:
+                  type: integer
+                  description: validation.between.
+                  example: 2001
+                month:
+                  type: integer
+                  description: validation.between.
+                  example: 2
+                  nullable: true
+                due_day:
+                  type: integer
+                  description: validation.between.
+                  example: 1
+                  nullable: true
+                recurrence:
+                  type: string
+                  description: ''
+                  example: annual
+                  enum:
+                    - single
+                    - monthly
+                    - annual
+                  nullable: true
+                early_payment_discount:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                  nullable: true
+                early_payment_deadline:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-08T19:31:10'
+                  nullable: true
+      security: []
+    parameters:
+      -
+        in: path
+        name: conceptId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/student-benefits:
+    get:
+      summary: ''
+      operationId: getApiV1StudentBenefits
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1StudentBenefits
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                benefit_type:
+                  type: string
+                  description: ''
+                  example: percentage
+                  enum:
+                    - percentage
+                    - fixed
+                    - waiver
+                value:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                  nullable: true
+                concept_ids:
+                  type: array
+                  description: 'validation.uuid The <code>id</code> of an existing record in the conceptos_pago table.'
+                  example:
+                    - 947170af-7488-3f30-a16d-723355a9502f
+                  items:
+                    type: string
+                stackable_with_early_payment:
+                  type: boolean
+                  description: ''
+                  example: true
+                starts_on:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-08T19:31:10'
+                ends_on:
+                  type: string
+                  description: 'validation.date validation.after_or_equal.'
+                  example: '2052-07-01'
+                  nullable: true
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: 'n'
+              required:
+                - student_id
+                - benefit_type
+                - starts_on
+                - reason
+      security: []
+  '/api/v1/student-benefits/{benefitId}/deactivation':
+    post:
+      summary: ''
+      operationId: postApiV1StudentBenefitsBenefitIdDeactivation
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: validation.max.
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: benefitId
         description: ''
         example: architecto
         required: true
@@ -1899,7 +2218,7 @@ paths:
               properties:
                 teacher_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 hourly_rate:
                   type: string
@@ -1907,11 +2226,11 @@ paths:
                   example: '642559'
                 effective_from:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:11'
                 effective_until:
                   type: string
-                  description: 'Must be a valid date. Must be a date after or equal to <code>effective_from</code>.'
+                  description: 'validation.date validation.after_or_equal.'
                   example: '2052-07-01'
                   nullable: true
               required:
@@ -1970,15 +2289,15 @@ paths:
               properties:
                 period_start:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:11'
                 period_end:
                   type: string
-                  description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
+                  description: 'validation.date validation.after_or_equal.'
                   example: '2052-07-01'
                 teacher_ids:
                   type: array
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example:
                     - a4855dc5-0acb-33c3-b921-f4291f719ca0
                   items:
@@ -2025,22 +2344,22 @@ paths:
               properties:
                 period_start:
                   type: string
-                  description: 'Must be a valid date.'
-                  example: '2026-06-08T16:39:55'
+                  description: validation.date.
+                  example: '2026-06-08T19:31:11'
                 period_end:
                   type: string
-                  description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
+                  description: 'validation.date validation.after_or_equal.'
                   example: '2052-07-01'
                 format:
                   type: string
                   description: ''
-                  example: xlsx
+                  example: pdf
                   enum:
                     - pdf
                     - xlsx
                 teacher_ids:
                   type: array
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the docentes table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the docentes table.'
                   example:
                     - a4855dc5-0acb-33c3-b921-f4291f719ca0
                   items:
@@ -2102,15 +2421,15 @@ paths:
               properties:
                 student_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 legal_basis:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: g
                 expires_at:
                   type: string
-                  description: 'Must be a valid date. Must be a date after <code>now</code>.'
+                  description: 'validation.date validation.after.'
                   example: '2052-07-02'
                   nullable: true
               required:
@@ -2135,7 +2454,7 @@ paths:
               properties:
                 reason:
                   type: string
-                  description: 'Must not be greater than 1000 characters.'
+                  description: validation.max.
                   example: b
               required:
                 - reason
@@ -2167,15 +2486,15 @@ paths:
               properties:
                 student_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the alumnos table.'
                   example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
                 consent_id:
                   type: string
-                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the consentimientos_biometricos table.'
+                  description: 'validation.uuid The <code>id</code> of an existing record in the consentimientos_biometricos table.'
                   example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
                 images:
                   type: array
-                  description: 'Must be a file. Must be an image. Must not be greater than 5120 kilobytes.'
+                  description: 'Must be a file. validation.image validation.max.'
                   items:
                     type: string
                     format: binary
@@ -2235,11 +2554,11 @@ paths:
               properties:
                 teaching_assignment_id:
                   type: string
-                  description: 'Identificador de la carga académica. Must be a valid UUID. The <code>id</code> of an existing record in the carga_academica table.'
+                  description: 'Identificador de la carga académica. validation.uuid The <code>id</code> of an existing record in the carga_academica table.'
                   example: 99999999-9999-4999-8999-999999999999
                 title:
                   type: string
-                  description: 'Título de la evaluación. Must be at least 1 character. Must not be greater than 150 characters.'
+                  description: 'Título de la evaluación. validation.min validation.max.'
                   example: 'Semanal 1 - I Bimestre'
                 assessment_type:
                   type: string
@@ -2257,7 +2576,7 @@ paths:
                   example: '20.00'
                 assessment_date:
                   type: string
-                  description: 'Fecha programada de la evaluación. Must be a valid date.'
+                  description: 'Fecha programada de la evaluación. validation.date.'
                   example: '2026-04-15'
                 channel:
                   type: string
@@ -2270,7 +2589,7 @@ paths:
                   nullable: true
                 total_questions:
                   type: integer
-                  description: 'Cantidad total de preguntas. Must be at least 1.'
+                  description: 'Cantidad total de preguntas. validation.min.'
                   example: 40
                   nullable: true
               required:
