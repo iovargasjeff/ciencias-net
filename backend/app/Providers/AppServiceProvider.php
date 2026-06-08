@@ -67,6 +67,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(PeriodoAcademico::class, PeriodoAcademicoPolicy::class);
         Gate::policy(Nota::class, NotaPolicy::class);
+        Gate::policy(\App\Modules\Horarios\Infrastructure\Models\Horario::class, \App\Modules\Horarios\Presentation\Policies\HorarioPolicy::class);
+        Gate::policy(\App\Modules\Horarios\Infrastructure\Models\EventoCalendario::class, \App\Modules\Horarios\Presentation\Policies\EventoCalendarioPolicy::class);
         Gate::policy(ReporteAcademico::class, AcademicReportPolicy::class);
 
         RateLimiter::for('human-login', fn (Request $request) => [

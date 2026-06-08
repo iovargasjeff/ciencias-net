@@ -71,6 +71,13 @@ Route::prefix('v1')->group(function (): void {
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
 
+        // Comunicados y Notificaciones
+        // Horarios y Calendario
+        Route::get('/schedules', [\App\Modules\Horarios\Presentation\Controllers\ScheduleController::class, 'listSchedules']);
+        Route::post('/schedules', [\App\Modules\Horarios\Presentation\Controllers\ScheduleController::class, 'createSchedule']);
+        Route::get('/calendar-events', [\App\Modules\Horarios\Presentation\Controllers\ScheduleController::class, 'listCalendarEvents']);
+        Route::post('/calendar-events', [\App\Modules\Horarios\Presentation\Controllers\ScheduleController::class, 'createCalendarEvent']);
+
         // Estaciones
         Route::get('stations', [StationController::class, 'index']);
         Route::post('stations', [StationController::class, 'store']);
