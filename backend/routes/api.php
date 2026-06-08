@@ -9,6 +9,7 @@ use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
 use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
 use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
+use App\Modules\Finanzas\Presentation\Controllers\PaymentObligationController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
@@ -97,12 +98,20 @@ Route::prefix('v1')->group(function (): void {
         Route::put('class-sessions/{classSessionId}/substitute', [TeacherAttendanceController::class, 'substitute']);
 
         // Nómina Docente (Finanzas)
+        // Configuración Financiera (BE-014)
         Route::get('payment-concepts', [FinanceConfigController::class, 'concepts']);
         Route::post('payment-concepts', [FinanceConfigController::class, 'storeConcept']);
         Route::patch('payment-concepts/{conceptId}', [FinanceConfigController::class, 'updateConcept']);
         Route::get('student-benefits', [FinanceConfigController::class, 'benefits']);
         Route::post('student-benefits', [FinanceConfigController::class, 'storeBenefit']);
         Route::post('student-benefits/{benefitId}/deactivation', [FinanceConfigController::class, 'deactivateBenefit']);
+
+        // Obligaciones y Ajustes (BE-015)
+        Route::get('payment-obligations', [PaymentObligationController::class, 'index']);
+        Route::post('payment-obligations', [PaymentObligationController::class, 'store']);
+        Route::get('payment-obligations/{obligationId}', [PaymentObligationController::class, 'show']);
+        Route::post('payment-obligations/{obligationId}/adjustments', [PaymentObligationController::class, 'adjust']);
+        Route::post('payment-obligations/bulk-adjustments', [PaymentObligationController::class, 'bulkAdjust']);
 
         Route::get('teacher-payroll/rates', [TeacherPayrollController::class, 'rates']);
         Route::post('teacher-payroll/rates', [TeacherPayrollController::class, 'storeRate']);
