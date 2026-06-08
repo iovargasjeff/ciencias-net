@@ -1,18 +1,18 @@
 <?php
 
 use App\Models\Alumno;
+use App\Models\Grado;
+use App\Models\Matricula;
+use App\Models\PeriodoAcademico;
+use App\Models\Seccion;
+use App\Models\User;
 use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
 use App\Modules\Asistencia\Domain\Models\CuentaTecnica;
 use App\Modules\Asistencia\Domain\Models\EstacionBiometrica;
 use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
-use App\Models\Grado;
-use App\Models\Matricula;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
-use App\Models\PeriodoAcademico;
-use App\Models\Seccion;
-use App\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

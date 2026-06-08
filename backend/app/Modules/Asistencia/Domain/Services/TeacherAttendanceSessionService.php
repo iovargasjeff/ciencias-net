@@ -2,12 +2,12 @@
 
 namespace App\Modules\Asistencia\Domain\Services;
 
-use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Models\CargaAcademica;
 use App\Models\Docente;
+use App\Models\User;
+use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
-use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 

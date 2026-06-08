@@ -1,15 +1,15 @@
 <?php
 
-use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Models\CargaAcademica;
 use App\Models\Curso;
 use App\Models\Docente;
 use App\Models\Grado;
-use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
 use App\Models\PeriodoAcademico;
 use App\Models\Seccion;
-use App\Modules\Asistencia\Domain\Models\SesionClase;
 use App\Models\User;
+use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
+use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
+use App\Modules\Asistencia\Domain\Models\SesionClase;
 use App\Modules\Asistencia\Domain\Services\TeacherAttendanceSessionService;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

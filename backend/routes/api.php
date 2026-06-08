@@ -6,11 +6,11 @@ use App\Http\Controllers\Api\V1\Auth\SessionController;
 use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
 use App\Modules\Academico\Presentation\Controllers\AssessmentController;
-use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Asistencia\Presentation\Controllers\StationController;
 use App\Modules\Asistencia\Presentation\Controllers\StudentAttendanceController;
 use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
+use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {

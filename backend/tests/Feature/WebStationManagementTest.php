@@ -1,7 +1,7 @@
 <?php
 
-use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use App\Models\User;
+use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -15,7 +15,7 @@ beforeEach(function (): void {
     config(['facial-service.url' => 'http://facial-api.test']);
     config(['facial-service.token' => 'internal-token']);
     config(['biometrics.storage_prefix' => 'private/biometrics-test']);
-    config(['biometrics.embedding_key' => 'base64:' . base64_encode(random_bytes(32))]);
+    config(['biometrics.embedding_key' => 'base64:'.base64_encode(random_bytes(32))]);
     Storage::fake('local');
     Http::fake([
         'facial-api.test/v1/identifications' => Http::response([

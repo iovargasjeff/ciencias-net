@@ -3,12 +3,12 @@
 namespace App\Modules\Asistencia\Domain\Services;
 
 use App\Models\Alumno;
+use App\Models\User;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
 use App\Modules\Asistencia\Domain\Models\ConfiguracionJornada;
 use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
-use App\Models\User;
 use App\Notifications\StudentAttendanceMovementNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;

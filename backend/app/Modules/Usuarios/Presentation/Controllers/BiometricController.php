@@ -3,19 +3,19 @@
 namespace App\Modules\Usuarios\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alumno;
+use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
+use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
+use App\Modules\Usuarios\Domain\Models\PerfilFacial;
+use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
+use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
+use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use App\Modules\Usuarios\Presentation\Requests\Biometrics\EnrollBiometricProfileRequest;
 use App\Modules\Usuarios\Presentation\Requests\Biometrics\GrantBiometricConsentRequest;
 use App\Modules\Usuarios\Presentation\Requests\Biometrics\RevokeBiometricConsentRequest;
 use App\Modules\Usuarios\Presentation\Resources\BiometricConsentResource;
 use App\Modules\Usuarios\Presentation\Resources\BiometricProfileResource;
-use App\Models\Alumno;
-use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
-use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
-use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Support\AuditLogger;
-use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
-use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
-use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
