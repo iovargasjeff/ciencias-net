@@ -2,6 +2,7 @@
 
 use App\Modules\Academico\Presentation\Controllers\AcademicController;
 use App\Modules\Academico\Presentation\Controllers\AssessmentController;
+use App\Modules\Academico\Presentation\Controllers\NotasController;
 use App\Modules\Asistencia\Presentation\Controllers\StationController;
 use App\Modules\Asistencia\Presentation\Controllers\StudentAttendanceController;
 use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
@@ -111,5 +112,10 @@ Route::prefix('v1')->group(function (): void {
         // Assessments
         Route::get('assessments', [AssessmentController::class, 'index']);
         Route::post('assessments', [AssessmentController::class, 'store'])->name('api.v1.assessments.store');
+
+        // Notas (Result Entry Import)
+        Route::post('assessments/{examen}/grades', [NotasController::class, 'store']);
+        Route::post('assessments/{examen}/grades/import', [NotasController::class, 'import']);
+        Route::put('grades/{nota}', [NotasController::class, 'update']);
     });
 });
