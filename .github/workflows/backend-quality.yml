@@ -10,6 +10,8 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     services:
       postgres:
         image: postgres:16-alpine
@@ -53,8 +55,12 @@ jobs:
       - run: php artisan migrate:fresh --force
       - run: php artisan test
       - run: php artisan scribe:generate
-      - if: github.event_name == 'push'
-        run: git diff --exit-code -- public/docs
+      - name: Auto-commit updated docs
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Auto-update API documentation via Scribe"
+          file_pattern: "backend/public/docs/*"
 
   secrets:
     runs-on: ubuntu-latest
