@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
               required:
                 - image
                 - camera_id
@@ -1531,7 +1531,7 @@ paths:
                 starts_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 ends_at:
                   type: string
                   description: 'Must be a valid date. Must be a date after <code>starts_at</code>.'
@@ -1539,7 +1539,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: meeting
+                  example: academic
                   enum:
                     - academic
                     - holiday
@@ -1632,7 +1632,7 @@ paths:
                 publish_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                   nullable: true
               required:
                 - title
@@ -1771,7 +1771,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: entry
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1808,7 +1808,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: exit
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1816,7 +1816,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
       security: []
     parameters:
       -
@@ -2009,7 +2009,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: entry
+                  example: absence
                   enum:
                     - entry
                     - exit
@@ -2018,7 +2018,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 reason:
                   type: string
                   description: 'Must not be greater than 1000 characters.'
@@ -2048,7 +2048,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
               required:
                 - date
       security: []
@@ -2237,7 +2237,7 @@ paths:
                 outcome:
                   type: string
                   description: ''
-                  example: confirmed
+                  example: reassigned
                   enum:
                     - confirmed
                     - rejected
@@ -2320,7 +2320,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 adjustment_type:
                   type: string
                   description: ''
@@ -2476,7 +2476,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: cuota_ingreso
+                  example: matricula
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -2513,7 +2513,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                   nullable: true
               required:
                 - code
@@ -2572,7 +2572,7 @@ paths:
                 recurrence:
                   type: string
                   description: ''
-                  example: annual
+                  example: single
                   enum:
                     - single
                     - monthly
@@ -2586,7 +2586,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                   nullable: true
       security: []
     parameters:
@@ -2654,7 +2654,7 @@ paths:
                 benefit_type:
                   type: string
                   description: ''
-                  example: fixed
+                  example: waiver
                   enum:
                     - percentage
                     - fixed
@@ -2678,7 +2678,7 @@ paths:
                 starts_on:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 ends_on:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>starts_on</code>.'
@@ -2777,7 +2777,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: vencido
+                  example: pagado
                   enum:
                     - pendiente
                     - pagado
@@ -2785,7 +2785,7 @@ paths:
                 due_date_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 due_date_to:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>due_date_from</code>.'
@@ -2966,7 +2966,7 @@ paths:
                 adjustment_type:
                   type: string
                   description: ''
-                  example: discount
+                  example: charge
                   enum:
                     - charge
                     - discount
@@ -3045,7 +3045,7 @@ paths:
                 effective_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 effective_until:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>effective_from</code>.'
@@ -3108,7 +3108,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -3163,7 +3163,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T23:19:09'
+                  example: '2026-06-08T23:34:55'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -3521,14 +3521,14 @@ paths:
                 format:
                   type: string
                   description: ''
-                  example: pdf
+                  example: xlsx
                   enum:
                     - pdf
                     - xlsx
                 report_type:
                   type: string
                   description: ''
-                  example: report_card
+                  example: ranking
                   enum:
                     - report_card
                     - grade_summary
@@ -3612,7 +3612,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: ausente
+                  example: pendiente
                   enum:
                     - registrada
                     - ausente
@@ -3660,7 +3660,7 @@ paths:
                 preview:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
                 notas:
                   type: array
                   description: 'Must have at least 1 items.'
@@ -3676,7 +3676,7 @@ paths:
                       estado:
                         type: string
                         description: ''
-                        example: pendiente
+                        example: registrada
                         enum:
                           - registrada
                           - ausente
@@ -3730,7 +3730,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: ausente
+                  example: pendiente
                   enum:
                     - registrada
                     - ausente
