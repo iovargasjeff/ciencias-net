@@ -20,15 +20,11 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
  */
 class ObligationAdjustmentService
 {
-    public function __construct(private AuditLogger $auditLogger) {}
+    public function __construct(private AuditLogger $auditLogger)
+    {
+    }
 
     /**
-     * Adjust a pending payment obligation.
-     *
-     * @param ObligacionPago $obligation
-     * @param array $adjustmentData Keys: adjustment_type, amount, reason
-     * @param User $adjustedBy
-     *
      * @throws ConflictHttpException If obligation is not pending
      */
     public function adjust(
@@ -36,7 +32,6 @@ class ObligationAdjustmentService
         array $adjustmentData,
         User $adjustedBy
     ): ObligacionPago {
-        // Validate obligation can be adjusted
         if ($obligation->estado !== 'pendiente') {
             throw new ConflictHttpException(
                 "Solo se pueden ajustar obligaciones en estado 'pendiente'. Estado actual: {$obligation->estado}"
@@ -46,14 +41,12 @@ class ObligationAdjustmentService
         return DB::transaction(function () use ($obligation, $adjustmentData, $adjustedBy) {
             $old = $obligation->toArray();
 
-            // Apply adjustment based on type
             $updatedFields = $this->calculateAdjustment(
                 $obligation,
                 $adjustmentData['adjustment_type'],
                 (float) $adjustmentData['amount']
             );
 
-            // Update obligation
             $obligation->update(array_merge($updatedFields, [
                 'actualizado_finanzas_por' => $adjustedBy->id,
                 'motivo_ultima_modificacion' => $adjustmentData['reason'],
@@ -61,7 +54,6 @@ class ObligationAdjustmentService
 
             $obligation->refresh();
 
-            // Record audit trail
             $this->auditLogger->record(
                 null,
                 'finance.obligation_adjusted',
@@ -71,8 +63,6 @@ class ObligationAdjustmentService
                 $obligation->toArray()
             );
 
-            // Dispatch notification event
-            // (listeners will handle email/panel notification)
             Event::dispatch('obligation.adjusted', [
                 'obligation' => $obligation,
                 'adjustedBy' => $adjustedBy,
@@ -83,15 +73,6 @@ class ObligationAdjustmentService
         });
     }
 
-    /**
-     * Adjust multiple obligations based on filters.
-     *
-     * @param array $filters Keys: obligation_ids[], concept_id, grade_id, section_id
-     * @param array $adjustmentData Keys: adjustment_type, amount, reason
-     * @param User $adjustedBy
-     *
-     * @return int Number of obligations adjusted
-     */
     public function bulkAdjust(
         array $filters,
         array $adjustmentData,
@@ -101,7 +82,6 @@ class ObligationAdjustmentService
             $query = ObligacionPago::query()
                 ->where('estado', 'pendiente');
 
-            // Apply filters
             if (! empty($filters['obligation_ids'])) {
                 $query->whereIn('id', $filters['obligation_ids']);
             }
@@ -134,7 +114,6 @@ class ObligationAdjustmentService
                     $this->adjust($obligation, $adjustmentData, $adjustedBy);
                     $count++;
                 } catch (\Throwable $e) {
-                    // Log but continue with other obligations
                     \Log::error("Failed to adjust obligation {$obligation->id}", [
                         'error' => $e->getMessage(),
                     ]);
@@ -145,15 +124,6 @@ class ObligationAdjustmentService
         });
     }
 
-    /**
-     * Calculate new values based on adjustment type.
-     *
-     * @param ObligacionPago $obligation
-     * @param string $type charge, discount, or waiver
-     * @param float $amount
-     *
-     * @return array
-     */
     private function calculateAdjustment(
         ObligacionPago $obligation,
         string $type,
@@ -167,14 +137,6 @@ class ObligationAdjustmentService
         };
     }
 
-    /**
-     * Apply charge adjustment (increase amount).
-     *
-     * @param ObligacionPago $obligation
-     * @param float $chargeAmount
-     *
-     * @return array
-     */
     private function applyCharge(ObligacionPago $obligation, float $chargeAmount): array
     {
         return [
@@ -183,14 +145,6 @@ class ObligationAdjustmentService
         ];
     }
 
-    /**
-     * Apply discount adjustment (decrease amount).
-     *
-     * @param ObligacionPago $obligation
-     * @param float $discountAmount
-     *
-     * @return array
-     */
     private function applyDiscount(ObligacionPago $obligation, float $discountAmount): array
     {
         $newOrdinario = max(0, $obligation->monto_ordinario_snapshot - $discountAmount);
@@ -202,13 +156,6 @@ class ObligationAdjustmentService
         ];
     }
 
-    /**
-     * Apply waiver adjustment (zero out amounts).
-     *
-     * @param ObligacionPago $obligation
-     *
-     * @return array
-     */
     private function applyWaiver(ObligacionPago $obligation): array
     {
         return [

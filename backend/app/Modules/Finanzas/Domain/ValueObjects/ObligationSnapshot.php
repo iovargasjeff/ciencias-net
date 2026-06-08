@@ -28,19 +28,6 @@ final class ObligationSnapshot
 
     public readonly Carbon $fechaVencimiento;
 
-    /**
-     * Create a new obligation snapshot.
-     *
-     * @param string $conceptId
-     * @param string|null $benefitId
-     * @param float $montoBase Base concept amount
-     * @param float $montoBeneficio Benefit amount deducted
-     * @param float $montoOrdinario Base - benefit (regular payment amount)
-     * @param float $montoPromtoPago Ordinario - early payment discount
-     * @param float $descuentoPromtoPagoAplicado Early payment discount value
-     * @param Carbon $fechaLimitePromtoPago Deadline for early payment rate
-     * @param Carbon $fechaVencimiento Final due date
-     */
     private function __construct(
         string $conceptId,
         ?string $benefitId,
@@ -63,15 +50,6 @@ final class ObligationSnapshot
         $this->fechaVencimiento = $fechaVencimiento;
     }
 
-    /**
-     * Create snapshot from concept and optional benefit.
-     *
-     * @param array $conceptData Concept fields: monto_base, descuento_pronto_pago, fecha_limite_pronto_pago, id
-     * @param array|null $benefitData Optional benefit fields: modalidad, valor, id
-     * @param Carbon $dueDate
-     *
-     * @return self
-     */
     public static function fromConceptAndBenefit(
         array $conceptData,
         ?array $benefitData,
@@ -80,16 +58,12 @@ final class ObligationSnapshot
         $montoBase = (float) $conceptData['monto_base'];
         $benefitId = $benefitData['id'] ?? null;
 
-        // Calculate benefit deduction
         $montoBeneficio = self::calculateBenefitAmount($montoBase, $benefitData);
 
-        // Ordinary amount = base - benefit
         $montoOrdinario = $montoBase - $montoBeneficio;
 
-        // Early payment discount amount
         $descuentoPromtoPago = (float) ($conceptData['descuento_pronto_pago'] ?? 0);
 
-        // Early payment amount (ordinario - discount)
         $montoPromtoPago = max(0, $montoOrdinario - $descuentoPromtoPago);
 
         return new self(
@@ -105,14 +79,6 @@ final class ObligationSnapshot
         );
     }
 
-    /**
-     * Calculate benefit deduction based on modalidad and valor.
-     *
-     * @param float $baseAmount
-     * @param array|null $benefitData
-     *
-     * @return float
-     */
     private static function calculateBenefitAmount(float $baseAmount, ?array $benefitData): float
     {
         if (! $benefitData) {
@@ -127,11 +93,6 @@ final class ObligationSnapshot
         };
     }
 
-    /**
-     * Get all values as array for database insertion.
-     *
-     * @return array
-     */
     public function toArray(): array
     {
         return [

@@ -77,7 +77,7 @@ class EloquentObligationRepository implements ObligationRepositoryInterface
             ->where('estado', 'pendiente');
 
         // Direct obligation IDs
-        if (!empty($filters['obligation_ids'])) {
+        if (! empty($filters['obligation_ids'])) {
             $query->whereIn('id', $filters['obligation_ids']);
         }
 

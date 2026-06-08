@@ -48,7 +48,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
 
     public function test_bulk_adjust_multiple_obligations(): void
     {
-        $obligationIds = array_map(fn($o) => $o->id, $this->obligations);
+        $obligationIds = array_map(fn ($o) => $o->id, $this->obligations);
 
         $response = $this->actingAs($this->yanina)
             ->postJson('/api/v1/payment-obligations/bulk-adjustments', [
@@ -78,7 +78,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
         ]);
 
         $obligationIds = array_merge(
-            array_map(fn($o) => $o->id, $this->obligations),
+            array_map(fn ($o) => $o->id, $this->obligations),
             [$paidObligation->id]
         );
 
@@ -108,7 +108,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
 
     public function test_bulk_adjust_without_permission_returns_403(): void
     {
-        $obligationIds = array_map(fn($o) => $o->id, $this->obligations);
+        $obligationIds = array_map(fn ($o) => $o->id, $this->obligations);
 
         $response = $this->actingAs($this->unauthorized)
             ->postJson('/api/v1/payment-obligations/bulk-adjustments', [
@@ -123,7 +123,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
 
     public function test_bulk_adjust_with_invalid_adjustment_type(): void
     {
-        $obligationIds = array_map(fn($o) => $o->id, $this->obligations);
+        $obligationIds = array_map(fn ($o) => $o->id, $this->obligations);
 
         $response = $this->actingAs($this->yanina)
             ->postJson('/api/v1/payment-obligations/bulk-adjustments', [
@@ -144,7 +144,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
         ]);
 
         $obligationIds = array_merge(
-            array_map(fn($o) => $o->id, $this->obligations),
+            array_map(fn ($o) => $o->id, $this->obligations),
             [$paidObligation->id]
         );
 
@@ -164,7 +164,7 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
 
     public function test_bulk_adjust_requires_reason(): void
     {
-        $obligationIds = array_map(fn($o) => $o->id, $this->obligations);
+        $obligationIds = array_map(fn ($o) => $o->id, $this->obligations);
 
         $response = $this->actingAs($this->yanina)
             ->postJson('/api/v1/payment-obligations/bulk-adjustments', [

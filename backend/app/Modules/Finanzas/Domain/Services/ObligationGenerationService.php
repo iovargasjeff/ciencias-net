@@ -26,16 +26,6 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 class ObligationGenerationService
 {
     /**
-     * Generate payment obligations for students in a period.
-     *
-     * @param string $conceptId UUID of concept to generate
-     * @param string $periodId UUID of academic period
-     * @param Carbon $dueDate Due date for obligations
-     * @param array|null $studentIds Optional list of student UUIDs; if null, all enrolled students
-     * @param User $generatedBy User performing generation
-     *
-     * @return Collection<ObligacionPago> Created obligations
-     *
      * @throws ConflictHttpException If concept not vigente or period not active
      */
     public function generate(
@@ -46,20 +36,16 @@ class ObligationGenerationService
         User $generatedBy
     ): Collection {
         return DB::transaction(function () use ($conceptId, $periodId, $dueDate, $studentIds, $generatedBy) {
-            // Load and validate concept
             $concept = $this->getAndValidateConcept($conceptId, $periodId);
 
-            // Load and validate period
             $period = $this->getAndValidatePeriod($periodId);
 
-            // Resolve students to generate for
             $students = $this->resolveStudents($periodId, $studentIds);
 
             if ($students->isEmpty()) {
                 return Collection::make();
             }
 
-            // Generate obligations for each student
             $obligations = $students->map(function (Alumno $student) use ($concept, $dueDate, $generatedBy): ObligacionPago {
                 return $this->generateForStudent($student, $concept, $dueDate, $generatedBy);
             });
@@ -68,16 +54,6 @@ class ObligationGenerationService
         });
     }
 
-    /**
-     * Validate and fetch concept.
-     *
-     * @param string $conceptId
-     * @param string $periodId
-     *
-     * @return ConceptoPago
-     *
-     * @throws ConflictHttpException
-     */
     private function getAndValidateConcept(string $conceptId, string $periodId): ConceptoPago
     {
         $concept = ConceptoPago::query()
@@ -96,15 +72,6 @@ class ObligationGenerationService
         return $concept;
     }
 
-    /**
-     * Validate and fetch academic period.
-     *
-     * @param string $periodId
-     *
-     * @return PeriodoAcademico
-     *
-     * @throws ConflictHttpException
-     */
     private function getAndValidatePeriod(string $periodId): PeriodoAcademico
     {
         $period = PeriodoAcademico::findOr($periodId, function () {
@@ -118,13 +85,6 @@ class ObligationGenerationService
         return $period;
     }
 
-    /**
-     * Resolve which students to generate obligations for.
-     *
-     * @param  string  $periodId
-     * @param  ?array  $studentIds
-     * @return Collection<Alumno>
-     */
     private function resolveStudents(string $periodId, ?array $studentIds): Collection
     {
         $query = Alumno::query()
@@ -143,22 +103,12 @@ class ObligationGenerationService
         return $query->get();
     }
 
-    /**
-     * Generate single obligation for a student.
-     *
-     * @param  Alumno  $student
-     * @param  ConceptoPago  $concept
-     * @param  Carbon  $dueDate
-     * @param  User  $generatedBy
-     * @return ObligacionPago
-     */
     private function generateForStudent(
         Alumno $student,
         ConceptoPago $concept,
         Carbon $dueDate,
         User $generatedBy
     ): ObligacionPago {
-        // Check if obligation already exists
         $existing = ObligacionPago::query()
             ->where('alumno_id', $student->id)
             ->where('concepto_id', $concept->id)
@@ -169,17 +119,14 @@ class ObligationGenerationService
             return $existing;
         }
 
-        // Resolve benefit for student (if applicable)
         $benefit = $this->resolveBenefit($student, $concept);
 
-        // Create snapshot with frozen values
         $snapshot = ObligationSnapshot::fromConceptAndBenefit(
             $concept->only('id', 'monto_base', 'descuento_pronto_pago', 'fecha_limite_pronto_pago'),
             $benefit?->only('id', 'modalidad', 'valor'),
             $dueDate
         );
 
-        // Create obligation with snapshot data
         return ObligacionPago::create(array_merge(
             $snapshot->toArray(),
             [
@@ -191,13 +138,6 @@ class ObligationGenerationService
         ));
     }
 
-    /**
-     * Resolve single applicable benefit for student and concept.
-     *
-     * @param  Alumno  $student
-     * @param  ConceptoPago  $concept
-     * @return ?BeneficioAlumno
-     */
     private function resolveBenefit(Alumno $student, ConceptoPago $concept): ?BeneficioAlumno
     {
         $applicableBenefits = BeneficioAlumno::query()
@@ -210,7 +150,6 @@ class ObligationGenerationService
             })
             ->get();
 
-        // Filter benefits applicable to this concept type
         $filtered = $applicableBenefits->filter(function (BeneficioAlumno $benefit) use ($concept) {
             return match ($concept->tipo) {
                 'mensualidad' => $benefit->aplica_mensualidad,
@@ -220,8 +159,6 @@ class ObligationGenerationService
             };
         });
 
-        // For now, return first applicable benefit; FE will handle selection if multiple
-        // In production, might need to queue for admin selection
         return $filtered->first();
     }
 }
