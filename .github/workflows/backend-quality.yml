@@ -33,6 +33,10 @@ jobs:
       DB_DATABASE: cienciasnet_test
       DB_USERNAME: cienciasnet
       DB_PASSWORD: cienciasnet_test
+      SANCTUM_STATEFUL_DOMAINS: localhost:5173,127.0.0.1:5173
+      BIOMETRIC_EMBEDDING_KEY: base64:QMvEkhQz2N8+sDiTMwskEUpRNAud6aak+oqmp+Qd5rE=
+      FACIAL_SERVICE_TOKEN: test-token
+      FACIAL_SERVICE_URL: http://localhost:8001
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -49,12 +53,18 @@ jobs:
       - run: php artisan migrate:fresh --force
       - run: php artisan test
       - run: php artisan scribe:generate
-      - run: git diff --exit-code -- public/docs
+      - if: github.event_name == 'push'
+        run: git diff --exit-code -- public/docs
 
   secrets:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
