@@ -27,3 +27,16 @@ Este repositorio tiene reglas técnicas aisladas para cada entorno. Dependiendo 
 ## 4. Vertical Slicing
 - Trabaja por módulos de valor completo (Features). Termina todo el espectro de la funcionalidad que te fue asignada en el `EXECUTION_PLAN.md` correspondiente antes de dar el ticket por cerrado.
 - Nunca cierres un ticket (marcar con `[x]`) si dependes de Mocks temporales o si quedan pruebas pendientes.
+
+## 5. Fuente de Verdad y Backend Modular
+
+- La carpeta `docs/` es la fuente de verdad superior para producto, dominio, seguridad y arquitectura.
+- Si un `openspec/` change, `tasks.md` o instruccion de agente contradice `docs/`, el agente debe detenerse,
+  reportar la contradiccion y priorizar `docs/`.
+- Antes de implementar backend, leer `docs/architecture/backend.md`, `docs/product/roles-and-permissions.md` y los
+  contratos relevantes en `docs/api/`.
+- No crear codigo de dominio en `backend/app/Models`, `backend/app/Http/Controllers`, `backend/app/UseCases` ni
+  `backend/app/Policies`.
+- Todo nuevo feature backend debe vivir bajo `backend/app/Modules/<Modulo>/` siguiendo `Domain`, `Application`,
+  `Infrastructure` y `Presentation` solo cuando esas capas aporten valor real.
+- Las carpetas raiz legacy existen solo por migracion incremental; no son destino valido para codigo nuevo.

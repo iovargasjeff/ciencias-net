@@ -14,11 +14,11 @@ class ComunicadoFactory extends Factory
     public function definition(): array
     {
         return [
-            'titulo'            => fake()->sentence(5),
-            'contenido'         => fake()->paragraphs(2, true),
-            'publicado_por'     => User::factory(),
-            'destinatarios'     => ['roles' => ['padre', 'docente']],
-            'importante'        => false,
+            'titulo' => fake()->sentence(5),
+            'contenido' => fake()->paragraphs(2, true),
+            'publicado_por' => User::factory(),
+            'destinatarios' => ['roles' => ['padre', 'docente']],
+            'importante' => false,
             'fecha_publicacion' => now(),
         ];
     }

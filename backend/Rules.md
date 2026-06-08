@@ -53,3 +53,17 @@ Estas reglas son obligatorias para cualquier cambio backend.
   2. Mover el change completo a `openspec/changes/archive/YYYY-MM-DD-<change-name>/`.
   3. Cambiar su estado a `[x]` en `openspec/EXECUTION_PLAN.md`.
 - No eliminar historial del change ni marcar `[x]` dejando casillas pendientes.
+
+## Fuente de Verdad y Ubicacion Modular
+
+- Leer primero `../docs/architecture/backend.md`, `../docs/product/roles-and-permissions.md`, los documentos de dominio
+  y seguridad relacionados, y los contratos relevantes en `../docs/api/`.
+- `../docs/` manda sobre cualquier `openspec/changes/*/tasks.md`. Si hay contradiccion, detenerse y reportarla antes
+  de implementar.
+- No crear modelos, controllers, requests, resources, use cases ni policies de dominio en la raiz de `app/`.
+- Todo nuevo codigo de dominio debe ubicarse en `app/Modules/<Modulo>/`:
+  `Domain`, `Application`, `Infrastructure` y `Presentation` segun corresponda.
+- Al crear o modificar migraciones de un comportamiento visible, revisar primero `../docs/api/schemas/` y mantener
+  nombres de columnas/enumeradores lo mas cerca posible del contrato HTTP.
+- Todo `design.md` y `tasks.md` activo debe incluir `Source of Truth Check` y `Backend Placement`. Si falta, agregarlo
+  antes de implementar.

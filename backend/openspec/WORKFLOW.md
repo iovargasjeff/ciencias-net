@@ -1,5 +1,57 @@
 # Backend OpenSpec Workflow
 
+## Gate obligatorio de fuente de verdad
+
+Antes de escribir codigo, todo agente debe completar o corregir `Source of Truth Check` y `Backend Placement` en
+`design.md` y `tasks.md`. Si el change contradice `../docs/`, se detiene la implementacion y se registra el bloqueo en
+`verification.md`.
+
+## Crear o modificar changes
+
+Para crear una nueva cadena/change:
+
+1. Editar `../scripts/generate-openspec.ps1` o crear manualmente `openspec/changes/<change-name>/`.
+2. Incluir `proposal.md`, `design.md`, `tasks.md`, `verification.md` y `specs/<capability>/spec.md`.
+3. Declarar documentos fuente concretos de `../docs/` y, si hay API, registrar el paquete en `API_CONTRACTS.md`.
+4. Completar `Source of Truth Check` antes de escribir tareas de implementacion.
+5. Definir `Backend Placement` con el modulo destino bajo `app/Modules/<Modulo>/`.
+6. Agregar el change a `EXECUTION_PLAN.md` con dependencias y reviewer.
+
+Para modificar un change existente:
+
+1. Releer los documentos fuente y contratos afectados.
+2. Actualizar primero `proposal.md` y `design.md`; luego ajustar `tasks.md`.
+3. Si cambia el contrato HTTP, modificar `../docs/api/` y pedir aprobacion antes de implementar.
+4. Si cambia la ubicacion modular, actualizar `Backend Placement` y mover codigo existente antes de continuar.
+5. Registrar la razon y evidencia en `verification.md`.
+
+Plantillas obligatorias:
+
+```md
+## Source of Truth Check
+
+- Product docs reviewed:
+- Architecture docs reviewed:
+- API contracts reviewed:
+- Domain docs reviewed:
+- Security docs reviewed:
+- Conflicts found: yes/no
+
+If any conflict exists, do not implement until docs are corrected or the task is rewritten.
+
+## Backend Placement
+
+All backend domain code must be placed under:
+
+backend/app/Modules/<ModuleName>/
+├── Domain/
+├── Application/
+├── Infrastructure/
+└── Presentation/
+
+No domain models/controllers/use cases/policies may be created under root app/.
+```
+
 ## Estados
 
 - `[ ]` pendiente

@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Assessments;
+namespace App\Modules\Academico\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Assessments\CreateAssessmentRequest;
-use App\Http\Resources\AssessmentResource;
-use App\Models\Examen;
-use App\UseCases\Assessments\CreateAssessment;
+use App\Modules\Academico\Application\UseCases\CreateAssessment;
+use App\Modules\Academico\Infrastructure\Models\Examen;
+use App\Modules\Academico\Presentation\Requests\CreateAssessmentRequest;
+use App\Modules\Academico\Presentation\Resources\AssessmentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 
 class AssessmentController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        \Illuminate\Support\Facades\Gate::authorize('viewAny', Examen::class);
+        Gate::authorize('viewAny', Examen::class);
 
         $query = Examen::query();
 
@@ -24,7 +25,7 @@ class AssessmentController extends Controller
         // Como esto no está detallado en los requerimientos del change para el endpoint de listar todos
         // asumimos que el scope principal es para listar general con un filtro opcional.
         // Aquí implementaremos una búsqueda básica o devolvemos todo paginado por defecto.
-        
+
         $perPage = $request->query('per_page', 15);
         $examenes = $query->latest('fecha_aplicacion')->paginate($perPage);
 
@@ -33,7 +34,7 @@ class AssessmentController extends Controller
 
     public function store(CreateAssessmentRequest $request, CreateAssessment $useCase): AssessmentResource
     {
-        \Illuminate\Support\Facades\Gate::authorize('create', [Examen::class, $request->input('teaching_assignment_id')]);
+        Gate::authorize('create', [Examen::class, $request->input('teaching_assignment_id')]);
 
         $examen = $useCase->execute($request->validated());
 

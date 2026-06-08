@@ -13,7 +13,6 @@ listAssessments:
     x-roles:
       - superadmin
       - coordinador_academico
-      - docente
     requestBody:
       $ref: '../openapi.yaml#/components/requestBodies/createAssessmentRequest'
     responses:

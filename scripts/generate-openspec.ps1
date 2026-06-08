@@ -104,13 +104,53 @@ function GenerateProject($project, $changes) {
         )
         WriteText (Join-Path $dir 'design.md') @(
             "# Design: $($c.Name)", '', '## Sources and Invariants', '', ($c.References | ForEach-Object { '- `../../../../{0}`' -f $_ }), '',
+            '## Source of Truth Check', '',
+            '- Product docs reviewed: TODO',
+            '- Architecture docs reviewed: TODO',
+            '- API contracts reviewed: TODO',
+            '- Domain docs reviewed: TODO',
+            '- Security docs reviewed: TODO',
+            '- Conflicts found: TODO',
+            '',
+            'If any conflict exists, do not implement until docs are corrected or the task is rewritten.', '',
+            '## Backend Placement', '',
+            'All backend domain code must be placed under:', '',
+            '```text',
+            'backend/app/Modules/<ModuleName>/',
+            '├── Domain/',
+            '├── Application/',
+            '├── Infrastructure/',
+            '└── Presentation/',
+            '```',
+            '',
+            'No domain models/controllers/use cases/policies may be created under root app/.', '',
             '## Technical Design', '', ($c.Design | ForEach-Object { "- $_." }), '', '## Security and Authorization', '',
             '- Laravel sigue siendo autoridad de permisos y reglas críticas.', '- Aplicar mínimo privilegio, auditoría y protección de datos según los documentos fuente.', '',
             '## Testing Strategy', '', ($c.Checks | ForEach-Object { "- $_." }), '', '## Rejected Scope', '',
             '- No implementar capacidades declaradas en otros changes.', '- No depender de changes activos de otro proyecto como contrato estable.'
         )
         $taskNumber = 1
-        $taskLines = @("# Tasks: $($c.Name)", '', '## Implementation')
+        $taskLines = @(
+            "# Tasks: $($c.Name)",
+            '',
+            '## Source of Truth Check',
+            '',
+            '- Product docs reviewed: TODO',
+            '- Architecture docs reviewed: TODO',
+            '- API contracts reviewed: TODO',
+            '- Domain docs reviewed: TODO',
+            '- Security docs reviewed: TODO',
+            '- Conflicts found: TODO',
+            '',
+            'If any conflict exists, do not implement until docs are corrected or the task is rewritten.',
+            '',
+            '## Backend Placement',
+            '',
+            'All backend domain code must be placed under `backend/app/Modules/<ModuleName>/`.',
+            'No domain models/controllers/use cases/policies may be created under root app/.',
+            '',
+            '## Implementation'
+        )
         foreach ($item in $c.Design) { $taskLines += "- [ ] 1.$taskNumber $item. Owner: $($c.Owner)"; $taskNumber++ }
         $checkNumber = 1
         $taskLines += '', '## Verification'

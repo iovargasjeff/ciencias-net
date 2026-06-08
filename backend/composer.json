@@ -45,7 +45,11 @@
             "@php artisan config:clear --ansi @no_additional_args",
             "@php artisan test"
         ],
+        "guard:architecture": [
+            "@php scripts/guard-architecture.php"
+        ],
         "quality": [
+            "@php scripts/guard-architecture.php",
             "@php vendor/bin/pint --test",
             "@php artisan test",
             "@php artisan scribe:generate"

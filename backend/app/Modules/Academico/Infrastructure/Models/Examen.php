@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Modules\Academico\Infrastructure\Models;
 
+use App\Models\CargaAcademica;
+use App\Models\Nota;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,8 +18,8 @@ class Examen extends Model
     protected $table = 'examenes';
 
     protected $fillable = [
-        'carga_academica_id', 'titulo', 'fecha_aplicacion', 'periodo_nombre',
-        'canal', 'total_preguntas', 'puntaje_maximo', 'estado',
+        'carga_academica_id', 'titulo', 'fecha_aplicacion', 'assessment_type',
+        'channel', 'total_preguntas', 'puntaje_maximo', 'estado',
         'publicado_por', 'publicado_en',
     ];
 
@@ -24,8 +27,8 @@ class Examen extends Model
     {
         return [
             'fecha_aplicacion' => 'date',
-            'puntaje_maximo'   => 'decimal:2',
-            'publicado_en'     => 'datetime',
+            'puntaje_maximo' => 'decimal:2',
+            'publicado_en' => 'datetime',
         ];
     }
 

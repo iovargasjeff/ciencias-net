@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\PasswordRecoveryController;
 use App\Http\Controllers\Api\V1\Auth\SessionController;
 use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
+use App\Modules\Academico\Presentation\Controllers\AssessmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
@@ -54,9 +55,9 @@ Route::prefix('v1')->group(function (): void {
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
-        
+
         // Assessments
-        Route::get('assessments', [\App\Http\Controllers\Api\V1\Assessments\AssessmentController::class, 'index']);
-        Route::post('assessments', [\App\Http\Controllers\Api\V1\Assessments\AssessmentController::class, 'store'])->name('api.v1.assessments.store');
+        Route::get('assessments', [AssessmentController::class, 'index']);
+        Route::post('assessments', [AssessmentController::class, 'store'])->name('api.v1.assessments.store');
     });
 });

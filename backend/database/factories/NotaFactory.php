@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Examen;
 use App\Models\Matricula;
 use App\Models\Nota;
 use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Nota> */
@@ -16,11 +16,11 @@ class NotaFactory extends Factory
     public function definition(): array
     {
         return [
-            'examen_id'      => Examen::factory(),
-            'matricula_id'   => Matricula::factory(),
-            'puntaje'        => fake()->randomFloat(2, 0, 20),
-            'estado'         => 'registrada',
-            'observacion'    => null,
+            'examen_id' => Examen::factory(),
+            'matricula_id' => Matricula::factory(),
+            'puntaje' => fake()->randomFloat(2, 0, 20),
+            'estado' => 'registrada',
+            'observacion' => null,
             'puesto_ranking' => null,
             'registrado_por' => User::factory(),
         ];
@@ -30,7 +30,7 @@ class NotaFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'puntaje' => null,
-            'estado'  => 'ausente',
+            'estado' => 'ausente',
         ]);
     }
 
@@ -38,7 +38,7 @@ class NotaFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'puntaje' => null,
-            'estado'  => 'exonerado',
+            'estado' => 'exonerado',
         ]);
     }
 

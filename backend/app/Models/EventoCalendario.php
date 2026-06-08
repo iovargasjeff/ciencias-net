@@ -24,7 +24,7 @@ class EventoCalendario extends Model
     {
         return [
             'fecha_inicio' => 'datetime',
-            'fecha_fin'    => 'datetime',
+            'fecha_fin' => 'datetime',
         ];
     }
 

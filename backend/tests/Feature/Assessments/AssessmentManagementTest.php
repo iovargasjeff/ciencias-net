@@ -5,9 +5,12 @@ namespace Tests\Feature\Assessments;
 use App\Models\CargaAcademica;
 use App\Models\Curso;
 use App\Models\Docente;
-use App\Models\Examen;
+use App\Models\Grado;
+use App\Models\PeriodoAcademico;
 use App\Models\Seccion;
 use App\Models\User;
+use App\Modules\Academico\Application\UseCases\CloseAssessment;
+use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -24,20 +27,21 @@ class AssessmentManagementTest extends TestCase
         Role::create(['name' => 'superadmin']);
     }
 
-    private function createCargaAcademica(Docente $docente = null): CargaAcademica
+    private function createCargaAcademica(?Docente $docente = null): CargaAcademica
     {
-        $periodo = \App\Models\PeriodoAcademico::factory()->create();
-        $grado = \App\Models\Grado::firstOrCreate([
-            'nombre' => '1ro Secundaria', 
+        $periodo = PeriodoAcademico::factory()->create();
+        $grado = Grado::firstOrCreate([
+            'nombre' => '1ro Secundaria',
             'nivel' => 'secundaria',
             'periodo_academico_id' => $periodo->id,
-            'orden' => 1
+            'orden' => 1,
         ]);
-        $seccion = \App\Models\Seccion::create(['grado_id' => $grado->id, 'periodo_academico_id' => $periodo->id, 'letra' => 'A', 'nombre' => '1ro A', 'vacantes' => 30, 'turno' => 'mañana']);
-        $curso = \App\Models\Curso::factory()->create();
-        if (!$docente) {
+        $seccion = Seccion::create(['grado_id' => $grado->id, 'periodo_academico_id' => $periodo->id, 'letra' => 'A', 'nombre' => '1ro A', 'vacantes' => 30, 'turno' => 'mañana']);
+        $curso = Curso::factory()->create();
+        if (! $docente) {
             $docente = Docente::factory()->create(['user_id' => User::factory()->create()->id]);
         }
+
         return CargaAcademica::create([
             'seccion_id' => $seccion->id,
             'curso_id' => $curso->id,
@@ -57,12 +61,12 @@ class AssessmentManagementTest extends TestCase
 
         $payload = [
             'teaching_assignment_id' => $otherCarga->id,
-            'title'                  => 'Examen Parcial',
-            'assessment_type'        => 'exam',
-            'max_score'              => '20.00',
-            'assessment_date'        => '2026-06-15',
-            'channel'                => 'general',
-            'total_questions'        => 40,
+            'title' => 'Examen Parcial',
+            'assessment_type' => 'exam',
+            'max_score' => '20.00',
+            'assessment_date' => '2026-06-15',
+            'channel' => 'general',
+            'total_questions' => 40,
         ];
 
         $response = $this->actingAs($docenteUser)->postJson('/api/v1/assessments', $payload);
@@ -70,7 +74,7 @@ class AssessmentManagementTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_docente_can_create_assessment_inside_their_carga_academica(): void
+    public function test_docente_cannot_create_assessment_inside_their_carga_academica(): void
     {
         $docenteUser = User::factory()->create();
         $docenteUser->assignRole('docente');
@@ -80,29 +84,21 @@ class AssessmentManagementTest extends TestCase
 
         $payload = [
             'teaching_assignment_id' => $carga->id,
-            'title'                  => 'Examen Parcial',
-            'assessment_type'        => 'exam',
-            'max_score'              => '20.00',
-            'assessment_date'        => '2026-06-15',
-            'channel'                => 'general',
-            'total_questions'        => 40,
+            'title' => 'Examen Parcial',
+            'assessment_type' => 'exam',
+            'max_score' => '20.00',
+            'assessment_date' => '2026-06-15',
+            'channel' => 'general',
+            'total_questions' => 40,
         ];
 
         $response = $this->actingAs($docenteUser)->postJson('/api/v1/assessments', $payload);
 
-        if ($response->status() !== 201) {
-            $response->dd();
-        }
+        $response->assertStatus(403);
 
-        $response->assertStatus(201)
-            ->assertJsonPath('data.title', 'Examen Parcial')
-            ->assertJsonPath('data.status', 'borrador');
-
-        $this->assertDatabaseHas('examenes', [
+        $this->assertDatabaseMissing('examenes', [
             'carga_academica_id' => $carga->id,
-            'titulo'             => 'Examen Parcial',
-            'periodo_nombre'     => 'exam',
-            'estado'             => 'borrador',
+            'titulo' => 'Examen Parcial',
         ]);
     }
 
@@ -115,12 +111,12 @@ class AssessmentManagementTest extends TestCase
 
         $payload = [
             'teaching_assignment_id' => $carga->id,
-            'title'                  => 'Simulacro',
-            'assessment_type'        => 'practice',
-            'max_score'              => '100.00',
-            'assessment_date'        => '2026-06-16',
-            'channel'                => 'sciences',
-            'total_questions'        => 60,
+            'title' => 'Simulacro',
+            'assessment_type' => 'practice',
+            'max_score' => '100.00',
+            'assessment_date' => '2026-06-16',
+            'channel' => 'sciences',
+            'total_questions' => 60,
         ];
 
         $response = $this->actingAs($coordinador)->postJson('/api/v1/assessments', $payload);
@@ -136,13 +132,14 @@ class AssessmentManagementTest extends TestCase
             'carga_academica_id' => $carga->id,
             'titulo' => 'Test',
             'fecha_aplicacion' => now(),
-            'periodo_nombre' => 'exam',
+            'assessment_type' => 'exam',
+            'channel' => 'general',
             'total_preguntas' => 40,
             'puntaje_maximo' => 20,
         ]);
         $user = User::factory()->create();
 
-        $useCase = new \App\UseCases\Assessments\CloseAssessment();
+        $useCase = new CloseAssessment;
         $useCase->execute($examen, $user->id);
 
         $this->assertEquals('cerrado', $examen->fresh()->estado);

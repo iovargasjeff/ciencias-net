@@ -1,5 +1,14 @@
 # Backend Agents
 
+## Regla para Codex, Antigravity y otros agentes
+
+- Antes de implementar, contrastar el change con `../docs/architecture/backend.md`,
+  `../docs/product/roles-and-permissions.md`, `../docs/domain/`, `../docs/security/` y `../docs/api/`.
+- Si OpenSpec contradice `../docs/`, no se implementa. El agente reporta la contradiccion y propone corregir el change
+  o el contrato, dando prioridad a `../docs/`.
+- No crear codigo de dominio en `app/Models`, `app/Http/Controllers`, `app/UseCases` ni `app/Policies`.
+- Usar `app/Modules/<Modulo>/...` para todo nuevo feature backend. Las carpetas raiz son legado transitorio.
+
 ## Equipo
 
 | Persona | Responsabilidad principal | Puede apoyar |

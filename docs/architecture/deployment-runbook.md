@@ -56,9 +56,9 @@ systemctl enable nginx && systemctl start nginx
 
 ```bash
 add-apt-repository ppa:ondrej/php -y && apt update
-apt install php8.2-fpm php8.2-cli php8.2-pgsql php8.2-mbstring \
-  php8.2-xml php8.2-curl php8.2-zip php8.2-intl php8.2-bcmath \
-  php8.2-gd php8.2-imagick -y
+apt install php8.3-fpm php8.3-cli php8.3-pgsql php8.3-mbstring \
+  php8.3-xml php8.3-curl php8.3-zip php8.3-intl php8.3-bcmath \
+  php8.3-gd php8.3-imagick -y
 
 php -v
 ```
@@ -118,7 +118,7 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
@@ -300,7 +300,7 @@ jobs:
 ```bash
 tail -f /var/www/CienciasNET/backend/storage/logs/laravel.log
 systemctl status nginx
-systemctl restart php8.2-fpm
+systemctl restart php8.3-fpm
 sudo -u postgres psql cienciasnet
 df -h /var/www/CienciasNET/backend/storage/
 du -sh /var/www/CienciasNET/backend/storage/app/private/*/
@@ -353,7 +353,7 @@ CienciasNET/
 | Servicio   | Imagen/Base          | Rol                                            |
 |------------|----------------------|------------------------------------------------|
 | `db`       | `postgres:16-alpine` | PostgreSQL con volume `pgdata`                 |
-| `backend`  | `php:8.2-fpm-alpine` | Laravel API. Volume `storage` para archivos    |
+| `backend`  | `php:8.3-fpm-alpine` | Laravel API. Volume `storage` para archivos    |
 | `queue`    | Mismo que backend    | Colas Laravel (emails)                         |
 | `facial-api` | Python / FastAPI   | Reconocimiento facial; sin reglas de asistencia |
 | `frontend` | `nginx:alpine`       | Sirve build estático. Proxy `/api/` al backend |

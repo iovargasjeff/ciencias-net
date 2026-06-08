@@ -1,8 +1,8 @@
 <?php
 
-namespace App\UseCases\Assessments;
+namespace App\Modules\Academico\Application\UseCases;
 
-use App\Models\Examen;
+use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Support\Facades\Log;
 
 class CloseAssessment
@@ -20,7 +20,7 @@ class CloseAssessment
             'examen_id' => $examen->id,
             'user_id' => $userId,
             'old_status' => $oldStatus,
-            'new_status' => 'cerrado'
+            'new_status' => 'cerrado',
         ]);
 
         return $examen;

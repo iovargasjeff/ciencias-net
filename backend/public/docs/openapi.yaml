@@ -614,7 +614,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T23:10:59'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -622,7 +622,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: closed
+                  example: active
                   enum:
                     - draft
                     - active
@@ -688,7 +688,7 @@ paths:
                 start_date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T23:10:59'
                 end_date:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -696,7 +696,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: draft
+                  example: closed
                   enum:
                     - draft
                     - active
@@ -767,7 +767,7 @@ paths:
                 level:
                   type: string
                   description: ''
-                  example: inicial
+                  example: primaria
                   enum:
                     - inicial
                     - primaria
@@ -980,7 +980,7 @@ paths:
                 enrolled_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-07T07:13:06'
+                  example: '2026-06-07T23:10:59'
               required:
                 - student_id
                 - section_id
@@ -1056,4 +1056,100 @@ paths:
                 - course_id
                 - section_id
                 - academic_period_id
+      security: []
+  /api/v1/assessments:
+    get:
+      summary: ''
+      operationId: getApiV1Assessments
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Assessments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teaching_assignment_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the carga_academica table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                title:
+                  type: string
+                  description: 'validation.min validation.max.'
+                  example: g
+                assessment_type:
+                  type: string
+                  description: ''
+                  example: project
+                  enum:
+                    - exam
+                    - practice
+                    - project
+                    - participation
+                    - other
+                max_score:
+                  type: string
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/.'
+                  example: '642559'
+                assessment_date:
+                  type: string
+                  description: validation.date.
+                  example: '2026-06-07T23:10:59'
+                channel:
+                  type: string
+                  description: ''
+                  example: general
+                  enum:
+                    - general
+                    - sciences
+                    - humanities
+                  nullable: true
+                total_questions:
+                  type: integer
+                  description: validation.min.
+                  example: 4
+                  nullable: true
+              required:
+                - teaching_assignment_id
+                - title
+                - assessment_type
+                - max_score
+                - assessment_date
       security: []

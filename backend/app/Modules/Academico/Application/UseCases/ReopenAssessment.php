@@ -1,8 +1,8 @@
 <?php
 
-namespace App\UseCases\Assessments;
+namespace App\Modules\Academico\Application\UseCases;
 
-use App\Models\Examen;
+use App\Modules\Academico\Infrastructure\Models\Examen;
 use Illuminate\Support\Facades\Log;
 
 class ReopenAssessment
@@ -17,14 +17,14 @@ class ReopenAssessment
         // Si estaba publicado antes de cerrar, quizás vuelva a publicado, pero por defecto a borrador o listo
         // Asumimos 'publicado' si ya tiene publicado_en, o 'listo'
         $newStatus = $examen->publicado_en ? 'publicado' : 'borrador';
-        
+
         $examen->update(['estado' => $newStatus]);
 
         Log::info('Evaluacion reabierta', [
             'examen_id' => $examen->id,
             'user_id' => $userId,
             'old_status' => $oldStatus,
-            'new_status' => $newStatus
+            'new_status' => $newStatus,
         ]);
 
         return $examen;
