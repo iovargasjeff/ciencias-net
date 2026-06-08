@@ -7,12 +7,21 @@ use App\Http\Controllers\Api\V1\Family\FamilyLinkController;
 use App\Http\Controllers\Api\V1\IdentityAccess\AccountController;
 use App\Modules\Academico\Presentation\Controllers\AssessmentController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
+use App\Modules\Asistencia\Presentation\Controllers\StationController;
+use App\Modules\Asistencia\Presentation\Controllers\StudentAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/health', fn () => response()->json([
         'data' => ['status' => 'ok'],
     ]))->name('api.v1.health');
+
+    Route::post('station-activations', [StationController::class, 'activate'])->middleware('throttle:station-activation');
+
+    Route::middleware(['station.session'])->group(function (): void {
+        Route::get('station/session', [StationController::class, 'session']);
+        Route::post('station/captures', [StationController::class, 'capture'])->middleware(['throttle:station-capture', 'idempotent']);
+    });
 
     Route::prefix('auth')->group(function (): void {
         Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:human-login');
@@ -56,6 +65,26 @@ Route::prefix('v1')->group(function (): void {
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
+
+        // Estaciones
+        Route::get('stations', [StationController::class, 'index']);
+        Route::post('stations', [StationController::class, 'store']);
+        Route::patch('stations/{stationId}', [StationController::class, 'update']);
+        Route::post('stations/{stationId}/activation-codes', [StationController::class, 'activationCode'])->middleware('throttle:station-activation');
+        Route::post('stations/{stationId}/revocation', [StationController::class, 'revoke']);
+        Route::get('stations/{stationId}/cameras', [StationController::class, 'cameras']);
+        Route::post('stations/{stationId}/cameras', [StationController::class, 'storeCamera']);
+
+        // Asistencia Alumnos
+        Route::get('student-attendance', [StudentAttendanceController::class, 'index']);
+        Route::post('student-attendance/manual-events', [StudentAttendanceController::class, 'manual'])->middleware('idempotent');
+        Route::post('student-attendance/day-closures', [StudentAttendanceController::class, 'closeDay'])->middleware('idempotent');
+        Route::get('student-attendance/anomalies', [StudentAttendanceController::class, 'anomalies']);
+        Route::post('student-attendance/anomalies/{anomalyId}/resolution', [StudentAttendanceController::class, 'resolveAnomaly']);
+        Route::post('student-attendance/absences/{attendanceId}/justification', [StudentAttendanceController::class, 'justifyAbsence']);
+        Route::get('student-attendance/alerts', [StudentAttendanceController::class, 'alerts']);
+        Route::get('recognition-events', [StudentAttendanceController::class, 'recognitionEvents']);
+        Route::post('recognition-events/{recognitionEventId}/review', [StudentAttendanceController::class, 'reviewRecognition']);
 
         // Biometría
         Route::get('biometric-consents', [BiometricController::class, 'index']);

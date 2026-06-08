@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureActiveHumanAccount;
 use App\Http\Middleware\EnsureIdempotentRequest;
+use App\Modules\Asistencia\Presentation\Middleware\EnsureStationSession;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,10 +24,12 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
+        $middleware->encryptCookies(except: ['cienciasnet_station_session']);
 
         $middleware->alias([
             'active.account' => EnsureActiveHumanAccount::class,
             'idempotent' => EnsureIdempotentRequest::class,
+            'station.session' => EnsureStationSession::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
