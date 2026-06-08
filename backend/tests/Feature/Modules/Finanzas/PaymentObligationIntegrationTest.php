@@ -16,8 +16,11 @@ class PaymentObligationIntegrationTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected PeriodoAcademico $period;
+
     protected ConceptoPago $concept;
+
     protected Alumno $student;
 
     protected function setUp(): void

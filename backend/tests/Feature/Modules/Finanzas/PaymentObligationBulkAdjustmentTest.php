@@ -13,7 +13,9 @@ class PaymentObligationBulkAdjustmentTest extends TestCase
     use RefreshDatabase;
 
     protected User $yanina;
+
     protected User $unauthorized;
+
     protected array $obligations;
 
     protected function setUp(): void

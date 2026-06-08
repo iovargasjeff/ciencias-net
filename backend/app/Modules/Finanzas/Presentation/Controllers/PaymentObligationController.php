@@ -8,22 +8,16 @@ use App\Modules\Finanzas\Application\DTOs\BulkAdjustmentDTO;
 use App\Modules\Finanzas\Application\DTOs\GenerateObligationsDTO;
 use App\Modules\Finanzas\Domain\Services\ObligationAdjustmentService;
 use App\Modules\Finanzas\Domain\Services\ObligationGenerationService;
-use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
 use App\Modules\Finanzas\Infrastructure\Repositories\EloquentObligationRepository;
 use App\Modules\Finanzas\Presentation\Requests\AdjustPaymentObligationRequest;
 use App\Modules\Finanzas\Presentation\Requests\BulkAdjustPaymentObligationRequest;
 use App\Modules\Finanzas\Presentation\Requests\GeneratePaymentObligationsRequest;
 use App\Modules\Finanzas\Presentation\Requests\ListPaymentObligationsRequest;
-use App\Modules\Finanzas\Presentation\Resources\BulkOperationResultResource;
 use App\Modules\Finanzas\Presentation\Resources\PaymentObligationResource;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/**
- * Controller for payment obligations operations.
- * Handles generation, listing, and adjustment of payment obligations.
- */
 class PaymentObligationController extends Controller
 {
     public function __construct(
@@ -31,15 +25,9 @@ class PaymentObligationController extends Controller
         private ObligationAdjustmentService $adjustmentService,
         private EloquentObligationRepository $repository,
         private AuditLogger $auditLogger
-    ) {}
+    ) {
+    }
 
-    /**
-     * List payment obligations with filters.
-     * GET /api/v1/payment-obligations
-     *
-     * @param  ListPaymentObligationsRequest  $request
-     * @return ResourceCollection
-     */
     public function index(ListPaymentObligationsRequest $request): ResourceCollection
     {
         $filters = $request->validated();
@@ -51,15 +39,6 @@ class PaymentObligationController extends Controller
         return PaymentObligationResource::collection($paginated);
     }
 
-    /**
-     * Generate payment obligations.
-     * POST /api/v1/payment-obligations
-     *
-     * Returns 202 Accepted with idempotency support.
-     *
-     * @param  GeneratePaymentObligationsRequest  $request
-     * @return JsonResponse
-     */
     public function store(GeneratePaymentObligationsRequest $request): JsonResponse
     {
         $dto = GenerateObligationsDTO::fromRequest($request->validated());
@@ -99,13 +78,6 @@ class PaymentObligationController extends Controller
         }
     }
 
-    /**
-     * Get single obligation details.
-     * GET /api/v1/payment-obligations/{obligationId}
-     *
-     * @param  string  $obligationId
-     * @return PaymentObligationResource
-     */
     public function show(string $obligationId): PaymentObligationResource
     {
         $obligation = $this->repository->findOrFail($obligationId);
@@ -113,14 +85,6 @@ class PaymentObligationController extends Controller
         return new PaymentObligationResource($obligation);
     }
 
-    /**
-     * Adjust a pending obligation.
-     * POST /api/v1/payment-obligations/{obligationId}/adjustments
-     *
-     * @param  string  $obligationId
-     * @param  AdjustPaymentObligationRequest  $request
-     * @return JsonResponse
-     */
     public function adjust(string $obligationId, AdjustPaymentObligationRequest $request): JsonResponse
     {
         try {
@@ -151,13 +115,7 @@ class PaymentObligationController extends Controller
     }
 
     /**
-     * Bulk adjust multiple obligations.
-     * POST /api/v1/payment-obligations/bulk-adjustments
-     *
-     * Returns 202 Accepted for asynchronous processing.
-     *
-     * @param  BulkAdjustPaymentObligationRequest  $request
-     * @return JsonResponse
+     * Bulk adjust multiple obligations. Returns 202 Accepted.
      */
     public function bulkAdjust(BulkAdjustPaymentObligationRequest $request): JsonResponse
     {

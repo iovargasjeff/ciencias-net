@@ -11,27 +11,35 @@ use Carbon\Carbon;
 final class ObligationSnapshot
 {
     public readonly string $conceptId;
+
     public readonly ?string $benefitId;
+
     public readonly float $montoBase;
+
     public readonly float $montoBeneficio;
+
     public readonly float $montoOrdinario;
+
     public readonly float $montoPromtoPago;
+
     public readonly float $descuentoPromtoPagoAplicado;
+
     public readonly Carbon $fechaLimitePromtoPago;
+
     public readonly Carbon $fechaVencimiento;
 
     /**
      * Create a new obligation snapshot.
      *
-     * @param  string  $conceptId
-     * @param  ?string  $benefitId
-     * @param  float  $montoBase  Base concept amount
-     * @param  float  $montoBeneficio  Benefit amount deducted
-     * @param  float  $montoOrdinario  Base - benefit (regular payment amount)
-     * @param  float  $montoPromtoPago  Ordinario - early payment discount
-     * @param  float  $descuentoPromtoPagoAplicado  Early payment discount value
-     * @param  Carbon  $fechaLimitePromtoPago  Deadline for early payment rate
-     * @param  Carbon  $fechaVencimiento  Final due date
+     * @param string $conceptId
+     * @param string|null $benefitId
+     * @param float $montoBase Base concept amount
+     * @param float $montoBeneficio Benefit amount deducted
+     * @param float $montoOrdinario Base - benefit (regular payment amount)
+     * @param float $montoPromtoPago Ordinario - early payment discount
+     * @param float $descuentoPromtoPagoAplicado Early payment discount value
+     * @param Carbon $fechaLimitePromtoPago Deadline for early payment rate
+     * @param Carbon $fechaVencimiento Final due date
      */
     private function __construct(
         string $conceptId,
@@ -58,9 +66,10 @@ final class ObligationSnapshot
     /**
      * Create snapshot from concept and optional benefit.
      *
-     * @param  array  $conceptData  Concept fields: monto_base, descuento_pronto_pago, fecha_limite_pronto_pago, id
-     * @param  array  $benefitData  Optional benefit fields: modalidad, valor, id
-     * @param  Carbon  $dueDate
+     * @param array $conceptData Concept fields: monto_base, descuento_pronto_pago, fecha_limite_pronto_pago, id
+     * @param array|null $benefitData Optional benefit fields: modalidad, valor, id
+     * @param Carbon $dueDate
+     *
      * @return self
      */
     public static function fromConceptAndBenefit(
@@ -99,8 +108,9 @@ final class ObligationSnapshot
     /**
      * Calculate benefit deduction based on modalidad and valor.
      *
-     * @param  float  $baseAmount
-     * @param  ?array  $benefitData
+     * @param float $baseAmount
+     * @param array|null $benefitData
+     *
      * @return float
      */
     private static function calculateBenefitAmount(float $baseAmount, ?array $benefitData): float

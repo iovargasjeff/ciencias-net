@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 /**
  * Service for adjusting pending payment obligations.
- * 
+ *
  * Handles:
  * - Validating obligation can be modified (must be pending)
  * - Updating allowed fields (amounts, dates, benefit)
@@ -25,10 +25,9 @@ class ObligationAdjustmentService
     /**
      * Adjust a pending payment obligation.
      *
-     * @param  ObligacionPago  $obligation
-     * @param  array  $adjustmentData  Keys: adjustment_type, amount, reason
-     * @param  User  $adjustedBy
-     * @return ObligacionPago
+     * @param ObligacionPago $obligation
+     * @param array $adjustmentData Keys: adjustment_type, amount, reason
+     * @param User $adjustedBy
      *
      * @throws ConflictHttpException If obligation is not pending
      */
@@ -87,10 +86,11 @@ class ObligationAdjustmentService
     /**
      * Adjust multiple obligations based on filters.
      *
-     * @param  array  $filters  Keys: obligation_ids[], concept_id, grade_id, section_id
-     * @param  array  $adjustmentData  Keys: adjustment_type, amount, reason
-     * @param  User  $adjustedBy
-     * @return int  Number of obligations adjusted
+     * @param array $filters Keys: obligation_ids[], concept_id, grade_id, section_id
+     * @param array $adjustmentData Keys: adjustment_type, amount, reason
+     * @param User $adjustedBy
+     *
+     * @return int Number of obligations adjusted
      */
     public function bulkAdjust(
         array $filters,
@@ -148,9 +148,10 @@ class ObligationAdjustmentService
     /**
      * Calculate new values based on adjustment type.
      *
-     * @param  ObligacionPago  $obligation
-     * @param  string  $type  charge, discount, or waiver
-     * @param  float  $amount
+     * @param ObligacionPago $obligation
+     * @param string $type charge, discount, or waiver
+     * @param float $amount
+     *
      * @return array
      */
     private function calculateAdjustment(
@@ -169,8 +170,9 @@ class ObligationAdjustmentService
     /**
      * Apply charge adjustment (increase amount).
      *
-     * @param  ObligacionPago  $obligation
-     * @param  float  $chargeAmount
+     * @param ObligacionPago $obligation
+     * @param float $chargeAmount
+     *
      * @return array
      */
     private function applyCharge(ObligacionPago $obligation, float $chargeAmount): array
@@ -184,8 +186,9 @@ class ObligationAdjustmentService
     /**
      * Apply discount adjustment (decrease amount).
      *
-     * @param  ObligacionPago  $obligation
-     * @param  float  $discountAmount
+     * @param ObligacionPago $obligation
+     * @param float $discountAmount
+     *
      * @return array
      */
     private function applyDiscount(ObligacionPago $obligation, float $discountAmount): array
@@ -202,7 +205,8 @@ class ObligationAdjustmentService
     /**
      * Apply waiver adjustment (zero out amounts).
      *
-     * @param  ObligacionPago  $obligation
+     * @param ObligacionPago $obligation
+     *
      * @return array
      */
     private function applyWaiver(ObligacionPago $obligation): array

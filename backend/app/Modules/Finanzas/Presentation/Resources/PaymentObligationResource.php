@@ -16,7 +16,7 @@ class PaymentObligationResource extends JsonResource
             'id' => $this->id,
             'student' => [
                 'id' => $this->alumno->id,
-                'name' => $this->alumno->nombres . ' ' . $this->alumno->apellidos,
+                'name' => $this->alumno->nombres.' '.$this->alumno->apellidos,
                 'email' => $this->alumno->user?->email,
             ],
             'concept' => [

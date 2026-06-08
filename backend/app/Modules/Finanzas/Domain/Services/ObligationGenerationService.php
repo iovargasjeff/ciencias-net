@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 /**
  * Service for generating payment obligations (deudas) with transactional integrity.
- * 
+ *
  * Handles:
  * - Resolving single benefit per student
  * - Calculating and freezing obligation snapshots
@@ -28,12 +28,13 @@ class ObligationGenerationService
     /**
      * Generate payment obligations for students in a period.
      *
-     * @param  string  $conceptId  UUID of concept to generate
-     * @param  string  $periodId  UUID of academic period
-     * @param  Carbon  $dueDate  Due date for obligations
-     * @param  ?array  $studentIds  Optional list of student UUIDs; if null, all enrolled students
-     * @param  User  $generatedBy  User performing generation
-     * @return Collection<ObligacionPago>  Created obligations
+     * @param string $conceptId UUID of concept to generate
+     * @param string $periodId UUID of academic period
+     * @param Carbon $dueDate Due date for obligations
+     * @param array|null $studentIds Optional list of student UUIDs; if null, all enrolled students
+     * @param User $generatedBy User performing generation
+     *
+     * @return Collection<ObligacionPago> Created obligations
      *
      * @throws ConflictHttpException If concept not vigente or period not active
      */
@@ -70,8 +71,9 @@ class ObligationGenerationService
     /**
      * Validate and fetch concept.
      *
-     * @param  string  $conceptId
-     * @param  string  $periodId
+     * @param string $conceptId
+     * @param string $periodId
+     *
      * @return ConceptoPago
      *
      * @throws ConflictHttpException
@@ -97,7 +99,8 @@ class ObligationGenerationService
     /**
      * Validate and fetch academic period.
      *
-     * @param  string  $periodId
+     * @param string $periodId
+     *
      * @return PeriodoAcademico
      *
      * @throws ConflictHttpException

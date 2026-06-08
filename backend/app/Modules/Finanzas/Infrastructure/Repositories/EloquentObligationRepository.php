@@ -7,18 +7,8 @@ use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
-/**
- * Eloquent implementation of ObligationRepositoryInterface.
- */
 class EloquentObligationRepository implements ObligationRepositoryInterface
 {
-    /**
-     * Get paginated list of obligations with filters.
-     *
-     * @param  array  $filters
-     * @param  int  $perPage
-     * @return Paginator
-     */
     public function paginated(array $filters = [], int $perPage = 20): Paginator
     {
         $query = ObligacionPago::query()
@@ -52,12 +42,6 @@ class EloquentObligationRepository implements ObligationRepositoryInterface
         return $query->paginate($perPage);
     }
 
-    /**
-     * Get pending obligations for a student.
-     *
-     * @param  string  $studentId
-     * @return Collection<ObligacionPago>
-     */
     public function pendingByStudent(string $studentId): Collection
     {
         return ObligacionPago::query()
@@ -67,13 +51,6 @@ class EloquentObligationRepository implements ObligationRepositoryInterface
             ->get();
     }
 
-    /**
-     * Get obligations by concept and optional period.
-     *
-     * @param  string  $conceptId
-     * @param  ?string  $periodId
-     * @return Collection<ObligacionPago>
-     */
     public function byConceptAndPeriod(string $conceptId, ?string $periodId = null): Collection
     {
         $query = ObligacionPago::query()
@@ -88,31 +65,19 @@ class EloquentObligationRepository implements ObligationRepositoryInterface
         return $query->get();
     }
 
-    /**
-     * Find obligation by ID or fail.
-     *
-     * @param  string  $id
-     * @return ObligacionPago
-     */
     public function findOrFail(string $id): ObligacionPago
     {
         return ObligacionPago::with('alumno', 'concepto', 'beneficio')
             ->findOrFail($id);
     }
 
-    /**
-     * Get obligations matching bulk adjustment filters.
-     *
-     * @param  array  $filters
-     * @return Collection<ObligacionPago>
-     */
     public function bulkFilter(array $filters): Collection
     {
         $query = ObligacionPago::query()
             ->where('estado', 'pendiente');
 
         // Direct obligation IDs
-        if (! empty($filters['obligation_ids'])) {
+        if (!empty($filters['obligation_ids'])) {
             $query->whereIn('id', $filters['obligation_ids']);
         }
 

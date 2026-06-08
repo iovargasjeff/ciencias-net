@@ -15,8 +15,11 @@ class PaymentObligationAdjustmentTest extends TestCase
     use RefreshDatabase;
 
     protected User $yanina;
+
     protected User $unauthorized;
+
     protected ObligacionPago $pendingObligation;
+
     protected ObligacionPago $paidObligation;
 
     protected function setUp(): void

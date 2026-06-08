@@ -15,9 +15,13 @@ class PaymentObligationAuthorizationTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $teacher;
+
     protected User $student;
+
     protected User $unauthorized;
+
     protected ObligacionPago $obligation;
 
     protected function setUp(): void
