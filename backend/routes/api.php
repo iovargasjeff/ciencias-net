@@ -8,6 +8,7 @@ use App\Modules\Asistencia\Presentation\Controllers\StudentAttendanceController;
 use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
 use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
+use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
@@ -96,6 +97,13 @@ Route::prefix('v1')->group(function (): void {
         Route::put('class-sessions/{classSessionId}/substitute', [TeacherAttendanceController::class, 'substitute']);
 
         // Nómina Docente (Finanzas)
+        Route::get('payment-concepts', [FinanceConfigController::class, 'concepts']);
+        Route::post('payment-concepts', [FinanceConfigController::class, 'storeConcept']);
+        Route::patch('payment-concepts/{conceptId}', [FinanceConfigController::class, 'updateConcept']);
+        Route::get('student-benefits', [FinanceConfigController::class, 'benefits']);
+        Route::post('student-benefits', [FinanceConfigController::class, 'storeBenefit']);
+        Route::post('student-benefits/{benefitId}/deactivation', [FinanceConfigController::class, 'deactivateBenefit']);
+
         Route::get('teacher-payroll/rates', [TeacherPayrollController::class, 'rates']);
         Route::post('teacher-payroll/rates', [TeacherPayrollController::class, 'storeRate']);
         Route::get('teacher-payroll/liquidations', [TeacherPayrollController::class, 'liquidations']);

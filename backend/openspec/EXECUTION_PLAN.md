@@ -44,7 +44,7 @@
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
 | DB-003 | `[x]` | `add-finance-schema` | Fátima | Jefferson | DB-001 |
-| BE-014 | `[ ]` | `add-finance-configuration-benefits` | Fátima | Jefferson | BE-004, DB-003 |
+| BE-014 | `[~]` | `add-finance-configuration-benefits` | Fátima | Jefferson | BE-004, DB-003 |
 | BE-015 | `[ ]` | `add-obligation-generation-adjustments` | Fátima | Jefferson | BE-014 |
 | BE-016 | `[ ]` | `add-payment-movements-receipts` | Fátima | Jefferson | BE-015 |
 | BE-017 | `[ ]` | `add-finance-queries-reminders` | Fátima | Jefferson | BE-016 |

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BeneficioAlumno extends Model
@@ -59,5 +60,11 @@ class BeneficioAlumno extends Model
     public function obligacionesPago(): HasMany
     {
         return $this->hasMany(ObligacionPago::class, 'beneficio_id');
+    }
+
+    public function conceptos(): BelongsToMany
+    {
+        return $this->belongsToMany(ConceptoPago::class, 'beneficio_concepto', 'beneficio_id', 'concepto_id')
+            ->withTimestamps();
     }
 }

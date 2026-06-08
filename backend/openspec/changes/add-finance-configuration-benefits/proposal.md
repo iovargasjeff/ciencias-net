@@ -2,7 +2,7 @@
 
 **ID:** BE-014  
 **Fase:** Fase 3: Finanzas  
-**Owner:** Jefferson  
+**Owner:** Fátima
 **Reviewer:** Jefferson
 **Dependencias:** BE-004, DB-003
 
