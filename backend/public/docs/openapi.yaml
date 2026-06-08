@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
               required:
                 - image
                 - camera_id
@@ -1152,6 +1152,163 @@ paths:
                 - section_id
                 - academic_period_id
       security: []
+  /api/v1/schedules:
+    get:
+      summary: ''
+      operationId: getApiV1Schedules
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Schedules
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teaching_assignment_id:
+                  type: string
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the carga_academica table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                weekday:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 7.'
+                  example: 1
+                starts_at:
+                  type: string
+                  description: 'Must match the regex /^([01]\d|2[0-3]):[0-5]\d$/.'
+                  example: '14:22'
+                ends_at:
+                  type: string
+                  description: 'Must match the regex /^([01]\d|2[0-3]):[0-5]\d$/.'
+                  example: '14:22'
+                room:
+                  type: string
+                  description: 'Must be at least 1 character. Must not be greater than 100 characters.'
+                  example: v
+                  nullable: true
+              required:
+                - teaching_assignment_id
+                - weekday
+                - starts_at
+                - ends_at
+      security: []
+  /api/v1/calendar-events:
+    get:
+      summary: ''
+      operationId: getApiV1CalendarEvents
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1CalendarEvents
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: 'Must be at least 1 character. Must not be greater than 200 characters.'
+                  example: b
+                starts_at:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-06-08T22:28:50'
+                ends_at:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after <code>starts_at</code>.'
+                  example: '2052-07-01'
+                event_type:
+                  type: string
+                  description: ''
+                  example: holiday
+                  enum:
+                    - academic
+                    - holiday
+                    - meeting
+                    - other
+                description:
+                  type: string
+                  description: 'Must be at least 1 character. Must not be greater than 2000 characters.'
+                  example: 'Et animi quos velit et fugiat.'
+                  nullable: true
+              required:
+                - title
+                - starts_at
+                - ends_at
+                - event_type
+      security: []
   /api/v1/stations:
     get:
       summary: ''
@@ -1212,7 +1369,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: exit
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -1257,7 +1414,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
       security: []
     parameters:
       -
@@ -1450,7 +1607,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: entry
+                  example: late
                   enum:
                     - entry
                     - exit
@@ -1459,7 +1616,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 reason:
                   type: string
                   description: 'Must not be greater than 1000 characters.'
@@ -1489,7 +1646,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
               required:
                 - date
       security: []
@@ -1678,7 +1835,7 @@ paths:
                 outcome:
                   type: string
                   description: ''
-                  example: rejected
+                  example: confirmed
                   enum:
                     - confirmed
                     - rejected
@@ -1761,11 +1918,11 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 adjustment_type:
                   type: string
                   description: ''
-                  example: add
+                  example: subtract
                   enum:
                     - add
                     - subtract
@@ -1940,7 +2097,7 @@ paths:
                 recurrence:
                   type: string
                   description: ''
-                  example: annual
+                  example: monthly
                   enum:
                     - single
                     - monthly
@@ -1954,7 +2111,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                   nullable: true
               required:
                 - code
@@ -1990,7 +2147,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: cuota_ingreso
+                  example: mensualidad
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -2027,7 +2184,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                   nullable: true
       security: []
     parameters:
@@ -2095,7 +2252,7 @@ paths:
                 benefit_type:
                   type: string
                   description: ''
-                  example: fixed
+                  example: waiver
                   enum:
                     - percentage
                     - fixed
@@ -2119,7 +2276,7 @@ paths:
                 starts_on:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 ends_on:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>starts_on</code>.'
@@ -2227,7 +2384,7 @@ paths:
                 effective_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 effective_until:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>effective_from</code>.'
@@ -2290,7 +2447,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -2345,7 +2502,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T21:45:12'
+                  example: '2026-06-08T22:28:50'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -2353,7 +2510,7 @@ paths:
                 format:
                   type: string
                   description: ''
-                  example: xlsx
+                  example: pdf
                   enum:
                     - pdf
                     - xlsx
@@ -2710,7 +2867,7 @@ paths:
                 report_type:
                   type: string
                   description: ''
-                  example: ranking
+                  example: report_card
                   enum:
                     - report_card
                     - grade_summary
@@ -2794,7 +2951,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: ausente
+                  example: pendiente
                   enum:
                     - registrada
                     - ausente

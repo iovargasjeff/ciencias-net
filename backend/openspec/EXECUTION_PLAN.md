@@ -58,7 +58,7 @@
 | BE-019 | `[x]` | `add-result-entry-import` | Jefferson | André | BE-018 |
 | BE-020 | `[x]` | `add-result-publication-ranking-reports` | Jefferson | André | BE-019 |
 | BE-021 | `[x]` | `add-materials-management` | Jefferson | André | BE-006, DB-004 |
-| BE-022 | `[ ]` | `add-schedules-calendar-management` | Jefferson | André | BE-006, DB-004 |
+| BE-022 | `[x]` | `add-schedules-calendar-management` | Jefferson | André | BE-006, DB-004 |
 | BE-023 | `[ ]` | `add-communications-notifications` | Jefferson | André | BE-004, DB-004 |
 
 ## Fase 5: Incidencias y Psicología

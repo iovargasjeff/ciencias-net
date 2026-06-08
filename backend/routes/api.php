@@ -11,6 +11,7 @@ use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
 use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
+use App\Modules\Horarios\Presentation\Controllers\ScheduleController;
 use App\Modules\Materiales\Presentation\Controllers\MaterialController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
@@ -80,6 +81,12 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/materials/{material}', [MaterialController::class, 'archiveMaterial']);
         Route::post('/material-links', [MaterialController::class, 'createExternalMaterial']);
         Route::put('/materials/{material}/file', [MaterialController::class, 'replaceMaterialFile']);
+
+        // Horarios y Calendario
+        Route::get('/schedules', [ScheduleController::class, 'listSchedules']);
+        Route::post('/schedules', [ScheduleController::class, 'createSchedule']);
+        Route::get('/calendar-events', [ScheduleController::class, 'listCalendarEvents']);
+        Route::post('/calendar-events', [ScheduleController::class, 'createCalendarEvent']);
 
         // Comunicados y Notificaciones
         // Estaciones

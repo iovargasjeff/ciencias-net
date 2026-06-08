@@ -18,6 +18,11 @@ class Horario extends Model
         'carga_academica_id', 'dia_semana', 'hora_inicio', 'hora_fin', 'aula',
     ];
 
+    protected $casts = [
+        'hora_inicio' => 'datetime:H:i',
+        'hora_fin' => 'datetime:H:i',
+    ];
+
     public function cargaAcademica(): BelongsTo
     {
         return $this->belongsTo(CargaAcademica::class);
