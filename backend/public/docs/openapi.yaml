@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
               required:
                 - image
                 - camera_id
@@ -1304,7 +1304,7 @@ paths:
                 activo:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
       security: []
     delete:
       summary: ''
@@ -1531,7 +1531,7 @@ paths:
                 starts_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 ends_at:
                   type: string
                   description: 'Must be a valid date. Must be a date after <code>starts_at</code>.'
@@ -1539,7 +1539,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: academic
+                  example: holiday
                   enum:
                     - academic
                     - holiday
@@ -1783,7 +1783,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
               required:
                 - label
                 - device_identifier
@@ -1854,7 +1854,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: absence
+                  example: exit
                   enum:
                     - entry
                     - exit
@@ -1863,7 +1863,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 reason:
                   type: string
                   description: 'Must not be greater than 1000 characters.'
@@ -1893,7 +1893,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
               required:
                 - date
       security: []
@@ -2165,11 +2165,11 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 adjustment_type:
                   type: string
                   description: ''
-                  example: subtract
+                  example: add
                   enum:
                     - add
                     - subtract
@@ -2358,7 +2358,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                   nullable: true
               required:
                 - code
@@ -2394,7 +2394,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: matricula
+                  example: otro
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -2417,7 +2417,7 @@ paths:
                 recurrence:
                   type: string
                   description: ''
-                  example: annual
+                  example: single
                   enum:
                     - single
                     - monthly
@@ -2431,7 +2431,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                   nullable: true
       security: []
     parameters:
@@ -2499,7 +2499,7 @@ paths:
                 benefit_type:
                   type: string
                   description: ''
-                  example: waiver
+                  example: percentage
                   enum:
                     - percentage
                     - fixed
@@ -2519,11 +2519,11 @@ paths:
                 stackable_with_early_payment:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
                 starts_on:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 ends_on:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>starts_on</code>.'
@@ -2571,6 +2571,265 @@ paths:
         required: true
         schema:
           type: string
+  /api/v1/payment-obligations:
+    get:
+      summary: ''
+      operationId: getApiV1PaymentObligations
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                  description: 'Must be a valid UUID.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                concept_id:
+                  type: string
+                  description: 'Must be a valid UUID.'
+                  example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+                estado:
+                  type: string
+                  description: ''
+                  example: pagado
+                  enum:
+                    - pendiente
+                    - pagado
+                    - vencido
+                due_date_from:
+                  type: string
+                  description: 'Must be a valid date.'
+                  example: '2026-06-08T22:34:37'
+                due_date_to:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after or equal to <code>due_date_from</code>.'
+                  example: '2052-07-01'
+                per_page:
+                  type: integer
+                  description: 'Must be at least 1. Must not be greater than 100.'
+                  example: 22
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1PaymentObligations
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                academic_period_id:
+                  type: string
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the periodos_academicos table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                concept_id:
+                  type: string
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the conceptos_pago table.'
+                  example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+                due_date:
+                  type: string
+                  description: 'Must be a valid date. Must be a date after <code>today</code>.'
+                  example: '2052-07-01'
+                student_ids:
+                  type: array
+                  description: 'Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table.'
+                  example:
+                    - a4855dc5-0acb-33c3-b921-f4291f719ca0
+                  items:
+                    type: string
+              required:
+                - academic_period_id
+                - concept_id
+                - due_date
+      security: []
+  '/api/v1/payment-obligations/{obligationId}':
+    get:
+      summary: ''
+      operationId: getApiV1PaymentObligationsObligationId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: obligationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/payment-obligations/{obligationId}/adjustments':
+    post:
+      summary: ''
+      operationId: postApiV1PaymentObligationsObligationIdAdjustments
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adjustment_type:
+                  type: string
+                  description: ''
+                  example: discount
+                  enum:
+                    - charge
+                    - discount
+                    - waiver
+                amount:
+                  type: number
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/. Must be at least 0.'
+                  example: 27
+                reason:
+                  type: string
+                  description: 'Must be at least 1 character. Must not be greater than 1000 characters.'
+                  example: 'n'
+              required:
+                - adjustment_type
+                - amount
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: obligationId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
+  /api/v1/payment-obligations/bulk-adjustments:
+    post:
+      summary: 'Bulk adjust multiple obligations. Returns 202 Accepted.'
+      operationId: bulkAdjustMultipleObligationsReturns202Accepted
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filters:
+                  type: object
+                  description: ''
+                  example: []
+                  properties:
+                    obligation_ids:
+                      type: array
+                      description: 'Must be a valid UUID.'
+                      example:
+                        - 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                      items:
+                        type: string
+                    concept_id:
+                      type: string
+                      description: 'Must be a valid UUID.'
+                      example: 6b72fe4a-5b40-307c-bc24-f79acf9a1bb9
+                    grade_id:
+                      type: string
+                      description: 'Must be a valid UUID.'
+                      example: 977e5426-8d13-3824-86aa-b092f8ae52c5
+                    section_id:
+                      type: string
+                      description: 'Must be a valid UUID.'
+                      example: d6fa562b-acd5-35ff-babb-d11194d3737b
+                adjustment_type:
+                  type: string
+                  description: ''
+                  example: charge
+                  enum:
+                    - charge
+                    - discount
+                    - waiver
+                amount:
+                  type: number
+                  description: 'Must match the regex /^\d{1,10}(\.\d{1,2})?$/. Must be at least 0.'
+                  example: 42
+                reason:
+                  type: string
+                  description: 'Must be at least 3 characters. Must not be greater than 1000 characters.'
+                  example: l
+              required:
+                - filters
+                - adjustment_type
+                - amount
+                - reason
+      security: []
   /api/v1/teacher-payroll/rates:
     get:
       summary: ''
@@ -2631,7 +2890,7 @@ paths:
                 effective_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 effective_until:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>effective_from</code>.'
@@ -2694,7 +2953,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -2749,7 +3008,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-08T22:32:41'
+                  example: '2026-06-08T22:34:37'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -3114,7 +3373,7 @@ paths:
                 report_type:
                   type: string
                   description: ''
-                  example: ranking
+                  example: grade_summary
                   enum:
                     - report_card
                     - grade_summary
@@ -3262,7 +3521,7 @@ paths:
                       estado:
                         type: string
                         description: ''
-                        example: exonerado
+                        example: pendiente
                         enum:
                           - registrada
                           - ausente
@@ -3316,7 +3575,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: pendiente
+                  example: registrada
                   enum:
                     - registrada
                     - ausente
