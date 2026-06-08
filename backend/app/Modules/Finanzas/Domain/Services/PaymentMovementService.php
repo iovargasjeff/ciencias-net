@@ -8,7 +8,6 @@ use App\Modules\Finanzas\Infrastructure\Models\MovimientoPago;
 use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Support\AuditLogger;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
@@ -35,7 +34,7 @@ class PaymentMovementService
                 throw new ConflictHttpException('Esta obligación ya tiene un pago registrado.');
             }
 
-            $applicableAmount = $this->calculateApplicableAmount($obligation, $dto->occurredAt);
+            $applicableAmount = $obligation->getApplicableAmount($dto->occurredAt);
 
             if (abs((float) $dto->amount - $applicableAmount) > 0.01) {
                 throw new ConflictHttpException(
@@ -171,17 +170,6 @@ class PaymentMovementService
 
             return $refund;
         });
-    }
-
-    private function calculateApplicableAmount(ObligacionPago $obligation, Carbon $paymentDate): float
-    {
-        $deadline = $obligation->fecha_limite_pronto_pago_snapshot;
-
-        if ($deadline && $paymentDate->startOfDay()->lte(Carbon::parse($deadline)->endOfDay())) {
-            return (float) $obligation->monto_pronto_pago_snapshot;
-        }
-
-        return (float) $obligation->monto_ordinario_snapshot;
     }
 
     private function mapMethod(string $apiMethod): string

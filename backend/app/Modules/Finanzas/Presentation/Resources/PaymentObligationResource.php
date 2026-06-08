@@ -32,6 +32,7 @@ class PaymentObligationResource extends JsonResource
                 'early_payment' => (float) $this->monto_pronto_pago_snapshot,
                 'early_payment_discount' => (float) $this->descuento_pronto_pago_aplicado,
                 'paid' => $this->monto_cobrado ? (float) $this->monto_cobrado : null,
+                'applicable_amount' => (float) $this->getApplicableAmount(),
             ],
             'dates' => [
                 'early_payment_deadline' => $this->fecha_limite_pronto_pago_snapshot?->toDateString(),

@@ -4,6 +4,7 @@ namespace App\Modules\Finanzas\Infrastructure\Models;
 
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,5 +79,17 @@ class ObligacionPago extends Model
     public function movimientosPago(): HasMany
     {
         return $this->hasMany(MovimientoPago::class, 'obligacion_pago_id');
+    }
+
+    public function getApplicableAmount(?Carbon $date = null): float
+    {
+        $date = $date ?? Carbon::now();
+        $deadline = $this->fecha_limite_pronto_pago_snapshot;
+
+        if ($deadline && $date->startOfDay()->lte(Carbon::parse($deadline)->endOfDay())) {
+            return (float) $this->monto_pronto_pago_snapshot;
+        }
+
+        return (float) $this->monto_ordinario_snapshot;
     }
 }

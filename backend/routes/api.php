@@ -10,6 +10,7 @@ use App\Modules\Asistencia\Presentation\Controllers\TeacherAttendanceController;
 use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
 use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
+use App\Modules\Finanzas\Presentation\Controllers\FinanceQueryController;
 use App\Modules\Finanzas\Presentation\Controllers\PaymentMovementController;
 use App\Modules\Finanzas\Presentation\Controllers\PaymentObligationController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
@@ -136,6 +137,12 @@ Route::prefix('v1')->group(function (): void {
         // Movimientos de Pago y Recibos (BE-016)
         Route::post('payment-movements', [PaymentMovementController::class, 'store']);
         Route::get('payment-movements/{paymentMovementId}/receipt', [PaymentMovementController::class, 'downloadReceipt']);
+
+        // Consultas Financieras y Recordatorios (BE-017)
+        Route::get('account-statements', [FinanceQueryController::class, 'listAccountStatements']);
+        Route::get('finance/debtors', [FinanceQueryController::class, 'listDebtors']);
+        Route::get('finance/cash-reports', [FinanceQueryController::class, 'getCashReport']);
+        Route::post('payment-reminders', [FinanceQueryController::class, 'sendPaymentReminders'])->middleware('idempotent');
 
         Route::get('teacher-payroll/rates', [TeacherPayrollController::class, 'rates']);
         Route::post('teacher-payroll/rates', [TeacherPayrollController::class, 'storeRate']);
