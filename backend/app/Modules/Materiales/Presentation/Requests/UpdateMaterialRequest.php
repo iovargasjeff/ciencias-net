@@ -2,7 +2,6 @@
 
 namespace App\Modules\Materiales\Presentation\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMaterialRequest extends FormRequest

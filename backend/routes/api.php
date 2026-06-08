@@ -11,6 +11,7 @@ use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
 use App\Modules\Auth\Presentation\Controllers\SessionController;
 use App\Modules\Finanzas\Presentation\Controllers\FinanceConfigController;
 use App\Modules\Finanzas\Presentation\Controllers\TeacherPayrollController;
+use App\Modules\Materiales\Presentation\Controllers\MaterialController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Usuarios\Presentation\Controllers\FamilyLinkController;
@@ -72,13 +73,13 @@ Route::prefix('v1')->group(function (): void {
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
 
         // Materiales
-        Route::get('/materials', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'listMaterials']);
-        Route::post('/materials', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'createMaterial']);
-        Route::get('/materials/{material}/download', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'downloadMaterial']);
-        Route::patch('/materials/{material}', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'updateMaterial']);
-        Route::delete('/materials/{material}', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'archiveMaterial']);
-        Route::post('/material-links', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'createExternalMaterial']);
-        Route::put('/materials/{material}/file', [\App\Modules\Materiales\Presentation\Controllers\MaterialController::class, 'replaceMaterialFile']);
+        Route::get('/materials', [MaterialController::class, 'listMaterials']);
+        Route::post('/materials', [MaterialController::class, 'createMaterial']);
+        Route::get('/materials/{material}/download', [MaterialController::class, 'downloadMaterial']);
+        Route::patch('/materials/{material}', [MaterialController::class, 'updateMaterial']);
+        Route::delete('/materials/{material}', [MaterialController::class, 'archiveMaterial']);
+        Route::post('/material-links', [MaterialController::class, 'createExternalMaterial']);
+        Route::put('/materials/{material}/file', [MaterialController::class, 'replaceMaterialFile']);
 
         // Comunicados y Notificaciones
         // Estaciones

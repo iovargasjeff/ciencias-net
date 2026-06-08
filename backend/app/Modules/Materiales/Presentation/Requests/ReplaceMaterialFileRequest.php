@@ -27,7 +27,7 @@ class ReplaceMaterialFileRequest extends FormRequest
                 'required',
                 'file',
                 'max:51200',
-                'mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar,mp4'
+                'mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar,mp4',
             ],
         ];
     }

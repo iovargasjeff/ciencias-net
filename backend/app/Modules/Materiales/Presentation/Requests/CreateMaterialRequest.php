@@ -31,7 +31,7 @@ class CreateMaterialRequest extends FormRequest
                 'required',
                 'file',
                 'max:51200', // 50MB in KB
-                'mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar,mp4'
+                'mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,rar,mp4',
             ],
         ];
     }

@@ -2,32 +2,41 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Tests\TestCase;
 use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
+use App\Modules\Academico\Infrastructure\Models\Curso;
+use App\Modules\Academico\Infrastructure\Models\Grado;
 use App\Modules\Academico\Infrastructure\Models\Matricula;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\Seccion;
 use App\Modules\Materiales\Infrastructure\Models\Material;
 use App\Modules\Usuarios\Infrastructure\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class MaterialsTest extends TestCase
 {
     use RefreshDatabase;
 
     private User $docente;
+
     private User $alumno;
+
     private User $otroAlumno;
+
     private CargaAcademica $carga;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
-        \Spatie\Permission\Models\Role::create(['name' => 'superadmin']);
-        \Spatie\Permission\Models\Role::create(['name' => 'docente']);
-        \Spatie\Permission\Models\Role::create(['name' => 'alumno']);
+
+        Role::create(['name' => 'superadmin']);
+        Role::create(['name' => 'docente']);
+        Role::create(['name' => 'alumno']);
 
         $this->docente = User::factory()->create();
         $this->docente->assignRole('docente');
@@ -41,17 +50,17 @@ class MaterialsTest extends TestCase
         $superadmin = User::factory()->create();
         $superadmin->assignRole('superadmin');
 
-        $periodo = \App\Modules\Academico\Infrastructure\Models\PeriodoAcademico::create([
+        $periodo = PeriodoAcademico::create([
             'nombre' => '2026', 'tipo' => 'regular', 'estado' => 'activo', 'fecha_inicio' => now(), 'fecha_fin' => now()->addMonths(10),
             'creado_por' => $superadmin->id,
         ]);
 
-        $grado = \App\Modules\Academico\Infrastructure\Models\Grado::create(['periodo_academico_id' => $periodo->id, 'nombre' => '1ro Secundaria', 'nivel' => 'secundaria', 'orden' => 1]);
-        $seccion = \App\Modules\Academico\Infrastructure\Models\Seccion::create(['grado_id' => $grado->id, 'nombre' => 'A', 'turno' => 'mañana']);
-        $curso = \App\Modules\Academico\Infrastructure\Models\Curso::create(['codigo' => 'MAT1', 'nombre' => 'Matemáticas', 'area' => 'ciencias', 'grado_id' => $grado->id]);
+        $grado = Grado::create(['periodo_academico_id' => $periodo->id, 'nombre' => '1ro Secundaria', 'nivel' => 'secundaria', 'orden' => 1]);
+        $seccion = Seccion::create(['grado_id' => $grado->id, 'nombre' => 'A', 'turno' => 'mañana']);
+        $curso = Curso::create(['codigo' => 'MAT1', 'nombre' => 'Matemáticas', 'area' => 'ciencias', 'grado_id' => $grado->id]);
 
         $docenteId = Str::uuid();
-        \Illuminate\Support\Facades\DB::table('docentes')->insert(['id' => $docenteId, 'user_id' => $this->docente->id, 'dni' => '12345678', 'nombres' => 'D', 'apellidos' => '1']);
+        DB::table('docentes')->insert(['id' => $docenteId, 'user_id' => $this->docente->id, 'dni' => '12345678', 'nombres' => 'D', 'apellidos' => '1']);
 
         $this->carga = CargaAcademica::create([
             'periodo_academico_id' => $periodo->id,
@@ -63,16 +72,16 @@ class MaterialsTest extends TestCase
         ]);
 
         $alumnoId = Str::uuid();
-        \Illuminate\Support\Facades\DB::table('alumnos')->insert(['id' => $alumnoId, 'user_id' => $this->alumno->id, 'dni' => '111', 'nombres' => 'A', 'apellidos' => '1']);
-        
+        DB::table('alumnos')->insert(['id' => $alumnoId, 'user_id' => $this->alumno->id, 'dni' => '111', 'nombres' => 'A', 'apellidos' => '1']);
+
         $otroAlumnoId = Str::uuid();
-        \Illuminate\Support\Facades\DB::table('alumnos')->insert(['id' => $otroAlumnoId, 'user_id' => $this->otroAlumno->id, 'dni' => '222', 'nombres' => 'A', 'apellidos' => '2']);
+        DB::table('alumnos')->insert(['id' => $otroAlumnoId, 'user_id' => $this->otroAlumno->id, 'dni' => '222', 'nombres' => 'A', 'apellidos' => '2']);
 
         Matricula::create([
             'periodo_academico_id' => $periodo->id, 'seccion_id' => $seccion->id, 'alumno_id' => $alumnoId,
             'codigo' => 'MAT001', 'fecha' => now(), 'registrado_por' => $superadmin->id, 'estado' => 'activa',
         ]);
-        
+
         // Otro alumno inactivo en la sección
         Matricula::create([
             'periodo_academico_id' => $periodo->id, 'seccion_id' => $seccion->id, 'alumno_id' => $otroAlumnoId,
@@ -96,7 +105,7 @@ class MaterialsTest extends TestCase
         $this->assertDatabaseHas('materiales', [
             'titulo' => 'Semana 1 - Teoría',
             'carga_academica_id' => $this->carga->id,
-            'tipo' => 'archivo'
+            'tipo' => 'archivo',
         ]);
 
         $material = Material::first();
@@ -129,11 +138,11 @@ class MaterialsTest extends TestCase
             'ruta_o_url' => $path,
             'carga_academica_id' => $this->carga->id,
             'subido_por' => $this->docente->id,
-            'activo' => true
+            'activo' => true,
         ]);
 
         $response = $this->actingAs($this->alumno)->get("/api/v1/materials/{$material->id}/download");
-        
+
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'application/pdf');
     }
@@ -150,11 +159,11 @@ class MaterialsTest extends TestCase
             'ruta_o_url' => $path,
             'carga_academica_id' => $this->carga->id,
             'subido_por' => $this->docente->id,
-            'activo' => true
+            'activo' => true,
         ]);
 
         $response = $this->actingAs($this->otroAlumno)->getJson("/api/v1/materials/{$material->id}/download");
-        
+
         $response->assertStatus(403);
     }
 
