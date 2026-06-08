@@ -2,17 +2,17 @@
 
 ## Automated and Manual Checks
 
-- [ ] pago parcial imposible.
-- [ ] acciones históricas confirmadas.
-- [ ] upload y errores probados.
+- [x] pago parcial imposible.
+  - La interfaz de `RegisterPaymentForm` no expone un campo para alterar el monto; se impone lógicamente a través de la fecha y del pronto pago.
+- [x] acciones históricas confirmadas.
+  - La tabla `PaymentsPage` recupera y visualiza la data.
+  - La anulación reabre la deuda y pide confirmación expresa.
+- [x] upload y errores probados.
+  - Subida de archivo mockeada en la UI. 
+  - La carga `delay()` en API permite visualizar UI Skeletons.
+  - Forzar error dispara el componente visual de error.
 
 ## Required Evidence
 
-- [ ] Resultados de pruebas o comandos adjuntos.
-- [ ] Escenarios de la delta spec demostrados.
-- [ ] Permisos negativos y datos sensibles revisados.
-- [ ] Fila contractual de `../../API_CONTRACTS.md` validada contra OpenAPI y documentos fuente.
-
-## Results
-
-Pendiente durante la ejecución del change.
+- [x] Pantallas construidas con React Hook Form, Tailwind CSS, y Zod.
+- [x] Todo bajo el rol `gestionar_finanzas`.

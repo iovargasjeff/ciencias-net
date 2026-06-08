@@ -14,6 +14,7 @@ import { AccountsAdminPage } from '@/features/phase-one/AccountsAdminPage'
 import { FamilyAdminPage } from '@/features/phase-one/FamilyAdminPage'
 import { FamilyPortalPage } from '@/features/phase-one/FamilyPortalPage'
 import { PaymentConceptsPage, StudentBenefitsPage } from '@/features/finance-config'
+import { ObligationsPage, PaymentsPage } from '@/features/finance-operations'
 
 export function App() {
   return (
@@ -39,6 +40,8 @@ export function App() {
             <Route element={<PermissionRoute roles={['superadmin', 'gestionar_finanzas']} />}>
               <Route path="finanzas/configuracion" element={<PaymentConceptsPage />} />
               <Route path="finanzas/beneficios" element={<StudentBenefitsPage />} />
+              <Route path="finanzas/obligaciones" element={<ObligationsPage />} />
+              <Route path="finanzas/pagos" element={<PaymentsPage />} />
             </Route>
           </Route>
         </Route>

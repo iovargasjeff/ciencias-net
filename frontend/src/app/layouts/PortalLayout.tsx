@@ -26,7 +26,7 @@ export function PortalLayout() {
           <Link className="nav-link nav-link-active" to={isAdmin ? '/admin' : '/portal'}><House aria-hidden /> Inicio</Link>
           {isAdmin && canManageUsers && <><Link className="nav-link" to="/admin/cuentas"><UserCircle aria-hidden /> Cuentas</Link><Link className="nav-link" to="/admin/familias"><UsersThree aria-hidden /> Familias</Link></>}
           {isAdmin && canManageAcademic && <Link className="nav-link" to="/admin/academia"><Books aria-hidden /> Academia</Link>}
-          {isAdmin && canManageFinance && <><Link className="nav-link" to="/admin/finanzas/configuracion"><Money aria-hidden /> Conceptos de Pago</Link><Link className="nav-link" to="/admin/finanzas/beneficios"><Money aria-hidden /> Beneficios</Link></>}
+          {isAdmin && canManageFinance && <><Link className="nav-link" to="/admin/finanzas/configuracion"><Money aria-hidden /> Conceptos de Pago</Link><Link className="nav-link" to="/admin/finanzas/beneficios"><Money aria-hidden /> Beneficios</Link><Link className="nav-link" to="/admin/finanzas/obligaciones"><Money aria-hidden /> Obligaciones</Link><Link className="nav-link" to="/admin/finanzas/pagos"><Money aria-hidden /> Pagos</Link></>}
         </nav>
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
       </aside>
