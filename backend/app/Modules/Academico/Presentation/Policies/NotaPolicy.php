@@ -37,4 +37,9 @@ class NotaPolicy
     {
         return $this->register($user, $nota->examen);
     }
+
+    public function correct(User $user, Nota $nota): bool
+    {
+        return $user->hasAnyRole(['superadmin', 'coordinador_academico']);
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Modules\Academico\Infrastructure\Models\Examen;
 use App\Modules\Academico\Infrastructure\Models\Nota;
 use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\ReporteAcademico;
+use App\Modules\Academico\Presentation\Policies\AcademicReportPolicy;
 use App\Modules\Academico\Presentation\Policies\ExamenPolicy;
 use App\Modules\Academico\Presentation\Policies\NotaPolicy;
 use App\Modules\Academico\Presentation\Policies\PeriodoAcademicoPolicy;
@@ -65,6 +67,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(PeriodoAcademico::class, PeriodoAcademicoPolicy::class);
         Gate::policy(Nota::class, NotaPolicy::class);
+        Gate::policy(ReporteAcademico::class, AcademicReportPolicy::class);
 
         RateLimiter::for('human-login', fn (Request $request) => [
             Limit::perMinute(5)->by(mb_strtolower((string) $request->input('email')).'|'.$request->ip()),

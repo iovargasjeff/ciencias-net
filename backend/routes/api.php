@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Academico\Presentation\Controllers\AcademicController;
+use App\Modules\Academico\Presentation\Controllers\AcademicReportController;
 use App\Modules\Academico\Presentation\Controllers\AssessmentController;
 use App\Modules\Academico\Presentation\Controllers\NotasController;
 use App\Modules\Asistencia\Presentation\Controllers\StationController;
@@ -120,6 +121,13 @@ Route::prefix('v1')->group(function (): void {
         // Assessments
         Route::get('assessments', [AssessmentController::class, 'index']);
         Route::post('assessments', [AssessmentController::class, 'store'])->name('api.v1.assessments.store');
+        Route::post('assessments/{examen}/publication', [AcademicReportController::class, 'publishAssessment']);
+        Route::put('assessments/{examen}/closure', [AcademicReportController::class, 'setAssessmentClosure']);
+
+        // Academic Reports & Rankings
+        Route::get('rankings', [AcademicReportController::class, 'listRankings']);
+        Route::post('academic-reports', [AcademicReportController::class, 'generateAcademicReport']);
+        Route::post('assessment-results/{nota}/corrections', [AcademicReportController::class, 'correctPublishedAssessmentResult']);
 
         // Notas (Result Entry Import)
         Route::post('assessments/{examen}/grades', [NotasController::class, 'store']);
