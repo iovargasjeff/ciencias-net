@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Modules\Finanzas\Infrastructure\Models\ConceptoPago;
+use App\Modules\Finanzas\Infrastructure\Models\ConfiguracionFinanciera;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,5 +31,15 @@ class PeriodoAcademico extends Model
     public function grados(): HasMany
     {
         return $this->hasMany(Grado::class);
+    }
+
+    public function configuracionesFinancieras(): HasMany
+    {
+        return $this->hasMany(ConfiguracionFinanciera::class);
+    }
+
+    public function conceptosPago(): HasMany
+    {
+        return $this->hasMany(ConceptoPago::class);
     }
 }

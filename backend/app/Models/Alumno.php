@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Modules\Finanzas\Infrastructure\Models\BeneficioAlumno;
+use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,5 +31,15 @@ class Alumno extends Model
     public function matriculas(): HasMany
     {
         return $this->hasMany(Matricula::class);
+    }
+
+    public function beneficiosFinancieros(): HasMany
+    {
+        return $this->hasMany(BeneficioAlumno::class);
+    }
+
+    public function obligacionesPago(): HasMany
+    {
+        return $this->hasMany(ObligacionPago::class);
     }
 }
