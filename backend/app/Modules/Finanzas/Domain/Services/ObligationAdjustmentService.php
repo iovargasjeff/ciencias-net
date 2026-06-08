@@ -1,0 +1,164 @@
+<?php
+
+namespace App\Modules\Finanzas\Domain\Services;
+
+use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
+use App\Modules\Usuarios\Infrastructure\Models\User;
+use App\Support\AuditLogger;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+
+/**
+ * Service for adjusting pending payment obligations.
+ *
+ * Handles:
+ * - Validating obligation can be modified (must be pending)
+ * - Updating allowed fields (amounts, dates, benefit)
+ * - Recording audit trail with before/after values
+ * - Dispatching notification events
+ */
+class ObligationAdjustmentService
+{
+    public function __construct(private AuditLogger $auditLogger) {}
+
+    /**
+     * @throws ConflictHttpException If obligation is not pending
+     */
+    public function adjust(
+        ObligacionPago $obligation,
+        array $adjustmentData,
+        User $adjustedBy
+    ): ObligacionPago {
+        if ($obligation->estado !== 'pendiente') {
+            throw new ConflictHttpException(
+                "Solo se pueden ajustar obligaciones en estado 'pendiente'. Estado actual: {$obligation->estado}"
+            );
+        }
+
+        return DB::transaction(function () use ($obligation, $adjustmentData, $adjustedBy) {
+            $old = $obligation->toArray();
+
+            $updatedFields = $this->calculateAdjustment(
+                $obligation,
+                $adjustmentData['adjustment_type'],
+                (float) $adjustmentData['amount']
+            );
+
+            $obligation->update(array_merge($updatedFields, [
+                'actualizado_finanzas_por' => $adjustedBy->id,
+                'motivo_ultima_modificacion' => $adjustmentData['reason'],
+            ]));
+
+            $obligation->refresh();
+
+            $this->auditLogger->record(
+                null,
+                'finance.obligation_adjusted',
+                $adjustedBy,
+                $obligation,
+                $old,
+                $obligation->toArray()
+            );
+
+            Event::dispatch('obligation.adjusted', [
+                'obligation' => $obligation,
+                'adjustedBy' => $adjustedBy,
+                'reason' => $adjustmentData['reason'],
+            ]);
+
+            return $obligation;
+        });
+    }
+
+    public function bulkAdjust(
+        array $filters,
+        array $adjustmentData,
+        User $adjustedBy
+    ): int {
+        return DB::transaction(function () use ($filters, $adjustmentData, $adjustedBy) {
+            $query = ObligacionPago::query()
+                ->where('estado', 'pendiente');
+
+            if (! empty($filters['obligation_ids'])) {
+                $query->whereIn('id', $filters['obligation_ids']);
+            }
+
+            if ($filters['concept_id'] ?? null) {
+                $query->where('concepto_id', $filters['concept_id']);
+            }
+
+            if ($filters['grade_id'] ?? null) {
+                $query->whereHas('alumno.matriculas', function ($q) use ($filters) {
+                    $q->where('estado', 'activo')
+                        ->whereHas('seccion.grado', function ($gq) use ($filters) {
+                            $gq->where('id', $filters['grade_id']);
+                        });
+                });
+            }
+
+            if ($filters['section_id'] ?? null) {
+                $query->whereHas('alumno.matriculas', function ($q) use ($filters) {
+                    $q->where('estado', 'activo')
+                        ->where('seccion_id', $filters['section_id']);
+                });
+            }
+
+            $obligations = $query->get();
+            $count = 0;
+
+            foreach ($obligations as $obligation) {
+                try {
+                    $this->adjust($obligation, $adjustmentData, $adjustedBy);
+                    $count++;
+                } catch (\Throwable $e) {
+                    \Log::error("Failed to adjust obligation {$obligation->id}", [
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+            }
+
+            return $count;
+        });
+    }
+
+    private function calculateAdjustment(
+        ObligacionPago $obligation,
+        string $type,
+        float $amount
+    ): array {
+        return match ($type) {
+            'charge' => $this->applyCharge($obligation, $amount),
+            'discount' => $this->applyDiscount($obligation, $amount),
+            'waiver' => $this->applyWaiver($obligation),
+            default => throw new \InvalidArgumentException("Unknown adjustment type: {$type}"),
+        };
+    }
+
+    private function applyCharge(ObligacionPago $obligation, float $chargeAmount): array
+    {
+        return [
+            'monto_ordinario_snapshot' => $obligation->monto_ordinario_snapshot + $chargeAmount,
+            'monto_pronto_pago_snapshot' => max(0, $obligation->monto_pronto_pago_snapshot + $chargeAmount),
+        ];
+    }
+
+    private function applyDiscount(ObligacionPago $obligation, float $discountAmount): array
+    {
+        $newOrdinario = max(0, $obligation->monto_ordinario_snapshot - $discountAmount);
+        $newPromtoPago = max(0, $newOrdinario - $obligation->descuento_pronto_pago_aplicado);
+
+        return [
+            'monto_ordinario_snapshot' => $newOrdinario,
+            'monto_pronto_pago_snapshot' => $newPromtoPago,
+        ];
+    }
+
+    private function applyWaiver(ObligacionPago $obligation): array
+    {
+        return [
+            'monto_ordinario_snapshot' => 0,
+            'monto_pronto_pago_snapshot' => 0,
+        ];
+    }
+}

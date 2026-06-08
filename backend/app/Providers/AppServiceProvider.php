@@ -10,6 +10,8 @@ use App\Modules\Academico\Presentation\Policies\AcademicReportPolicy;
 use App\Modules\Academico\Presentation\Policies\ExamenPolicy;
 use App\Modules\Academico\Presentation\Policies\NotaPolicy;
 use App\Modules\Academico\Presentation\Policies\PeriodoAcademicoPolicy;
+use App\Modules\Finanzas\Domain\Repositories\ObligationRepositoryInterface;
+use App\Modules\Finanzas\Infrastructure\Repositories\EloquentObligationRepository;
 use App\Modules\Horarios\Infrastructure\Models\EventoCalendario;
 use App\Modules\Horarios\Infrastructure\Models\Horario;
 use App\Modules\Horarios\Presentation\Policies\EventoCalendarioPolicy;
@@ -34,7 +36,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Finance module bindings
+        $this->app->bind(
+            ObligationRepositoryInterface::class,
+            EloquentObligationRepository::class
+        );
     }
 
     /**
