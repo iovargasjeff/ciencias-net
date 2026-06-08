@@ -40,7 +40,7 @@ class PaymentObligationAuthorizationTest extends TestCase
         $this->teacher->assignRole('docente');
 
         $this->student = User::factory()->create();
-        $this->student->assignRole('estudiante');
+        $this->student->assignRole('alumno');
 
         $this->unauthorized = User::factory()->create();
 
