@@ -16,6 +16,7 @@ import { FamilyAdminPage } from '@/features/phase-one/FamilyAdminPage'
 import { FamilyPortalPage } from '@/features/phase-one/FamilyPortalPage'
 import { BiometricAdminPage } from '@/features/biometrics/BiometricAdminPage'
 import { StudentAttendancePage } from '@/features/attendance/StudentAttendancePage'
+import { PayrollAdminPage } from '@/features/payroll/PayrollAdminPage'
 
 export function App() {
   return (
@@ -41,6 +42,9 @@ export function App() {
             </Route>
             <Route element={<PermissionRoute roles={['superadmin', 'auxiliar', 'toe']} />}>
               <Route path="asistencia" element={<StudentAttendancePage />} />
+            </Route>
+            <Route element={<PermissionRoute roles={['superadmin', 'administrativo']} />}>
+              <Route path="planilla" element={<PayrollAdminPage />} />
             </Route>
           </Route>
         </Route>
