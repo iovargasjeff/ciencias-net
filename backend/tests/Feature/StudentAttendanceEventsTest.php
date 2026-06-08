@@ -11,7 +11,7 @@ use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
-use App\Notifications\StudentAttendanceMovementNotification;
+use App\Modules\Asistencia\Infrastructure\Notifications\StudentAttendanceMovementNotification;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;

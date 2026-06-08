@@ -9,7 +9,7 @@ use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
 use App\Modules\Asistencia\Domain\Models\ConfiguracionJornada;
 use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
-use App\Notifications\StudentAttendanceMovementNotification;
+use App\Modules\Asistencia\Infrastructure\Notifications\StudentAttendanceMovementNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;

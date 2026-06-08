@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use App\Modules\Academico\Infrastructure\Models\Examen;
 use App\Modules\Academico\Presentation\Policies\ExamenPolicy;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
+use App\Modules\Usuarios\Infrastructure\Models\User;
+use App\Modules\Usuarios\Presentation\Policies\UserPolicy;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Presentation\Policies\PeriodoAcademicoPolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\Request;
@@ -48,6 +54,9 @@ class AppServiceProvider extends ServiceProvider
             return "App\\Models\\{$modelName}";
         });
         Gate::policy(Examen::class, ExamenPolicy::class);
+        Gate::policy(Alumno::class, AlumnoPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(PeriodoAcademico::class, PeriodoAcademicoPolicy::class);
 
         RateLimiter::for('human-login', fn (Request $request) => [
             Limit::perMinute(5)->by(mb_strtolower((string) $request->input('email')).'|'.$request->ip()),

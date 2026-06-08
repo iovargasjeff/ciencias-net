@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Modules\Asistencia\Infrastructure\Notifications;
 
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;

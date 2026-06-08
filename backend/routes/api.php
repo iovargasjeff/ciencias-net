@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\V1\Academic\AcademicController;
-use App\Http\Controllers\Api\V1\Auth\PasswordRecoveryController;
-use App\Http\Controllers\Api\V1\Auth\SessionController;
+use App\Modules\Academico\Presentation\Controllers\AcademicController;
+use App\Modules\Auth\Presentation\Controllers\PasswordRecoveryController;
+use App\Modules\Auth\Presentation\Controllers\SessionController;
 use App\Modules\Usuarios\Presentation\Controllers\FamilyLinkController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Academico\Presentation\Controllers\AssessmentController;

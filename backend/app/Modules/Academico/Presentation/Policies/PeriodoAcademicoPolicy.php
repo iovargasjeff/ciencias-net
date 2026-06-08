@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Policies;
+namespace App\Modules\Academico\Presentation\Policies;
 
 use App\Modules\Usuarios\Infrastructure\Models\User;
 
