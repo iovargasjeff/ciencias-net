@@ -2,8 +2,8 @@
 
 namespace App\Modules\Asistencia\Infrastructure\Notifications;
 
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;

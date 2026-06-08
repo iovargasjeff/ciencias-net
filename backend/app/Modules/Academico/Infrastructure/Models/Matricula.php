@@ -3,9 +3,6 @@
 namespace App\Modules\Academico\Infrastructure\Models;
 
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
-
-use App\Modules\Academico\Infrastructure\Models\Seccion;
-
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

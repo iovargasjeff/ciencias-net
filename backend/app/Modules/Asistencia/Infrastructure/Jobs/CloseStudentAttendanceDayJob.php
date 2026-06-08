@@ -2,8 +2,8 @@
 
 namespace App\Modules\Asistencia\Infrastructure\Jobs;
 
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Asistencia\Domain\Services\StudentAttendanceClosureService;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;

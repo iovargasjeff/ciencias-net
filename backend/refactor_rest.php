@@ -18,18 +18,19 @@ $map = [
 ];
 
 $baseDir = __DIR__;
-$modelsDir = $baseDir . '/app/Models';
-$modulesDir = $baseDir . '/app/Modules';
+$modelsDir = $baseDir.'/app/Models';
+$modulesDir = $baseDir.'/app/Modules';
 
-function updateReferences($baseDir, $model, $module) {
+function updateReferences($baseDir, $model, $module)
+{
     $oldNamespace = "App\\Models\\$model";
     $newNamespace = "App\\Modules\\$module\\Infrastructure\\Models\\$model";
-    
+
     $directories = [
-        $baseDir . '/app',
-        $baseDir . '/database',
-        $baseDir . '/tests',
-        $baseDir . '/routes',
+        $baseDir.'/app',
+        $baseDir.'/database',
+        $baseDir.'/tests',
+        $baseDir.'/routes',
     ];
 
     foreach ($directories as $dir) {
@@ -44,7 +45,7 @@ function updateReferences($baseDir, $model, $module) {
                     $content = str_replace("use $oldNamespace;", "use $newNamespace;", $content);
                     $modified = true;
                 }
-                
+
                 // 2. If it relies on same namespace (App\Models) and uses the model WITHOUT import
                 // e.g. public function alumno(): BelongsTo { return $this->belongsTo(Alumno::class); }
                 // Since we are moving ALL models, if a file has `namespace App\Models;` and uses `$model::class`,
@@ -57,7 +58,7 @@ function updateReferences($baseDir, $model, $module) {
                     $content = str_replace($oldNamespace, $newNamespace, $content);
                     $modified = true;
                 }
-                
+
                 // 4. In factories, we might have missing use statements because we moved the model out of App\Models.
                 // We'll just append `use $newNamespace;` after `namespace Database\Factories;` if the model is used.
                 if (strpos($content, 'namespace Database\Factories;') !== false) {
@@ -66,11 +67,11 @@ function updateReferences($baseDir, $model, $module) {
                         $modified = true;
                     }
                 }
-                
+
                 // 5. Same for tests, models, controllers that lost their sibling.
                 if (preg_match('/namespace App\\\(Models|Http\\\Controllers|Policies|Modules\\\.*);/', $content, $matches)) {
                     if (preg_match("/\b$model::class/", $content) && strpos($content, "use $newNamespace;") === false) {
-                        $content = str_replace($matches[0], $matches[0] . "\n\nuse $newNamespace;", $content);
+                        $content = str_replace($matches[0], $matches[0]."\n\nuse $newNamespace;", $content);
                         $modified = true;
                     }
                 }
@@ -89,19 +90,19 @@ foreach ($map as $model => $module) {
     $targetPath = "$targetDir/$model.php";
 
     if (file_exists($sourcePath)) {
-        if (!is_dir($targetDir)) {
+        if (! is_dir($targetDir)) {
             mkdir($targetDir, 0777, true);
         }
-        
+
         // 1. Move file
         rename($sourcePath, $targetPath);
         echo "Moved $model to $module\n";
-        
+
         // 2. Update namespace in the moved file
         $content = file_get_contents($targetPath);
-        $content = str_replace("namespace App\\Models;", "namespace App\\Modules\\$module\\Infrastructure\\Models;", $content);
+        $content = str_replace('namespace App\\Models;', "namespace App\\Modules\\$module\\Infrastructure\\Models;", $content);
         file_put_contents($targetPath, $content);
-        
+
         // 3. Update references in all other files
         updateReferences($baseDir, $model, $module);
     }

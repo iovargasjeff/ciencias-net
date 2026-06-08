@@ -1,4 +1,4 @@
-import { Books, House, SignOut, UserCircle, UsersThree } from '@phosphor-icons/react'
+import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree } from '@phosphor-icons/react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { logout } from '@/features/auth/api'
@@ -8,8 +8,9 @@ export function PortalLayout() {
   const navigate = useNavigate()
   const location = useLocation()
   const isAdmin = location.pathname.startsWith('/admin')
-  const canManageUsers = auth.user?.roles.some((role) => ['superadmin', 'gestor_usuarios'].includes(role))
-  const canManageAcademic = auth.user?.roles.some((role) => ['superadmin', 'coordinador_academico'].includes(role))
+  const canManageUsers = auth.user?.roles?.some((role) => ['superadmin', 'gestor_usuarios'].includes(role))
+  const canManageAcademic = auth.user?.roles?.some((role) => ['superadmin', 'coordinador_academico'].includes(role))
+  const canManageDevices = auth.user?.roles?.includes('superadmin') || auth.user?.permissions?.includes('gestionar_dispositivos')
 
   async function closeSession() {
     await logout()
@@ -25,6 +26,7 @@ export function PortalLayout() {
           <Link className="nav-link nav-link-active" to={isAdmin ? '/admin' : '/portal'}><House aria-hidden /> Inicio</Link>
           {isAdmin && canManageUsers && <><Link className="nav-link" to="/admin/cuentas"><UserCircle aria-hidden /> Cuentas</Link><Link className="nav-link" to="/admin/familias"><UsersThree aria-hidden /> Familias</Link></>}
           {isAdmin && canManageAcademic && <Link className="nav-link" to="/admin/academia"><Books aria-hidden /> Academia</Link>}
+          {isAdmin && canManageDevices && <Link className="nav-link" to="/admin/biometria"><Fingerprint aria-hidden /> Biometría</Link>}
         </nav>
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
       </aside>

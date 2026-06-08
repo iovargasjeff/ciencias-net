@@ -145,3 +145,34 @@ button:focus-visible, a:focus-visible { outline: 3px solid #86a2ff; outline-offs
               #030712 !important;
 }
 
+/* Light Glassmorphism Design System (FE-009A Redesign) */
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 8px -1px rgba(0, 0, 0, 0.03);
+}
+
+.glass-input-light {
+  background: rgba(248, 250, 252, 0.7) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  color: #1e293b !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.glass-input-light:focus {
+  background: #ffffff !important;
+  border-color: rgba(37, 99, 235, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  outline: none !important;
+}
+
+/* Light dashboard atmospheric background layout */
+.dashboard-light-bg {
+  background: radial-gradient(circle at 80% 10%, rgba(219, 234, 254, 0.25) 0%, transparent 45%),
+              radial-gradient(circle at 10% 90%, rgba(243, 232, 255, 0.25) 0%, transparent 45%),
+              #f8fafc !important;
+}
+
+

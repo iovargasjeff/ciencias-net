@@ -2,10 +2,6 @@
 
 namespace App\Modules\Usuarios\Infrastructure\Models;
 
-use App\Modules\Usuarios\Infrastructure\Models\Padre;
-
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
-
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;

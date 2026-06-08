@@ -2,13 +2,9 @@
 
 namespace App\Modules\Usuarios\Infrastructure\Models;
 
-use App\Modules\Usuarios\Infrastructure\Models\User;
-
-use App\Modules\Usuarios\Infrastructure\Models\Padre;
-
+use App\Modules\Academico\Infrastructure\Models\Matricula;
 use App\Modules\Finanzas\Infrastructure\Models\BeneficioAlumno;
 use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
-use App\Modules\Academico\Infrastructure\Models\Matricula;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

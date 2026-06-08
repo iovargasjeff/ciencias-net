@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:05'
+                  example: '2026-06-08T20:19:18'
               required:
                 - image
                 - camera_id
@@ -1204,15 +1204,15 @@ paths:
                 name:
                   type: string
                   description: validation.max.
-                  example: m
+                  example: b
                 location:
                   type: string
                   description: validation.max.
-                  example: t
+                  example: 'n'
                 mode:
                   type: string
                   description: ''
-                  example: mixed
+                  example: exit
                   enum:
                     - entry
                     - exit
@@ -1249,7 +1249,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: mixed
+                  example: exit
                   enum:
                     - entry
                     - exit
@@ -1450,7 +1450,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: late
+                  example: absence
                   enum:
                     - entry
                     - exit
@@ -1459,7 +1459,7 @@ paths:
                 occurred_at:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:08'
+                  example: '2026-06-08T20:19:21'
                 reason:
                   type: string
                   description: validation.max.
@@ -1489,7 +1489,7 @@ paths:
                 date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:08'
+                  example: '2026-06-08T20:19:21'
               required:
                 - date
       security: []
@@ -1678,7 +1678,7 @@ paths:
                 outcome:
                   type: string
                   description: ''
-                  example: rejected
+                  example: confirmed
                   enum:
                     - confirmed
                     - rejected
@@ -1761,7 +1761,7 @@ paths:
                 date:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:09'
+                  example: '2026-06-08T20:19:22'
                 adjustment_type:
                   type: string
                   description: ''
@@ -1917,7 +1917,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: matricula
+                  example: cuota_ingreso
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -1940,7 +1940,7 @@ paths:
                 recurrence:
                   type: string
                   description: ''
-                  example: monthly
+                  example: annual
                   enum:
                     - single
                     - monthly
@@ -1954,7 +1954,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:10'
+                  example: '2026-06-08T20:19:23'
                   nullable: true
               required:
                 - code
@@ -2027,7 +2027,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:10'
+                  example: '2026-06-08T20:19:23'
                   nullable: true
       security: []
     parameters:
@@ -2095,7 +2095,7 @@ paths:
                 benefit_type:
                   type: string
                   description: ''
-                  example: percentage
+                  example: fixed
                   enum:
                     - percentage
                     - fixed
@@ -2119,7 +2119,7 @@ paths:
                 starts_on:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:10'
+                  example: '2026-06-08T20:19:23'
                 ends_on:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -2227,7 +2227,7 @@ paths:
                 effective_from:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:11'
+                  example: '2026-06-08T20:19:24'
                 effective_until:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -2290,7 +2290,7 @@ paths:
                 period_start:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:11'
+                  example: '2026-06-08T20:19:24'
                 period_end:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -2345,7 +2345,7 @@ paths:
                 period_start:
                   type: string
                   description: validation.date.
-                  example: '2026-06-08T19:31:11'
+                  example: '2026-06-08T20:19:24'
                 period_end:
                   type: string
                   description: 'validation.date validation.after_or_equal.'
@@ -2599,3 +2599,173 @@ paths:
                 - max_score
                 - assessment_date
       security: []
+  '/api/v1/assessments/{examen_id}/grades':
+    post:
+      summary: ''
+      operationId: postApiV1AssessmentsExamen_idGrades
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matricula_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the matriculas table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                estado:
+                  type: string
+                  description: ''
+                  example: registrada
+                  enum:
+                    - registrada
+                    - ausente
+                    - exonerado
+                    - pendiente
+                puntaje:
+                  type: number
+                  description: validation.min.
+                  example: 84
+                  nullable: true
+                observacion:
+                  type: string
+                  description: validation.max.
+                  example: z
+                  nullable: true
+              required:
+                - matricula_id
+                - estado
+      security: []
+    parameters:
+      -
+        in: path
+        name: examen_id
+        description: 'The ID of the examen.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/assessments/{examen_id}/grades/import':
+    post:
+      summary: ''
+      operationId: postApiV1AssessmentsExamen_idGradesImport
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                preview:
+                  type: boolean
+                  description: ''
+                  example: false
+                notas:
+                  type: array
+                  description: validation.min.
+                  example:
+                    - []
+                  items:
+                    type: object
+                    properties:
+                      matricula_id:
+                        type: string
+                        description: 'validation.uuid The <code>id</code> of an existing record in the matriculas table.'
+                        example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                      estado:
+                        type: string
+                        description: ''
+                        example: registrada
+                        enum:
+                          - registrada
+                          - ausente
+                          - exonerado
+                          - pendiente
+                      puntaje:
+                        type: number
+                        description: validation.min.
+                        example: 84
+                        nullable: true
+                      observacion:
+                        type: string
+                        description: validation.max.
+                        example: z
+                        nullable: true
+                    required:
+                      - matricula_id
+                      - estado
+              required:
+                - notas
+      security: []
+    parameters:
+      -
+        in: path
+        name: examen_id
+        description: 'The ID of the examen.'
+        example: architecto
+        required: true
+        schema:
+          type: string
+  '/api/v1/grades/{nota_id}':
+    put:
+      summary: ''
+      operationId: putApiV1GradesNota_id
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                matricula_id:
+                  type: string
+                  description: 'validation.uuid The <code>id</code> of an existing record in the matriculas table.'
+                  example: 6ff8f7f6-1eb3-3525-be4a-3932c805afed
+                estado:
+                  type: string
+                  description: ''
+                  example: pendiente
+                  enum:
+                    - registrada
+                    - ausente
+                    - exonerado
+                    - pendiente
+                puntaje:
+                  type: number
+                  description: validation.min.
+                  example: 84
+                  nullable: true
+                observacion:
+                  type: string
+                  description: validation.max.
+                  example: z
+                  nullable: true
+              required:
+                - matricula_id
+                - estado
+      security: []
+    parameters:
+      -
+        in: path
+        name: nota_id
+        description: 'The ID of the nota.'
+        example: architecto
+        required: true
+        schema:
+          type: string

@@ -10,13 +10,13 @@
  * - Relaciones principales alumno → obligaciones → movimientos.
  */
 
-use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Finanzas\Infrastructure\Models\BeneficioAlumno;
 use App\Modules\Finanzas\Infrastructure\Models\ConceptoPago;
 use App\Modules\Finanzas\Infrastructure\Models\MovimientoPago;
 use App\Modules\Finanzas\Infrastructure\Models\ObligacionPago;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;

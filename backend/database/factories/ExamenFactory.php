@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
-use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Academico\Infrastructure\Models\Examen;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Examen> */

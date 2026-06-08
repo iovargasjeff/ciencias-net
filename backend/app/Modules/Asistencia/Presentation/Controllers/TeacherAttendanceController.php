@@ -3,7 +3,6 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
 use App\Modules\Asistencia\Domain\Services\TeacherAttendanceSessionService;
@@ -12,6 +11,7 @@ use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CancelClassSe
 use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CreateTeacherAttendanceAdjustmentRequest;
 use App\Modules\Asistencia\Presentation\Resources\ClassSessionResource;
 use App\Modules\Asistencia\Presentation\Resources\TeacherAttendanceResource;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
