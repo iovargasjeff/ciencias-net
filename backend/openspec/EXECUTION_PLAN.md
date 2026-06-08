@@ -30,7 +30,7 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-002 | `[ ]` | `add-biometric-attendance-schema` | André | Jefferson | DB-001 |
+| DB-002 | `[x]` | `add-biometric-attendance-schema` | André | Jefferson | DB-001 |
 | BE-007 | `[ ]` | `add-biometric-enrollment-consent` | André | Jefferson | DB-002 |
 | BE-008 | `[ ]` | `add-facial-service-integration` | André | Jefferson | OPS-001, DB-002 |
 | BE-009 | `[ ]` | `add-web-station-management` | André | Jefferson | BE-004, DB-002, BE-008 |
