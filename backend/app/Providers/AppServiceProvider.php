@@ -14,6 +14,8 @@ use App\Modules\Horarios\Infrastructure\Models\EventoCalendario;
 use App\Modules\Horarios\Infrastructure\Models\Horario;
 use App\Modules\Horarios\Presentation\Policies\EventoCalendarioPolicy;
 use App\Modules\Horarios\Presentation\Policies\HorarioPolicy;
+use App\Modules\Materiales\Infrastructure\Models\Material;
+use App\Modules\Materiales\Presentation\Policies\MaterialPolicy;
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
@@ -71,8 +73,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(PeriodoAcademico::class, PeriodoAcademicoPolicy::class);
         Gate::policy(Nota::class, NotaPolicy::class);
-        Gate::policy(Horario::class, HorarioPolicy::class);
         Gate::policy(EventoCalendario::class, EventoCalendarioPolicy::class);
+        Gate::policy(Horario::class, HorarioPolicy::class);
+        Gate::policy(Material::class, MaterialPolicy::class);
         Gate::policy(ReporteAcademico::class, AcademicReportPolicy::class);
 
         RateLimiter::for('human-login', fn (Request $request) => [
