@@ -22,6 +22,7 @@ import { CashReportPage } from '@/features/finance-queries/CashReportPage'
 import { BiometricAdminPage } from '@/features/biometrics/BiometricAdminPage'
 import { StudentAttendancePage } from '@/features/attendance/StudentAttendancePage'
 import { PayrollAdminPage } from '@/features/payroll/PayrollAdminPage'
+import { PsychologyAdminPage } from '@/features/psychology/PsychologyAdminPage'
 
 export function App() {
   return (
@@ -63,6 +64,9 @@ export function App() {
             </Route>
             <Route element={<PermissionRoute roles={['superadmin']} permissions={['gestionar_planilla']} />}>
               <Route path="planilla" element={<PayrollAdminPage />} />
+            </Route>
+            <Route element={<PermissionRoute roles={['superadmin', 'psicologia']} />}>
+              <Route path="psicologia" element={<PsychologyAdminPage />} />
             </Route>
           </Route>
         </Route>
