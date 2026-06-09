@@ -1,7 +1,9 @@
-import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, FileText, Money, ClipboardText, Brain, Calendar } from '@phosphor-icons/react'
+import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, FileText, Money, ClipboardText, Brain, Calendar, Megaphone } from '@phosphor-icons/react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { logout } from '@/features/auth/api'
+import { useQuery } from '@tanstack/react-query'
+import { listAnnouncements } from '@/features/communications/api'
 
 export function PortalLayout() {
   const auth = useAuth()
@@ -16,6 +18,16 @@ export function PortalLayout() {
   const canManageIncidents = auth.user?.roles?.some((role) => ['superadmin', 'auxiliar', 'toe'].includes(role))
   const canManagePayroll = auth.user?.roles?.includes('superadmin') || auth.user?.permissions?.includes('gestionar_planilla')
   const canManageAssessments = auth.user?.roles?.some((role) => ['superadmin', 'coordinador_academico', 'docente'].includes(role))
+  const canManageComms = auth.user?.roles?.some((role) => ['superadmin', 'toe', 'coordinador_academico'].includes(role))
+
+  // Unread announcements query for badge count
+  const announcementsQuery = useQuery({
+    queryKey: ['portal-announcements'],
+    queryFn: () => listAnnouncements({ is_archived: false }),
+    enabled: !!auth.user && !isAdmin
+  })
+
+  const unreadAnnouncementsCount = announcementsQuery.data?.data?.filter((ann) => !ann.is_read)?.length || 0
   const canManagePsychology = auth.user?.roles?.some((role) => ['superadmin', 'psicologia'].includes(role))
 
 
@@ -42,8 +54,20 @@ export function PortalLayout() {
           {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/evaluaciones"><FileText aria-hidden /> Evaluaciones</Link>}
           {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/materiales"><FileText aria-hidden /> Materiales de Estudio</Link>}
           {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/horarios"><Calendar aria-hidden /> Horarios y Calendario</Link>}
+          {isAdmin && canManageComms && <Link className="nav-link" to="/admin/comunicaciones"><Megaphone aria-hidden /> Comunicaciones</Link>}
           {!isAdmin && <Link className="nav-link" to="/portal/materiales"><Books aria-hidden /> Materiales</Link>}
           {!isAdmin && <Link className="nav-link" to="/portal/horarios"><Calendar aria-hidden /> Horario y Calendario</Link>}
+          {!isAdmin && (
+            <Link className="nav-link" to="/portal/comunicaciones">
+              <Megaphone aria-hidden />
+              Comunicaciones
+              {unreadAnnouncementsCount > 0 && (
+                <span className="ml-auto bg-blue-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full" id="unread-communications-badge">
+                  {unreadAnnouncementsCount}
+                </span>
+              )}
+            </Link>
+          )}
           {isAdmin && canManagePsychology && <Link className="nav-link" to="/admin/psicologia"><Brain aria-hidden /> Psicología</Link>}
         </nav>
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>

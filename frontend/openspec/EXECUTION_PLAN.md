@@ -50,7 +50,7 @@
 | FE-016 | `[x]` | `add-result-publication-reports-portals` | Vincenzo | Jefferson | FE-008 |
 | FE-017 | `[x]` | `add-materials-portal` | Vincenzo | Jefferson | FE-002 |
 | FE-018 | `[x]` | `add-schedules-calendar-portals` | Vincenzo | Jefferson | FE-002 |
-| FE-019 | `[ ]` | `add-communications-notifications` | Vincenzo | Jefferson | FE-002 |
+| FE-019 | `[x]` | `add-communications-notifications` | Vincenzo | Jefferson | FE-002 |
 
 ## Fase 5: Incidencias y Psicología
 
