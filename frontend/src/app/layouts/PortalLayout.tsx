@@ -1,4 +1,4 @@
-import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, FileText, Money, ClipboardText, Brain } from '@phosphor-icons/react'
+import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, FileText, Money, ClipboardText, Brain, Calendar } from '@phosphor-icons/react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { logout } from '@/features/auth/api'
@@ -41,7 +41,9 @@ export function PortalLayout() {
           {isAdmin && canManagePayroll && <Link className="nav-link" to="/admin/planilla"><Coins aria-hidden /> Planilla</Link>}
           {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/evaluaciones"><FileText aria-hidden /> Evaluaciones</Link>}
           {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/materiales"><FileText aria-hidden /> Materiales de Estudio</Link>}
+          {isAdmin && canManageAssessments && <Link className="nav-link" to="/admin/horarios"><Calendar aria-hidden /> Horarios y Calendario</Link>}
           {!isAdmin && <Link className="nav-link" to="/portal/materiales"><Books aria-hidden /> Materiales</Link>}
+          {!isAdmin && <Link className="nav-link" to="/portal/horarios"><Calendar aria-hidden /> Horario y Calendario</Link>}
           {isAdmin && canManagePsychology && <Link className="nav-link" to="/admin/psicologia"><Brain aria-hidden /> Psicología</Link>}
         </nav>
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
