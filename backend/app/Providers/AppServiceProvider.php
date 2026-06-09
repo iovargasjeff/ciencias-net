@@ -24,6 +24,8 @@ use App\Modules\Incidencias\Infrastructure\Models\Incidencia;
 use App\Modules\Incidencias\Presentation\Policies\IncidentPolicy;
 use App\Modules\Materiales\Infrastructure\Models\Material;
 use App\Modules\Materiales\Presentation\Policies\MaterialPolicy;
+use App\Modules\Psicologia\Infrastructure\Models\AtencionPsicologica;
+use App\Modules\Psicologia\Presentation\Policies\PsychologyCarePolicy;
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
@@ -94,6 +96,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Material::class, MaterialPolicy::class);
         Gate::policy(Comunicado::class, ComunicadoPolicy::class);
         Gate::policy(Incidencia::class, IncidentPolicy::class);
+        Gate::policy(AtencionPsicologica::class, PsychologyCarePolicy::class);
         Gate::policy(ReporteAcademico::class, AcademicReportPolicy::class);
 
         RateLimiter::for('human-login', fn (Request $request) => [
