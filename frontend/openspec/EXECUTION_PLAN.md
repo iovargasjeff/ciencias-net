@@ -32,7 +32,7 @@
 | FE-009 | `[x]` | `add-web-station-activation-capture` | Vincenzo | Jefferson | FE-003 |
 | FE-009A | `[x]` | `add-biometric-station-administration` | Vincenzo | Jefferson | FE-003 |
 | FE-010 | `[x]` | `add-student-attendance-supervision` | Vincenzo | Jefferson | FE-002, FE-003 |
-| FE-011 | `[ ]` | `add-teacher-attendance-payroll` | Vincenzo | Jefferson | FE-003 |
+| FE-011 | `[x]` | `add-teacher-attendance-payroll` | Vincenzo | Jefferson | FE-003 |
 
 ## Fase 3: Finanzas
 

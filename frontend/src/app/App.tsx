@@ -16,6 +16,7 @@ import { FamilyAdminPage } from '@/features/phase-one/FamilyAdminPage'
 import { FamilyPortalPage } from '@/features/phase-one/FamilyPortalPage'
 import { BiometricAdminPage } from '@/features/biometrics/BiometricAdminPage'
 import { StudentAttendancePage } from '@/features/attendance/StudentAttendancePage'
+import { PayrollAdminPage } from '@/features/payroll/PayrollAdminPage'
 
 export function App() {
   return (
@@ -28,12 +29,14 @@ export function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/seleccionar-contexto" element={<PortalLayout />}><Route index element={<ContextPage />} /></Route>
         <Route path="/portal" element={<PortalLayout />}><Route index element={<FamilyPortalPage />} /></Route>
-        <Route element={<PermissionRoute roles={['superadmin', 'gestor_usuarios', 'administrativo', 'coordinador_academico', 'toe', 'psicologia', 'auxiliar']} />}>
+        <Route element={<PermissionRoute roles={['superadmin', 'gestor_usuarios', 'administrativo', 'coordinador_academico', 'toe', 'psicologia', 'auxiliar']} permissions={['gestionar_dispositivos', 'gestionar_planilla']} />}>
           <Route path="/admin" element={<PortalLayout />}>
             <Route index element={<FoundationsPage context="Administración" />} />
             <Route element={<PermissionRoute roles={['superadmin', 'gestor_usuarios']} />}>
               <Route path="cuentas" element={<AccountsAdminPage />} />
               <Route path="familias" element={<FamilyAdminPage />} />
+            </Route>
+            <Route element={<PermissionRoute roles={['superadmin']} permissions={['gestionar_dispositivos']} />}>
               <Route path="biometria" element={<BiometricAdminPage />} />
             </Route>
             <Route element={<PermissionRoute roles={['superadmin', 'coordinador_academico']} />}>
@@ -41,6 +44,9 @@ export function App() {
             </Route>
             <Route element={<PermissionRoute roles={['superadmin', 'auxiliar', 'toe']} />}>
               <Route path="asistencia" element={<StudentAttendancePage />} />
+            </Route>
+            <Route element={<PermissionRoute roles={['superadmin']} permissions={['gestionar_planilla']} />}>
+              <Route path="planilla" element={<PayrollAdminPage />} />
             </Route>
           </Route>
         </Route>
