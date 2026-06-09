@@ -18,4 +18,18 @@ class ActivationRequest extends FormRequest
             'reason' => ['sometimes', 'string', 'max:500'],
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'active' => [
+                'description' => 'Estado activo de la cuenta.',
+                'example' => true,
+            ],
+            'reason' => [
+                'description' => 'Motivo administrativo del cambio.',
+                'example' => 'Revisión administrativa completada.',
+            ],
+        ];
+    }
 }

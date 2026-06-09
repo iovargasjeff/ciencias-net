@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Alumno;
 use App\Modules\Usuarios\Domain\Models\ArchivoBiometrico;
 use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -19,7 +19,7 @@ beforeEach(function (): void {
     config(['biometrics.storage_prefix' => 'private/biometrics-test']);
     config(['facial-service.url' => 'http://facial-api.test']);
     config(['facial-service.token' => 'test-token']);
-    config(['biometrics.embedding_key' => 'base64:' . base64_encode(random_bytes(32))]);
+    config(['biometrics.embedding_key' => 'base64:'.base64_encode(random_bytes(32))]);
     Http::fake([
         'facial-api.test/v1/enrollments' => Http::response([
             'embedding' => base64_encode(random_bytes(32)),

@@ -3,6 +3,13 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
+use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
+use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
+use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
+use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
+use App\Modules\Asistencia\Infrastructure\Jobs\CloseStudentAttendanceDayJob;
+use App\Modules\Asistencia\Infrastructure\Jobs\GenerateStudentAttendanceAlertsJob;
 use App\Modules\Asistencia\Presentation\Requests\StudentAttendance\CloseStudentAttendanceDayRequest;
 use App\Modules\Asistencia\Presentation\Requests\StudentAttendance\CreateManualStudentAttendanceEventRequest;
 use App\Modules\Asistencia\Presentation\Requests\StudentAttendance\ReasonRequest;
@@ -11,14 +18,7 @@ use App\Modules\Asistencia\Presentation\Resources\RecognitionEventResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceAnomalyResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceMovementResource;
 use App\Modules\Asistencia\Presentation\Resources\StudentAttendanceResource;
-use App\Modules\Asistencia\Infrastructure\Jobs\CloseStudentAttendanceDayJob;
-use App\Modules\Asistencia\Infrastructure\Jobs\GenerateStudentAttendanceAlertsJob;
-use App\Models\Alumno;
-use App\Modules\Asistencia\Domain\Models\AnomaliaAsistencia;
-use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
-use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
-use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
-use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -119,6 +119,22 @@ class StudentAttendanceController extends Controller
         $audit->record($request, 'student_attendance.absence_justified', $request->user(), $attendance, newValues: ['reason' => 'redacted']);
 
         return response()->json(['data' => new StudentAttendanceResource($attendance)]);
+    }
+
+    public function destroy(ReasonRequest $request, string $attendanceId, AuditLogger $audit): JsonResponse
+    {
+        abort_unless($request->user()?->hasAnyRole(['superadmin', 'auxiliar']) === true, 403);
+
+        $attendance = AsistenciaAlumno::findOrFail($attendanceId);
+        if ($attendance->estado === 'anulada') {
+            throw new ConflictHttpException('La asistencia ya está anulada.');
+        }
+
+        $old = $attendance->toArray();
+        $attendance->update(['estado' => 'anulada']);
+        $audit->record($request, 'student_attendance.deleted', $request->user(), $attendance, $old, newValues: ['reason' => $request->string('reason')->toString()]);
+
+        return response()->json(null, 204);
     }
 
     public function recognitionEvents(Request $request)

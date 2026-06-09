@@ -14,10 +14,17 @@ export function ProtectedRoute() {
   return <Outlet />
 }
 
-export function PermissionRoute({ roles }: { roles: string[] }) {
+export function PermissionRoute({ roles, permissions }: { roles?: string[]; permissions?: string[] }) {
   const { user } = useAuth()
 
-  if (!user || !roles.some((role) => user.roles.includes(role))) {
+  if (!user) {
+    return <OperationalState state="forbidden" title="Sin permiso" message="Tu cuenta no puede abrir este espacio." />
+  }
+
+  const hasRole = roles ? roles.some((role) => user.roles.includes(role)) : false
+  const hasPermission = permissions ? permissions.some((perm) => user.permissions.includes(perm)) : false
+
+  if (!hasRole && !hasPermission) {
     return <OperationalState state="forbidden" title="Sin permiso" message="Tu cuenta no puede abrir este espacio." />
   }
 

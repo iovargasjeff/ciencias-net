@@ -37,6 +37,8 @@ services:
       SESSION_DRIVER: database
       SANCTUM_STATEFUL_DOMAINS: localhost:5173
       FACIAL_SERVICE_URL: http://facial-api:8001
+      FACIAL_SERVICE_TOKEN: ${FACIAL_SERVICE_TOKEN:-local-only-token}
+      FACIAL_SERVICE_TIMEOUT: 5
       RUN_MIGRATIONS: "true"
     volumes:
       - ./backend:/var/www

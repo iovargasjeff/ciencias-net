@@ -33,8 +33,8 @@
 | DB-002 | `[x]` | `add-biometric-attendance-schema` | André | Jefferson | DB-001 |
 | BE-007 | `[x]` | `add-biometric-enrollment-consent` | André | Jefferson | DB-002 |
 | BE-008 | `[x]` | `add-facial-service-integration` | André | Jefferson | OPS-001, DB-002 |
-| BE-009 | `[x]` | `add-web-station-management` | André | Jefferson | BE-008 |
-| BE-010 | `[x]` | `add-student-attendance-events` | André | Jefferson | BE-009 |
+| BE-009 | `[x]` | `add-web-station-management` | André | Jefferson | BE-004, DB-002, BE-008 |
+| BE-010 | `[x]` | `add-student-attendance-events` | André | Jefferson | BE-008, BE-009 |
 | BE-011 | `[x]` | `add-student-attendance-closure-review` | André | Jefferson | BE-010 |
 | BE-012 | `[x]` | `add-teacher-attendance-sessions` | André | Jefferson | BE-006, BE-010 |
 | BE-013 | `[x]` | `add-teacher-payroll-liquidation` | André | Jefferson | BE-012 |
@@ -43,11 +43,11 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-003 | `[ ]` | `add-finance-schema` | Fátima | Jefferson | DB-001 |
-| BE-014 | `[ ]` | `add-finance-configuration-benefits` | Fátima | Jefferson | BE-004, DB-003 |
-| BE-015 | `[ ]` | `add-obligation-generation-adjustments` | Fátima | Jefferson | BE-014 |
-| BE-016 | `[ ]` | `add-payment-movements-receipts` | Fátima | Jefferson | BE-015 |
-| BE-017 | `[ ]` | `add-finance-queries-reminders` | Fátima | Jefferson | BE-016 |
+| DB-003 | `[x]` | `add-finance-schema` | Fátima | Jefferson | DB-001 |
+| BE-014 | `[x]` | `add-finance-configuration-benefits` | Fátima | Jefferson | BE-004, DB-003 |
+| BE-015 | `[x]` | `add-obligation-generation-adjustments` | Fátima | Jefferson | BE-014 |
+| BE-016 | `[x]` | `add-payment-movements-receipts` | Fátima | Jefferson | BE-015 |
+| BE-017 | `[x]` | `add-finance-queries-reminders` | Fátima | Jefferson | BE-016 |
 
 ## Fase 4: Evaluación y contenido
 
@@ -55,19 +55,19 @@
 |---|---|---|---|---|---|
 | DB-004 | `[x]` | `add-evaluation-content-schema` | Jefferson | André | DB-001 |
 | BE-018 | `[x]` | `add-assessment-management` | Jefferson | André | BE-006, DB-004 |
-| BE-019 | `[ ]` | `add-result-entry-import` | Jefferson | André | BE-018 |
-| BE-020 | `[ ]` | `add-result-publication-ranking-reports` | Jefferson | André | BE-019 |
-| BE-021 | `[ ]` | `add-materials-management` | Jefferson | André | BE-006, DB-004 |
-| BE-022 | `[ ]` | `add-schedules-calendar-management` | Jefferson | André | BE-006, DB-004 |
-| BE-023 | `[ ]` | `add-communications-notifications` | Jefferson | André | BE-004, DB-004 |
+| BE-019 | `[x]` | `add-result-entry-import` | Jefferson | André | BE-018 |
+| BE-020 | `[x]` | `add-result-publication-ranking-reports` | Jefferson | André | BE-019 |
+| BE-021 | `[x]` | `add-materials-management` | Jefferson | André | BE-006, DB-004 |
+| BE-022 | `[x]` | `add-schedules-calendar-management` | Jefferson | André | BE-006, DB-004 |
+| BE-023 | `[x]` | `add-communications-notifications` | Jefferson | André | BE-004, DB-004 |
 
 ## Fase 5: Incidencias y Psicología
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| DB-005 | `[ ]` | `add-incidents-psychology-schema` | Fátima | André | DB-001 |
-| BE-024 | `[ ]` | `add-incidents-workflow` | Fátima | André | BE-004, DB-005 |
-| BE-025 | `[ ]` | `add-private-psychology-workflow` | Fátima | André | BE-024 |
+| DB-005 | `[x]` | `add-incidents-psychology-schema` | Fátima | André | DB-001 |
+| BE-024 | `[x]` | `add-incidents-workflow` | Jefferson | André | BE-004, DB-005 |
+| BE-025 | `[x]` | `add-private-psychology-workflow` | Jefferson | André | BE-024 |
 
 ## Fase 6: Operación y release
 

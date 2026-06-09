@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\IdentityAccess;
 
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

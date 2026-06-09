@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Alumno;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
-use App\Models\User;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
@@ -21,7 +21,7 @@ beforeEach(function (): void {
     config(['facial-service.timeout' => 5]);
     config(['biometrics.storage_disk' => 'local']);
     config(['biometrics.storage_prefix' => 'private/biometrics-test']);
-    config(['biometrics.embedding_key' => 'base64:' . base64_encode(random_bytes(32))]);
+    config(['biometrics.embedding_key' => 'base64:'.base64_encode(random_bytes(32))]);
     Storage::fake('local');
 });
 

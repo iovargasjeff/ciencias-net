@@ -2,9 +2,7 @@
 
 namespace App\Modules\Academico\Infrastructure\Models;
 
-use App\Models\CargaAcademica;
-use App\Models\Nota;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -12,20 +12,20 @@
  * - Índices verificados vía estructuras (implícito en constraints y lecturas).
  */
 
-use App\Models\Alumno;
-use App\Models\CargaAcademica;
-use App\Models\Comunicado;
-use App\Models\ComunicadoLectura;
-use App\Models\Curso;
-use App\Models\Docente;
-use App\Models\Grado;
-use App\Models\Matricula;
-use App\Models\Nota;
-use App\Models\Notificacion;
-use App\Models\PeriodoAcademico;
-use App\Models\Seccion;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
+use App\Modules\Academico\Infrastructure\Models\Curso;
 use App\Modules\Academico\Infrastructure\Models\Examen;
+use App\Modules\Academico\Infrastructure\Models\Grado;
+use App\Modules\Academico\Infrastructure\Models\Matricula;
+use App\Modules\Academico\Infrastructure\Models\Nota;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\Seccion;
+use App\Modules\Comunicados\Infrastructure\Models\Comunicado;
+use App\Modules\Comunicados\Infrastructure\Models\ComunicadoLectura;
+use App\Modules\Notificaciones\Infrastructure\Models\Notificacion;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;

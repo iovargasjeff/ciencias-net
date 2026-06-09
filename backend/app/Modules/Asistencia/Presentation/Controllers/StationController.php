@@ -3,6 +3,12 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Asistencia\Domain\Models\ActivacionEstacion;
+use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
+use App\Modules\Asistencia\Domain\Models\CuentaTecnica;
+use App\Modules\Asistencia\Domain\Models\EstacionBiometrica;
+use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
+use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
 use App\Modules\Asistencia\Presentation\Requests\Stations\ActivateStationRequest;
 use App\Modules\Asistencia\Presentation\Requests\Stations\CreateStationCameraRequest;
 use App\Modules\Asistencia\Presentation\Requests\Stations\CreateStationRequest;
@@ -11,17 +17,11 @@ use App\Modules\Asistencia\Presentation\Requests\Stations\SubmitStationCaptureRe
 use App\Modules\Asistencia\Presentation\Requests\Stations\UpdateStationRequest;
 use App\Modules\Asistencia\Presentation\Resources\StationCameraResource;
 use App\Modules\Asistencia\Presentation\Resources\StationResource;
-use App\Modules\Asistencia\Domain\Models\ActivacionEstacion;
-use App\Models\Alumno;
-use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
-use App\Modules\Asistencia\Domain\Models\CuentaTecnica;
-use App\Modules\Asistencia\Domain\Models\EstacionBiometrica;
-use App\Modules\Asistencia\Domain\Models\EventoReconocimiento;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
-use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
-use App\Support\AuditLogger;
-use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
+use App\Support\AuditLogger;
 use App\Support\Facial\FacialServiceUnavailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

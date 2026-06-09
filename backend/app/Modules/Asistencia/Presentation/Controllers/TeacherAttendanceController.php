@@ -3,18 +3,15 @@
 namespace App\Modules\Asistencia\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\AssignClassSessionSubstituteRequest;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CancelClassSessionRequest;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CreatePayrollLiquidationRequest;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CreateTeacherAttendanceAdjustmentRequest;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CreateTeacherRateRequest;
-use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\GenerateTeacherPayrollReportRequest;
-use App\Modules\Asistencia\Presentation\Resources\ClassSessionResource;
-use App\Modules\Asistencia\Presentation\Resources\TeacherAttendanceResource;
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
-use App\Models\Docente;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
 use App\Modules\Asistencia\Domain\Services\TeacherAttendanceSessionService;
+use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\AssignClassSessionSubstituteRequest;
+use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CancelClassSessionRequest;
+use App\Modules\Asistencia\Presentation\Requests\TeacherAttendance\CreateTeacherAttendanceAdjustmentRequest;
+use App\Modules\Asistencia\Presentation\Resources\ClassSessionResource;
+use App\Modules\Asistencia\Presentation\Resources\TeacherAttendanceResource;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -32,7 +29,7 @@ class TeacherAttendanceController extends Controller
         );
     }
 
-/* Payroll routes removed for Finanzas extraction */
+    /* Payroll routes removed for Finanzas extraction */
 
     public function adjustment(CreateTeacherAttendanceAdjustmentRequest $request, TeacherAttendanceSessionService $service, AuditLogger $audit): JsonResponse
     {

@@ -1,12 +1,12 @@
 <?php
 
-use App\Models\Alumno;
-use App\Models\Grado;
-use App\Models\Matricula;
-use App\Models\Padre;
-use App\Models\PeriodoAcademico;
-use App\Models\Seccion;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\Grado;
+use App\Modules\Academico\Infrastructure\Models\Matricula;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\Seccion;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Padre;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

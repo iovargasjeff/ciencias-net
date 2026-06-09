@@ -3,15 +3,15 @@
 namespace App\Modules\Finanzas\Presentation\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Finanzas\Domain\Models\LiquidacionDescuentoDocente;
+use App\Modules\Finanzas\Domain\Models\TarifaDocente;
+use App\Modules\Finanzas\Domain\Services\TeacherPayrollLiquidationService;
 use App\Modules\Finanzas\Presentation\Requests\TeacherPayroll\CreatePayrollLiquidationRequest;
 use App\Modules\Finanzas\Presentation\Requests\TeacherPayroll\CreateTeacherRateRequest;
 use App\Modules\Finanzas\Presentation\Requests\TeacherPayroll\GenerateTeacherPayrollReportRequest;
 use App\Modules\Finanzas\Presentation\Resources\PayrollLiquidationResource;
 use App\Modules\Finanzas\Presentation\Resources\TeacherRateResource;
-use App\Models\Docente;
-use App\Modules\Finanzas\Domain\Models\LiquidacionDescuentoDocente;
-use App\Modules\Finanzas\Domain\Models\TarifaDocente;
-use App\Modules\Finanzas\Domain\Services\TeacherPayrollLiquidationService;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

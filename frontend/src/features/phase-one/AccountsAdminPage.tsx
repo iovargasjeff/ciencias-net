@@ -17,7 +17,7 @@ export function AccountsAdminPage() {
   const client = useQueryClient()
   const [search, setSearch] = useState('')
   const [message, setMessage] = useState('')
-  const accounts = useQuery({ queryKey: ['accounts', search], queryFn: () => listAccounts(search) })
+  const accounts = useQuery({ queryKey: ['accounts', search], queryFn: () => listAccounts(search, 'padre,alumno') })
   const roles = user?.roles.includes('superadmin') ? ['superadmin', 'gestor_usuarios', ...operationalRoles] : operationalRoles
   const form = useForm<Form>({ resolver: zodResolver(schema), defaultValues: { name: '', email: '', role: roles[0] } })
   const invalidate = async () => client.invalidateQueries({ queryKey: ['accounts'] })
