@@ -21,7 +21,7 @@ export const createStudentBenefitSchema = z.object({
   benefit_type: z.enum(['percentage', 'fixed', 'waiver']),
   value: z.string().regex(/^\d{1,10}(\.\d{1,2})?$/, 'Valor inválido').nullable().optional(),
   concept_ids: z.array(z.string().uuid()).optional(),
-  stackable_with_early_payment: z.boolean().default(false),
+  stackable_with_early_payment: z.boolean(),
   starts_on: z.string().min(1, 'La fecha de inicio es requerida'), // Should be YYYY-MM-DD
   ends_on: z.string().optional(),
 }).refine(data => {

@@ -1,4 +1,4 @@
-import type { Page, PaymentObligation, PaymentMovement } from './types'
+import type { Page, PaymentObligation, PaymentMovement, PaymentMethod } from './types'
 
 // Mock Data
 const mockObligations: PaymentObligation[] = [
@@ -87,7 +87,7 @@ export async function createPaymentMovement(input: { obligation_id: string; paym
     obligation_concept_name: obligation.concept_name,
     student_name: obligation.student_name,
     amount_paid: amountToPay,
-    payment_method: input.payment_method as "transfer" | "cash" | "card",
+    payment_method: input.payment_method as PaymentMethod,
     reference: input.reference || null,
     status: 'completed',
     receipt_number: `REC-${Math.floor(Math.random() * 10000).toString().padStart(5, '0')}`,
