@@ -313,7 +313,7 @@ test.describe('Supervisión de Asistencia - FE-010', () => {
     // Confirm face
     await page.getByRole('button', { name: 'Confirmar', exact: true }).click({ force: true })
     await page.getByPlaceholder('Ej. Rostro coincide plenamente con foto oficial del alumno...').fill('Confirmado plenamente')
-    await page.getByRole('button', { name: 'Aplicar Decisión' }).click({ force: true })
+    await page.getByRole('button', { name: 'Confirmar Decisión' }).click({ force: true })
 
     await expect(page.getByText('Sofia Torres')).not.toBeVisible()
   })

@@ -126,7 +126,7 @@ paths:
                 captured_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
               required:
                 - image
                 - camera_id
@@ -487,6 +487,147 @@ paths:
         required: true
         schema:
           type: string
+  /api/v1/search/students:
+    get:
+      summary: ''
+      operationId: getApiV1SearchStudents
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dni:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - dni
+      security: []
+  /api/v1/search/parents:
+    get:
+      summary: ''
+      operationId: getApiV1SearchParents
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dni:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - dni
+      security: []
+  /api/v1/search/teachers:
+    get:
+      summary: ''
+      operationId: getApiV1SearchTeachers
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error:
+                    code: unauthenticated
+                    message: 'Debes iniciar sesión.'
+                    fields: {  }
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        example: unauthenticated
+                      message:
+                        type: string
+                        example: 'Debes iniciar sesión.'
+                      fields:
+                        type: object
+                        properties: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dni:
+                  type: string
+                  description: ''
+                  example: architecto
+              required:
+                - dni
+      security: []
   /api/v1/family-links:
     get:
       summary: ''
@@ -880,6 +1021,34 @@ paths:
                 - level
                 - academic_period_id
       security: []
+  '/api/v1/grades/{id}':
+    patch:
+      summary: ''
+      operationId: patchApiV1GradesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1GradesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the grade.'
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/sections:
     get:
       summary: ''
@@ -946,6 +1115,34 @@ paths:
                 - name
                 - capacity
       security: []
+  '/api/v1/sections/{id}':
+    patch:
+      summary: ''
+      operationId: patchApiV1SectionsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1SectionsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the section.'
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/courses:
     get:
       summary: ''
@@ -1011,6 +1208,34 @@ paths:
                 - code
                 - name
       security: []
+  '/api/v1/courses/{id}':
+    patch:
+      summary: ''
+      operationId: patchApiV1CoursesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1CoursesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the course.'
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/enrollments:
     get:
       summary: ''
@@ -1081,6 +1306,34 @@ paths:
                 - section_id
                 - academic_period_id
       security: []
+  '/api/v1/enrollments/{id}':
+    patch:
+      summary: ''
+      operationId: patchApiV1EnrollmentsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1EnrollmentsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the enrollment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/teaching-assignments:
     get:
       summary: ''
@@ -1152,6 +1405,34 @@ paths:
                 - section_id
                 - academic_period_id
       security: []
+  '/api/v1/teaching-assignments/{id}':
+    patch:
+      summary: ''
+      operationId: patchApiV1TeachingAssignmentsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1TeachingAssignmentsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the teaching assignment.'
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/materials:
     get:
       summary: ''
@@ -1304,7 +1585,7 @@ paths:
                 activo:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
       security: []
     delete:
       summary: ''
@@ -1531,7 +1812,7 @@ paths:
                 starts_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 ends_at:
                   type: string
                   description: 'Must be a valid date. Must be a date after <code>starts_at</code>.'
@@ -1539,7 +1820,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: meeting
+                  example: academic
                   enum:
                     - academic
                     - holiday
@@ -1629,7 +1910,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
               required:
                 - student_id
                 - incident_type
@@ -1656,7 +1937,7 @@ paths:
                 target_status:
                   type: string
                   description: ''
-                  example: parent_notified
+                  example: in_progress
                   enum:
                     - open
                     - referred_toe
@@ -1738,7 +2019,7 @@ paths:
                 from_date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 to_date:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>from_date</code>.'
@@ -1753,7 +2034,7 @@ paths:
                 status:
                   type: string
                   description: ''
-                  example: parent_notified
+                  example: in_progress
                   enum:
                     - open
                     - referred_toe
@@ -1834,7 +2115,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 summary:
                   type: string
                   description: 'Must be at least 1 character. Must not be greater than 5000 characters.'
@@ -1881,7 +2162,7 @@ paths:
                 audience_type:
                   type: string
                   description: ''
-                  example: roles
+                  example: all
                   enum:
                     - all
                     - roles
@@ -1897,7 +2178,7 @@ paths:
                 publish_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                   nullable: true
               required:
                 - title
@@ -2106,7 +2387,7 @@ paths:
                 mode:
                   type: string
                   description: ''
-                  example: entry
+                  example: mixed
                   enum:
                     - entry
                     - exit
@@ -2114,7 +2395,7 @@ paths:
                 active:
                   type: boolean
                   description: ''
-                  example: true
+                  example: false
       security: []
     parameters:
       -
@@ -2307,7 +2588,7 @@ paths:
                 event_type:
                   type: string
                   description: ''
-                  example: entry
+                  example: exit
                   enum:
                     - entry
                     - exit
@@ -2316,7 +2597,7 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 reason:
                   type: string
                   description: 'Must not be greater than 1000 characters.'
@@ -2346,7 +2627,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
               required:
                 - date
       security: []
@@ -2482,6 +2763,38 @@ paths:
       tags:
         - Endpoints
       security: []
+  '/api/v1/student-attendance/{attendanceId}':
+    delete:
+      summary: ''
+      operationId: deleteApiV1StudentAttendanceAttendanceId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: 'Must not be greater than 1000 characters.'
+                  example: b
+              required:
+                - reason
+      security: []
+    parameters:
+      -
+        in: path
+        name: attendanceId
+        description: ''
+        example: architecto
+        required: true
+        schema:
+          type: string
   /api/v1/recognition-events:
     get:
       summary: ''
@@ -2535,7 +2848,7 @@ paths:
                 outcome:
                   type: string
                   description: ''
-                  example: reassigned
+                  example: confirmed
                   enum:
                     - confirmed
                     - rejected
@@ -2618,7 +2931,7 @@ paths:
                 date:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 adjustment_type:
                   type: string
                   description: ''
@@ -2774,7 +3087,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: otro
+                  example: mensualidad
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -2811,7 +3124,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                   nullable: true
               required:
                 - code
@@ -2847,7 +3160,7 @@ paths:
                 type:
                   type: string
                   description: ''
-                  example: otro
+                  example: matricula
                   enum:
                     - cuota_ingreso
                     - matricula
@@ -2870,7 +3183,7 @@ paths:
                 recurrence:
                   type: string
                   description: ''
-                  example: single
+                  example: monthly
                   enum:
                     - single
                     - monthly
@@ -2884,7 +3197,7 @@ paths:
                 early_payment_deadline:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                   nullable: true
       security: []
     parameters:
@@ -2976,7 +3289,7 @@ paths:
                 starts_on:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 ends_on:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>starts_on</code>.'
@@ -3083,7 +3396,7 @@ paths:
                 due_date_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 due_date_to:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>due_date_from</code>.'
@@ -3264,7 +3577,7 @@ paths:
                 adjustment_type:
                   type: string
                   description: ''
-                  example: discount
+                  example: waiver
                   enum:
                     - charge
                     - discount
@@ -3318,11 +3631,11 @@ paths:
                 occurred_at:
                   type: string
                   description: 'Must be a valid date in the format <code>Y-m-d\TH:i:s</code>.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 method:
                   type: string
                   description: 'This field is required when <code>movement_type</code> is <code>payment</code>.'
-                  example: plin
+                  example: cash
                   enum:
                     - cash
                     - transfer
@@ -3586,7 +3899,7 @@ paths:
                 effective_from:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 effective_until:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>effective_from</code>.'
@@ -3649,7 +3962,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -3704,7 +4017,7 @@ paths:
                 period_start:
                   type: string
                   description: 'Must be a valid date.'
-                  example: '2026-06-09T00:09:42'
+                  example: '2026-06-09T02:19:40'
                 period_end:
                   type: string
                   description: 'Must be a valid date. Must be a date after or equal to <code>period_start</code>.'
@@ -4062,14 +4375,14 @@ paths:
                 format:
                   type: string
                   description: ''
-                  example: xlsx
+                  example: pdf
                   enum:
                     - pdf
                     - xlsx
                 report_type:
                   type: string
                   description: ''
-                  example: grade_summary
+                  example: ranking
                   enum:
                     - report_card
                     - grade_summary
@@ -4153,7 +4466,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: registrada
+                  example: ausente
                   enum:
                     - registrada
                     - ausente
@@ -4217,7 +4530,7 @@ paths:
                       estado:
                         type: string
                         description: ''
-                        example: registrada
+                        example: exonerado
                         enum:
                           - registrada
                           - ausente
@@ -4271,7 +4584,7 @@ paths:
                 estado:
                   type: string
                   description: ''
-                  example: ausente
+                  example: pendiente
                   enum:
                     - registrada
                     - ausente

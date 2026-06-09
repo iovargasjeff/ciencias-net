@@ -16,6 +16,9 @@ import { FamilyAdminPage } from '@/features/phase-one/FamilyAdminPage'
 import { FamilyPortalPage } from '@/features/phase-one/FamilyPortalPage'
 import { PaymentConceptsPage, StudentBenefitsPage } from '@/features/finance-config'
 import { ObligationsPage, PaymentsPage } from '@/features/finance-operations'
+import { FamilyAccountStatementPage } from '@/features/finance-queries/FamilyAccountStatementPage'
+import { DebtorsReportPage } from '@/features/finance-queries/DebtorsReportPage'
+import { CashReportPage } from '@/features/finance-queries/CashReportPage'
 import { BiometricAdminPage } from '@/features/biometrics/BiometricAdminPage'
 import { StudentAttendancePage } from '@/features/attendance/StudentAttendancePage'
 import { PayrollAdminPage } from '@/features/payroll/PayrollAdminPage'
@@ -30,7 +33,10 @@ export function App() {
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/seleccionar-contexto" element={<PortalLayout />}><Route index element={<ContextPage />} /></Route>
-        <Route path="/portal" element={<PortalLayout />}><Route index element={<FamilyPortalPage />} /></Route>
+        <Route path="/portal" element={<PortalLayout />}>
+          <Route index element={<FamilyPortalPage />} />
+          <Route path="finanzas/estado-cuenta" element={<FamilyAccountStatementPage />} />
+        </Route>
         <Route element={<PermissionRoute roles={['superadmin', 'gestor_usuarios', 'administrativo', 'coordinador_academico', 'toe', 'psicologia', 'auxiliar']} permissions={['gestionar_dispositivos', 'gestionar_planilla']} />}>
           <Route path="/admin" element={<PortalLayout />}>
             <Route index element={<FoundationsPage context="Administración" />} />
@@ -49,6 +55,8 @@ export function App() {
               <Route path="finanzas/beneficios" element={<StudentBenefitsPage />} />
               <Route path="finanzas/obligaciones" element={<ObligationsPage />} />
               <Route path="finanzas/pagos" element={<PaymentsPage />} />
+              <Route path="finanzas/morosos" element={<DebtorsReportPage />} />
+              <Route path="finanzas/caja" element={<CashReportPage />} />
             </Route>
             <Route element={<PermissionRoute roles={['superadmin', 'auxiliar', 'toe']} />}>
               <Route path="asistencia" element={<StudentAttendancePage />} />

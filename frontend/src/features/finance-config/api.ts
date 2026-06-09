@@ -49,7 +49,8 @@ export async function createStudentBenefit(input: Partial<StudentBenefit>): Prom
   return newBenefit
 }
 
-export async function deactivateStudentBenefit(id: string, reason: string): Promise<StudentBenefit> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function deactivateStudentBenefit(id: string, _reason: string): Promise<StudentBenefit> {
   await delay(600)
   const idx = mockBenefits.findIndex(b => b.id === id)
   if (idx === -1) throw new Error('Benefit not found')

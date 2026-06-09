@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createStudentBenefitSchema, type CreateStudentBenefitInput } from '../schemas'
-import { useCreateStudentBenefit } from '../hooks'
+import { createStudentBenefitSchema, type CreateStudentBenefitInput } from './schemas'
+import { useCreateStudentBenefit } from './hooks'
 
 export function StudentBenefitForm({ onSuccess, onCancel }: { onSuccess: () => void; onCancel: () => void }) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateStudentBenefitInput>({

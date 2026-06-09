@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createPaymentConceptSchema, type CreatePaymentConceptInput } from '../schemas'
-import { useCreatePaymentConcept } from '../hooks'
+import { createPaymentConceptSchema, type CreatePaymentConceptInput } from './schemas'
+import { useCreatePaymentConcept } from './hooks'
 
 export function PaymentConceptForm({ onSuccess, onCancel }: { onSuccess: () => void; onCancel: () => void }) {
   const { register, handleSubmit, formState: { errors } } = useForm<CreatePaymentConceptInput>({

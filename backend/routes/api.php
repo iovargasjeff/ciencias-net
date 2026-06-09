@@ -22,6 +22,7 @@ use App\Modules\Notificaciones\Presentation\Controllers\NotificationController;
 use App\Modules\Psicologia\Presentation\Controllers\PsychologyCareController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
+use App\Modules\Usuarios\Presentation\Controllers\DniSearchController;
 use App\Modules\Usuarios\Presentation\Controllers\FamilyLinkController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,9 +60,9 @@ Route::prefix('v1')->group(function (): void {
         Route::put('accounts/{accountId}/roles', [AccountController::class, 'roles']);
         Route::post('accounts/{accountId}/password-reset', [AccountController::class, 'passwordReset']);
 
-        Route::get('search/students', [\App\Modules\Usuarios\Presentation\Controllers\DniSearchController::class, 'searchStudents']);
-        Route::get('search/parents', [\App\Modules\Usuarios\Presentation\Controllers\DniSearchController::class, 'searchParents']);
-        Route::get('search/teachers', [\App\Modules\Usuarios\Presentation\Controllers\DniSearchController::class, 'searchTeachers']);
+        Route::get('search/students', [DniSearchController::class, 'searchStudents']);
+        Route::get('search/parents', [DniSearchController::class, 'searchParents']);
+        Route::get('search/teachers', [DniSearchController::class, 'searchTeachers']);
 
         Route::get('family-links', [FamilyLinkController::class, 'index']);
         Route::post('family-links', [FamilyLinkController::class, 'store']);
@@ -77,22 +78,22 @@ Route::prefix('v1')->group(function (): void {
         Route::post('grades', [AcademicController::class, 'storeGrade'])->name('api.v1.grades.store');
         Route::patch('grades/{id}', [AcademicController::class, 'updateGrade']);
         Route::delete('grades/{id}', [AcademicController::class, 'destroyGrade']);
-        
+
         Route::get('sections', [AcademicController::class, 'sections']);
         Route::post('sections', [AcademicController::class, 'storeSection'])->name('api.v1.sections.store');
         Route::patch('sections/{id}', [AcademicController::class, 'updateSection']);
         Route::delete('sections/{id}', [AcademicController::class, 'destroySection']);
-        
+
         Route::get('courses', [AcademicController::class, 'courses']);
         Route::post('courses', [AcademicController::class, 'storeCourse'])->name('api.v1.courses.store');
         Route::patch('courses/{id}', [AcademicController::class, 'updateCourse']);
         Route::delete('courses/{id}', [AcademicController::class, 'destroyCourse']);
-        
+
         Route::get('enrollments', [AcademicController::class, 'enrollments']);
         Route::post('enrollments', [AcademicController::class, 'storeEnrollment'])->name('api.v1.enrollments.store');
         Route::patch('enrollments/{id}', [AcademicController::class, 'updateEnrollment']);
         Route::delete('enrollments/{id}', [AcademicController::class, 'destroyEnrollment']);
-        
+
         Route::get('teaching-assignments', [AcademicController::class, 'assignments']);
         Route::post('teaching-assignments', [AcademicController::class, 'storeAssignment'])->name('api.v1.teaching-assignments.store');
         Route::patch('teaching-assignments/{id}', [AcademicController::class, 'updateAssignment']);

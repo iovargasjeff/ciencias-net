@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const generateObligationSchema = z.object({
   concept_id: z.string().min(1, 'El concepto es obligatorio'),
   student_ids: z.array(z.string()).min(1, 'Debe seleccionar al menos un estudiante'),
-  apply_benefits: z.boolean().default(true),
+  apply_benefits: z.boolean(),
 })
 
 export type GenerateObligationFormValues = z.infer<typeof generateObligationSchema>

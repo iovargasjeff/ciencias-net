@@ -92,11 +92,20 @@ class AcademicController extends Controller
     {
         $grade = Grado::findOrFail($id);
         $data = [];
-        if ($request->has('name')) $data['nombre'] = $request->string('name');
-        if ($request->has('level')) $data['nivel'] = $request->string('level');
-        if ($request->has('order')) $data['orden'] = $request->integer('order');
-        if ($request->has('academic_period_id')) $data['periodo_academico_id'] = $request->string('academic_period_id');
+        if ($request->has('name')) {
+            $data['nombre'] = $request->string('name');
+        }
+        if ($request->has('level')) {
+            $data['nivel'] = $request->string('level');
+        }
+        if ($request->has('order')) {
+            $data['orden'] = $request->integer('order');
+        }
+        if ($request->has('academic_period_id')) {
+            $data['periodo_academico_id'] = $request->string('academic_period_id');
+        }
         $grade->update($data);
+
         return $this->resource($grade);
     }
 
@@ -104,6 +113,7 @@ class AcademicController extends Controller
     {
         $grade = Grado::findOrFail($id);
         $grade->delete();
+
         return response()->json([], 204);
     }
 
@@ -128,10 +138,17 @@ class AcademicController extends Controller
     {
         $section = Seccion::findOrFail($id);
         $data = [];
-        if ($request->has('name')) $data['nombre'] = $request->string('name');
-        if ($request->has('grade_id')) $data['grado_id'] = $request->string('grade_id');
-        if ($request->has('capacity')) $data['capacidad'] = $request->integer('capacity');
+        if ($request->has('name')) {
+            $data['nombre'] = $request->string('name');
+        }
+        if ($request->has('grade_id')) {
+            $data['grado_id'] = $request->string('grade_id');
+        }
+        if ($request->has('capacity')) {
+            $data['capacidad'] = $request->integer('capacity');
+        }
         $section->update($data);
+
         return $this->resource($section);
     }
 
@@ -139,6 +156,7 @@ class AcademicController extends Controller
     {
         $section = Seccion::findOrFail($id);
         $section->delete();
+
         return response()->json([], 204);
     }
 
@@ -163,10 +181,17 @@ class AcademicController extends Controller
     {
         $course = Curso::findOrFail($id);
         $data = [];
-        if ($request->has('code')) $data['codigo'] = $request->string('code');
-        if ($request->has('name')) $data['nombre'] = $request->string('name');
-        if ($request->has('description')) $data['descripcion'] = $request->input('description');
+        if ($request->has('code')) {
+            $data['codigo'] = $request->string('code');
+        }
+        if ($request->has('name')) {
+            $data['nombre'] = $request->string('name');
+        }
+        if ($request->has('description')) {
+            $data['descripcion'] = $request->input('description');
+        }
         $course->update($data);
+
         return $this->resource($course);
     }
 
@@ -174,6 +199,7 @@ class AcademicController extends Controller
     {
         $course = Curso::findOrFail($id);
         $course->delete();
+
         return response()->json([], 204);
     }
 
@@ -212,6 +238,7 @@ class AcademicController extends Controller
             $data['seccion_id'] = $section->id;
         }
         $enrollment->update($data);
+
         return $this->resource($enrollment);
     }
 
@@ -219,6 +246,7 @@ class AcademicController extends Controller
     {
         $enrollment = Matricula::findOrFail($id);
         $enrollment->delete();
+
         return response()->json([], 204);
     }
 
@@ -256,8 +284,11 @@ class AcademicController extends Controller
     {
         $assignment = CargaAcademica::with('seccion.grado.periodoAcademico')->findOrFail($id);
         $data = [];
-        if ($request->has('teacher_id')) $data['docente_id'] = $request->string('teacher_id');
+        if ($request->has('teacher_id')) {
+            $data['docente_id'] = $request->string('teacher_id');
+        }
         $assignment->update($data);
+
         return $this->resource($assignment);
     }
 
@@ -265,6 +296,7 @@ class AcademicController extends Controller
     {
         $assignment = CargaAcademica::findOrFail($id);
         $assignment->delete();
+
         return response()->json([], 204);
     }
 
