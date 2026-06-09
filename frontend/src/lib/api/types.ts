@@ -5,6 +5,9 @@ export interface PaginatedResponse<T> {
     limit: number
     total: number
   }
+  total: number
+  page: number
+  pageSize: number
 }
 
 export interface ResourceResponse<T> {

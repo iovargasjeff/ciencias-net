@@ -1,4 +1,4 @@
-import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, Money, ClipboardText } from '@phosphor-icons/react'
+import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, Money, ClipboardText, Brain } from '@phosphor-icons/react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { logout } from '@/features/auth/api'
@@ -15,6 +15,7 @@ export function PortalLayout() {
   const canSuperviseAttendance = auth.user?.roles?.some((role) => ['superadmin', 'auxiliar', 'toe'].includes(role))
   const canManageIncidents = auth.user?.roles?.some((role) => ['superadmin', 'auxiliar', 'toe'].includes(role))
   const canManagePayroll = auth.user?.roles?.includes('superadmin') || auth.user?.permissions?.includes('gestionar_planilla')
+  const canManagePsychology = auth.user?.roles?.some((role) => ['superadmin', 'psicologia'].includes(role))
 
 
   async function closeSession() {
@@ -37,6 +38,7 @@ export function PortalLayout() {
           {isAdmin && canSuperviseAttendance && <Link className="nav-link" to="/admin/asistencia"><Clock aria-hidden /> Asistencia</Link>}
           {isAdmin && canManageIncidents && <Link className="nav-link" to="/admin/incidencias"><ClipboardText aria-hidden /> Incidencias</Link>}
           {isAdmin && canManagePayroll && <Link className="nav-link" to="/admin/planilla"><Coins aria-hidden /> Planilla</Link>}
+          {isAdmin && canManagePsychology && <Link className="nav-link" to="/admin/psicologia"><Brain aria-hidden /> Psicología</Link>}
         </nav>
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
       </aside>
