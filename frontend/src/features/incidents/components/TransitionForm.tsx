@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { TransitionIncidentRequest, Incident } from '../types'
+import type { TransitionIncidentRequest } from '../types'
 
 export function TransitionForm({ onSubmit, isSubmitting }: { onSubmit: (data: TransitionIncidentRequest) => void, isSubmitting: boolean }) {
   const [formData, setFormData] = useState<TransitionIncidentRequest>({

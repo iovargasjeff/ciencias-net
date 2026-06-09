@@ -8,7 +8,7 @@ import { FollowUpForm } from './components/FollowUpForm'
 export function IncidentDetailPage() {
   const { id } = useParams<{ id: string }>()
   const [incident, setIncident] = useState<Incident | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
   // Nota: En un entorno real, habria un endpoint `getIncident(id)`.
@@ -19,6 +19,7 @@ export function IncidentDetailPage() {
   useEffect(() => {
     // Simulando busqueda en la lista general
     // const fetchDetail = async () => { ... }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIncident({
       id: id || 'test',
       student_id: 'alumno-1',
