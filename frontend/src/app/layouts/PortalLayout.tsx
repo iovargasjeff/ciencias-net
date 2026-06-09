@@ -1,4 +1,4 @@
-import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, Money, FileText, ClipboardText, Brain } from '@phosphor-icons/react'
+import { Books, Fingerprint, House, SignOut, UserCircle, UsersThree, Clock, Coins, FileText, Money, ClipboardText, Brain } from '@phosphor-icons/react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { logout } from '@/features/auth/api'
