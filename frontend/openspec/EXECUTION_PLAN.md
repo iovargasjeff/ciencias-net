@@ -56,8 +56,8 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-020 | `[ ]` | `add-incidents-workflow` | Kiara | Jefferson | FE-003 |
-| FE-021 | `[ ]` | `add-private-psychology-portal` | Kiara | Jefferson | FE-003 |
+| FE-020 | `[x]` | `add-incidents-workflow` | Kiara | Jefferson | FE-003 |
+| FE-021 | `[x]` | `add-private-psychology-portal` | Kiara | Jefferson | FE-003 |
 
 ## Fase 6: Calidad y release
 
