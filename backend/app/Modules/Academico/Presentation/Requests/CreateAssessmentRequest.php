@@ -23,4 +23,38 @@ class CreateAssessmentRequest extends FormRequest
             'total_questions' => ['nullable', 'integer', 'min:1'],
         ];
     }
+
+    public function bodyParameters(): array
+    {
+        return [
+            'teaching_assignment_id' => [
+                'description' => 'Identificador de la carga académica.',
+                'example' => '99999999-9999-4999-8999-999999999999',
+            ],
+            'title' => [
+                'description' => 'Título de la evaluación.',
+                'example' => 'Semanal 1 - I Bimestre',
+            ],
+            'assessment_type' => [
+                'description' => 'Tipo de evaluación.',
+                'example' => 'exam',
+            ],
+            'max_score' => [
+                'description' => 'Puntaje máximo permitido.',
+                'example' => '20.00',
+            ],
+            'assessment_date' => [
+                'description' => 'Fecha programada de la evaluación.',
+                'example' => '2026-04-15',
+            ],
+            'channel' => [
+                'description' => 'Canal académico asociado.',
+                'example' => 'sciences',
+            ],
+            'total_questions' => [
+                'description' => 'Cantidad total de preguntas.',
+                'example' => 40,
+            ],
+        ];
+    }
 }

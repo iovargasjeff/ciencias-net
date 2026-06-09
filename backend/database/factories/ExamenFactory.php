@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\CargaAcademica;
-use App\Models\User;
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
 use App\Modules\Academico\Infrastructure\Models\Examen;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /** @extends Factory<Examen> */

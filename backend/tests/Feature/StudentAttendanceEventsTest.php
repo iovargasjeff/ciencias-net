@@ -1,16 +1,16 @@
 <?php
 
-use App\Models\Alumno;
 use App\Modules\Asistencia\Domain\Models\AsistenciaAlumno;
 use App\Modules\Asistencia\Domain\Models\CamaraEstacion;
-use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
 use App\Modules\Asistencia\Domain\Models\EstacionBiometrica;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
-use App\Models\Padre;
-use App\Modules\Usuarios\Domain\Models\PerfilFacial;
-use App\Models\User;
-use App\Notifications\StudentAttendanceMovementNotification;
 use App\Modules\Asistencia\Domain\Services\StudentAttendanceProcessor;
+use App\Modules\Asistencia\Infrastructure\Notifications\StudentAttendanceMovementNotification;
+use App\Modules\Usuarios\Domain\Models\ConsentimientoBiometrico;
+use App\Modules\Usuarios\Domain\Models\PerfilFacial;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Padre;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -26,7 +26,7 @@ beforeEach(function (): void {
     config(['facial-service.url' => 'http://facial-api.test']);
     config(['facial-service.token' => 'internal-token']);
     config(['facial-service.timeout' => 5]);
-    config(['biometrics.embedding_key' => 'base64:' . base64_encode(random_bytes(32))]);
+    config(['biometrics.embedding_key' => 'base64:'.base64_encode(random_bytes(32))]);
     config(['biometrics.storage_prefix' => 'private/biometrics-test']);
     config(['biometrics.storage_disk' => 'local']);
     Storage::fake('local');

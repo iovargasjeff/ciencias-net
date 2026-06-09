@@ -3,8 +3,16 @@ import type { Account, AcademicItem, FamilyLink, LinkedStudent, Page, StudentSum
 
 const data = <T>(response: { data: { data: T } }) => response.data.data
 
-export async function listAccounts(search = ''): Promise<Page<Account>> {
-  return (await apiClient.get<Page<Account>>('/api/v1/accounts', { params: { search } })).data
+export async function listAccounts(search = '', excludeRoles = ''): Promise<Page<Account>> {
+  return (await apiClient.get<Page<Account>>('/api/v1/accounts', { params: { search, exclude_roles: excludeRoles } })).data
+}
+
+export async function searchDni(type: 'students' | 'parents' | 'teachers', dni: string): Promise<{ id: string; user_id: string; dni: string; name: string } | null> {
+  try {
+    return data(await apiClient.get(`/api/v1/search/${type}`, { params: { dni } }))
+  } catch {
+    return null;
+  }
 }
 export async function createAccount(input: { name: string; email: string; roles: string[] }): Promise<Account> {
   return data(await apiClient.post('/api/v1/accounts', input))

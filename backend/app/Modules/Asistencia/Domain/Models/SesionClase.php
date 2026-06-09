@@ -2,11 +2,9 @@
 
 namespace App\Modules\Asistencia\Domain\Models;
 
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Docente;
-use App\Models\Curso;
-use App\Models\CargaAcademica;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

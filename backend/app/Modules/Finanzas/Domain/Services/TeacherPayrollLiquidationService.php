@@ -3,11 +3,11 @@
 namespace App\Modules\Finanzas\Domain\Services;
 
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
-use App\Models\Docente;
-use App\Modules\Finanzas\Domain\Models\LiquidacionDescuentoDocente;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
+use App\Modules\Finanzas\Domain\Models\LiquidacionDescuentoDocente;
 use App\Modules\Finanzas\Domain\Models\TarifaDocente;
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;

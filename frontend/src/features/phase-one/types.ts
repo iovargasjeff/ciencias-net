@@ -45,6 +45,7 @@ export interface AcademicItem {
   teacher_id?: string
   section_id?: string
   course_id?: string
+  grade_id?: string
   academic_period_id?: string
   valid_from?: string
   valid_until?: string | null

@@ -5,6 +5,8 @@ createPaymentConceptRequest:
     - code
     - name
     - amount
+    - type
+    - year
   properties:
     code:
       type: string
@@ -17,6 +19,25 @@ createPaymentConceptRequest:
     amount:
       type: string
       pattern: ^\d{1,10}(\.\d{1,2})?$
+    academic_period_id:
+      type: string
+      format: uuid
+      nullable: true
+    type:
+      type: string
+      enum:
+        - cuota_ingreso
+        - matricula
+        - mensualidad
+        - otro
+    year:
+      type: integer
+      minimum: 2000
+      maximum: 2100
+    month:
+      type: integer
+      minimum: 1
+      maximum: 12
     due_day:
       type: integer
       minimum: 1
@@ -36,6 +57,7 @@ createStudentBenefitRequest:
     - student_id
     - benefit_type
     - starts_on
+    - reason
   properties:
     student_id:
       type: string
@@ -62,12 +84,19 @@ createStudentBenefitRequest:
     ends_on:
       type: string
       format: date
+    reason:
+      type: string
+      minLength: 1
+      maxLength: 1000
 updatePaymentConceptRequest:
   type: object
   additionalProperties: false
   properties:
     name: { type: string, minLength: 1, maxLength: 150 }
     amount: { type: string, pattern: '^\d{1,10}(\.\d{1,2})?$' }
+    type: { type: string, enum: [cuota_ingreso, matricula, mensualidad, otro] }
+    year: { type: integer, minimum: 2000, maximum: 2100 }
+    month: { type: integer, minimum: 1, maximum: 12 }
     due_day: { type: integer, minimum: 1, maximum: 31 }
     recurrence: { type: string, enum: [single, monthly, annual] }
     early_payment_discount: { type: string, pattern: '^\d{1,10}(\.\d{1,2})?$' }

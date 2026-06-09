@@ -1,16 +1,16 @@
 <?php
 
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
+use App\Modules\Academico\Infrastructure\Models\Curso;
+use App\Modules\Academico\Infrastructure\Models\Grado;
+use App\Modules\Academico\Infrastructure\Models\PeriodoAcademico;
+use App\Modules\Academico\Infrastructure\Models\Seccion;
 use App\Modules\Asistencia\Domain\Models\AsistenciaDocente;
-use App\Models\CargaAcademica;
-use App\Models\Curso;
-use App\Models\Docente;
-use App\Models\Grado;
 use App\Modules\Asistencia\Domain\Models\MovimientoAsistencia;
-use App\Models\PeriodoAcademico;
-use App\Models\Seccion;
 use App\Modules\Asistencia\Domain\Models\SesionClase;
-use App\Models\User;
 use App\Modules\Asistencia\Domain\Services\TeacherAttendanceSessionService;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;

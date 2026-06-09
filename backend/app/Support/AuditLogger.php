@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AuditLogger
 {
     public function record(
-        Request $request,
+        ?Request $request,
         string $action,
         ?User $user = null,
         Model|string|null $subject = null,
@@ -32,7 +32,7 @@ class AuditLogger
             'model_id' => $modelId,
             'old_values' => $oldValues === null ? null : json_encode($oldValues),
             'new_values' => $newValues === null ? null : json_encode($newValues),
-            'ip' => $request->ip(),
+            'ip' => $request?->ip(),
             'created_at' => now(),
         ]);
     }

@@ -6,7 +6,10 @@ const adminRoles = ['superadmin', 'gestor_usuarios', 'administrativo', 'coordina
 
 export function ContextPage() {
   const { user } = useAuth()
-  const canOpenAdmin = user ? adminRoles.some((role) => user.roles.includes(role)) : false
+  const canOpenAdmin = user
+    ? (adminRoles.some((role) => user.roles.includes(role)) ||
+       user.permissions.some((perm) => ['gestionar_dispositivos', 'gestionar_planilla'].includes(perm)))
+    : false
 
   return (
     <section className="page-stack">

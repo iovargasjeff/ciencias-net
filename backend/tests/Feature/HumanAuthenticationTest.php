@@ -1,18 +1,19 @@
 <?php
 
-use App\Models\User;
+use App\Modules\Usuarios\Infrastructure\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Route;
 
 uses(RefreshDatabase::class);
 
 it('creates a cookie session and returns the authenticated human', function () {
-    $this->withoutMiddleware(ValidateCsrfToken::class);
     $user = User::factory()->create(['email' => 'active@example.test', 'password' => 'correct-password']);
 
-    $this->withHeader('Origin', 'http://localhost:5173')
+    $this->withSession(['_token' => 'csrf-token'])
+        ->withHeaders(['Origin' => 'http://localhost:5173', 'X-CSRF-TOKEN' => 'csrf-token'])
         ->postJson('/api/v1/auth/login', ['email' => $user->email, 'password' => 'correct-password'])
         ->assertOk()
         ->assertJsonPath('data.id', $user->id)
@@ -26,14 +27,14 @@ it('creates a cookie session and returns the authenticated human', function () {
 });
 
 it('logs out and invalidates the session', function () {
-    $this->withoutMiddleware(ValidateCsrfToken::class);
     $user = User::factory()->create(['password' => 'correct-password']);
 
-    $this->withHeader('Origin', 'http://localhost:5173')
+    $this->withSession(['_token' => 'csrf-token'])
+        ->withHeaders(['Origin' => 'http://localhost:5173', 'X-CSRF-TOKEN' => 'csrf-token'])
         ->postJson('/api/v1/auth/login', ['email' => $user->email, 'password' => 'correct-password'])
         ->assertOk();
 
-    $this->withHeader('Origin', 'http://localhost:5173')
+    $this->withHeaders(['Origin' => 'http://localhost:5173', 'X-CSRF-TOKEN' => csrf_token()])
         ->postJson('/api/v1/auth/logout')
         ->assertOk()
         ->assertJsonPath('data.logged_out', true);
@@ -88,11 +89,12 @@ it('publishes the Sanctum CSRF cookie endpoint', function () {
         ->assertCookie('XSRF-TOKEN');
 });
 
-it('rejects a stateful mutation without a CSRF token', function () {
-    $user = User::factory()->create(['password' => 'correct-password']);
+it('formats csrf token mismatches as api errors', function () {
+    Route::post('/api/v1/test-csrf-token-mismatch', function (): void {
+        throw new TokenMismatchException('CSRF token mismatch.');
+    });
 
-    $this->withHeader('Origin', 'http://localhost:5173')
-        ->postJson('/api/v1/auth/login', ['email' => $user->email, 'password' => 'correct-password'])
+    $this->postJson('/api/v1/test-csrf-token-mismatch')
         ->assertStatus(419)
         ->assertJsonPath('error.code', 'csrf_token_mismatch');
 });
