@@ -13,4 +13,4 @@
 
 ## Review and Archive
 - [x] 3.1 Publicar contratos/documentación afectados. Owner: Kiara
-- [ ] 3.2 Revisar y archivar la spec aceptada. Reviewer: Jefferson
+- [x] 3.2 Revisar y archivar la spec aceptada. Reviewer: Jefferson
