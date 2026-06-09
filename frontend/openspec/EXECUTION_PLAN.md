@@ -39,8 +39,8 @@
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
 | FE-012 | `[x]` | `add-finance-configuration-benefits` | Kiara | Jefferson | FE-003 |
-| FE-013 | `[~]` | `add-obligations-payments-administration` | Kiara | Jefferson | FE-003 |
-| FE-014 | `[~]` | `add-finance-state-portals` | Kiara | Jefferson | FE-008 |
+| FE-013 | `[x]` | `add-obligations-payments-administration` | Kiara | Jefferson | FE-003 |
+| FE-014 | `[x]` | `add-finance-state-portals` | Kiara | Jefferson | FE-008 |
 
 ## Fase 4: Evaluación y contenido
 
