@@ -78,6 +78,7 @@ class IncidentsDatabaseTest extends TestCase
             'alumno_id' => $alumno->id,
             'psicologa_id' => $psicologa->id,
             'fecha_atencion' => now(),
+            'summary' => 'Resumen público de prueba',
             'notas_privadas' => 'Notas encriptadas o privadas del paciente.',
         ]);
 
