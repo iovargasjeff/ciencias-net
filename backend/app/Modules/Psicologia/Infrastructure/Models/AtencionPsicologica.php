@@ -20,6 +20,7 @@ class AtencionPsicologica extends Model
         'alumno_id',
         'psicologa_id',
         'fecha_atencion',
+        'summary',
         'notas_privadas',
     ];
 

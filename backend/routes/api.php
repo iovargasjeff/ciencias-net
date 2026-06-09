@@ -17,6 +17,7 @@ use App\Modules\Horarios\Presentation\Controllers\ScheduleController;
 use App\Modules\Incidencias\Presentation\Controllers\IncidentController;
 use App\Modules\Materiales\Presentation\Controllers\MaterialController;
 use App\Modules\Notificaciones\Presentation\Controllers\NotificationController;
+use App\Modules\Psicologia\Presentation\Controllers\PsychologyCareController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Usuarios\Presentation\Controllers\FamilyLinkController;
@@ -98,6 +99,10 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/incidents/{incident}/transitions', [IncidentController::class, 'transitionIncident']);
         Route::post('/incidents/{incident}/follow-ups', [IncidentController::class, 'createIncidentFollowUp']);
         Route::post('/incidents/reports', [IncidentController::class, 'generateIncidentReport']);
+
+        // Psicología
+        Route::get('/psychology-cares', [PsychologyCareController::class, 'listPsychologyCare']);
+        Route::post('/psychology-cares', [PsychologyCareController::class, 'createPsychologyCare']);
 
         Route::post('/announcements', [CommunicationController::class, 'createAnnouncement']);
         Route::get('/announcements', [CommunicationController::class, 'listAnnouncements']);
