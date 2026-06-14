@@ -8,7 +8,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     networks: [private, public]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-cienciasnet} -d ${DB_DATABASE:-cienciasnet}"]
@@ -25,7 +25,7 @@ services:
       APP_KEY: ${APP_KEY:-base64:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=}
       APP_DEBUG: "true"
       APP_URL: http://localhost:8000
-      FRONTEND_URL: http://localhost:5173
+      FRONTEND_URL: http://localhost:5173,http://127.0.0.1:5173
       DB_CONNECTION: pgsql
       DB_HOST: db
       DB_PORT: 5432
@@ -35,7 +35,7 @@ services:
       CACHE_STORE: database
       QUEUE_CONNECTION: database
       SESSION_DRIVER: database
-      SANCTUM_STATEFUL_DOMAINS: localhost:5173
+      SANCTUM_STATEFUL_DOMAINS: localhost:5173,127.0.0.1:5173
       FACIAL_SERVICE_URL: http://facial-api:8001
       FACIAL_SERVICE_TOKEN: ${FACIAL_SERVICE_TOKEN:-local-only-token}
       FACIAL_SERVICE_TIMEOUT: 5
@@ -97,7 +97,7 @@ services:
       - frontend_node_modules:/app/node_modules
     command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
     ports:
-      - "127.0.0.1:5173:5173"
+      - "5173:5173"
     networks: [public]
     depends_on:
       backend:
