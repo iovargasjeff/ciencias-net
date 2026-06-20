@@ -34,16 +34,19 @@ fail() {
 mkdir -p "${workdir}" "${outdir}"
 
 export PGPASSWORD="${DB_PASSWORD}"
-pg_dump -h "${DB_HOST}" -U "${DB_USERNAME}" -d "${DB_DATABASE}" --format=custom --file="${workdir}/postgres.dump" \
-  || fail "pg_dump failed"
+if ! pg_dump -h "${DB_HOST}" -U "${DB_USERNAME}" -d "${DB_DATABASE}" --format=custom --file="${workdir}/postgres.dump"; then
+  fail "pg_dump failed"
+fi
 
 if [ -d /var/lib/cienciasnet/private ]; then
-  tar -C /var/lib/cienciasnet -czf "${workdir}/private-files.tar.gz" private \
-    || fail "private files archive failed"
+  if ! tar -C /var/lib/cienciasnet -czf "${workdir}/private-files.tar.gz" private; then
+    fail "private files archive failed"
+  fi
 else
   mkdir -p "${workdir}/private-empty"
-  tar -C "${workdir}" -czf "${workdir}/private-files.tar.gz" private-empty \
-    || fail "private empty archive failed"
+  if ! tar -C "${workdir}" -czf "${workdir}/private-files.tar.gz" private-empty; then
+    fail "private empty archive failed"
+  fi
 fi
 
 {
@@ -53,12 +56,14 @@ fi
   echo "r2_bucket=${R2_BUCKET:-not_configured}"
 } >"${workdir}/inventory.txt"
 
-tar -C "${workdir}" -czf "${archive}" postgres.dump private-files.tar.gz inventory.txt \
-  || fail "backup bundle failed"
+if ! tar -C "${workdir}" -czf "${archive}" postgres.dump private-files.tar.gz inventory.txt; then
+  fail "backup bundle failed"
+fi
 
 sha256sum "${archive}" >"${manifest}" || fail "checksum failed"
-openssl enc -aes-256-cbc -salt -pbkdf2 -in "${archive}" -out "${encrypted}" -pass "file:${BACKUP_ENCRYPTION_PASSPHRASE_FILE}" \
-  || fail "encryption failed"
+if ! openssl enc -aes-256-cbc -salt -pbkdf2 -in "${archive}" -out "${encrypted}" -pass "file:${BACKUP_ENCRYPTION_PASSPHRASE_FILE}"; then
+  fail "encryption failed"
+fi
 sha256sum "${encrypted}" >"${encrypted}.sha256" || fail "encrypted checksum failed"
 
 rm -rf "${workdir}" "${archive}" "${manifest}"

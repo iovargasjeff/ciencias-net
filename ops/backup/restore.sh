@@ -25,14 +25,16 @@ if [ -r "${backup_file}.sha256" ]; then
   sha256sum -c "${backup_file}.sha256" || fail "encrypted checksum mismatch"
 fi
 
-openssl enc -d -aes-256-cbc -pbkdf2 -in "${backup_file}" -out "${decrypted}" -pass "file:${BACKUP_ENCRYPTION_PASSPHRASE_FILE}" \
-  || fail "decryption failed"
+if ! openssl enc -d -aes-256-cbc -pbkdf2 -in "${backup_file}" -out "${decrypted}" -pass "file:${BACKUP_ENCRYPTION_PASSPHRASE_FILE}"; then
+  fail "decryption failed"
+fi
 
 tar -C "${restore_root}" -xzf "${decrypted}" || fail "bundle extraction failed"
 
 export PGPASSWORD="${DB_PASSWORD}"
-pg_restore -h "${DB_HOST}" -U "${DB_USERNAME}" -d "${DB_DATABASE}" --clean --if-exists "${restore_root}/postgres.dump" \
-  || fail "database restore failed"
+if ! pg_restore -h "${DB_HOST}" -U "${DB_USERNAME}" -d "${DB_DATABASE}" --clean --if-exists "${restore_root}/postgres.dump"; then
+  fail "database restore failed"
+fi
 
 mkdir -p /var/lib/cienciasnet
 tar -C /var/lib/cienciasnet -xzf "${restore_root}/private-files.tar.gz" || fail "private files restore failed"

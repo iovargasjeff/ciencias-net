@@ -38,6 +38,9 @@ return new class extends Migration
         }, 'id');
 
         if (DB::getDriverName() === 'pgsql') {
+            DB::statement('ALTER TABLE bimestres_academicos DROP CONSTRAINT IF EXISTS bimestres_fechas_validas');
+            DB::statement('ALTER TABLE secciones DROP CONSTRAINT IF EXISTS secciones_capacidad_positiva');
+            DB::statement('DROP INDEX IF EXISTS cursos_unicos_por_grado_nombre');
             DB::statement('ALTER TABLE bimestres_academicos ADD CONSTRAINT bimestres_fechas_validas CHECK (fecha_fin >= fecha_inicio)');
             DB::statement('ALTER TABLE secciones ADD CONSTRAINT secciones_capacidad_positiva CHECK (capacidad > 0)');
             DB::statement('CREATE UNIQUE INDEX cursos_unicos_por_grado_nombre ON cursos (grado_id, nombre_normalizado) WHERE grado_id IS NOT NULL AND deleted_at IS NULL');
@@ -48,6 +51,8 @@ return new class extends Migration
     {
         if (DB::getDriverName() === 'pgsql') {
             DB::statement('DROP INDEX IF EXISTS cursos_unicos_por_grado_nombre');
+            DB::statement('ALTER TABLE secciones DROP CONSTRAINT IF EXISTS secciones_capacidad_positiva');
+            DB::statement('ALTER TABLE bimestres_academicos DROP CONSTRAINT IF EXISTS bimestres_fechas_validas');
         }
 
         Schema::table('cursos', function (Blueprint $table): void {

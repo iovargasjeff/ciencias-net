@@ -208,10 +208,26 @@ class AcademicController extends Controller
 
     public function storeCourse(AcademicEntityRequest $request): JsonResponse
     {
+        $normalized = $this->normalizeName($request->string('name')->toString());
+        $duplicate = Curso::query()
+            ->where('grado_id', $request->string('grade_id'))
+            ->where('nombre_normalizado', $normalized)
+            ->exists();
+
+        if ($duplicate) {
+            return response()->json([
+                'error' => [
+                    'code' => 'conflict',
+                    'message' => 'El curso ya existe para el grado seleccionado.',
+                    'fields' => (object) [],
+                ],
+            ], 409);
+        }
+
         return $this->created(Curso::create([
             'grado_id' => $request->string('grade_id'),
             'codigo' => $request->string('code'), 'nombre' => $request->string('name'),
-            'nombre_normalizado' => $this->normalizeName($request->string('name')->toString()),
+            'nombre_normalizado' => $normalized,
             'descripcion' => $request->input('description'), 'activo' => true,
         ]));
     }
