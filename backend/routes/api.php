@@ -74,6 +74,7 @@ Route::prefix('v1')->group(function (): void {
         Route::post('academic-periods', [AcademicController::class, 'storePeriod'])->name('api.v1.academic-periods.store');
         Route::get('academic-periods/{academicPeriodId}', [AcademicController::class, 'showPeriod']);
         Route::patch('academic-periods/{academicPeriodId}', [AcademicController::class, 'updatePeriod'])->name('api.v1.academic-periods.update');
+        Route::get('grade-catalog', [AcademicController::class, 'gradeCatalog']);
         Route::get('grades', [AcademicController::class, 'grades']);
         Route::post('grades', [AcademicController::class, 'storeGrade'])->name('api.v1.grades.store');
         Route::patch('grades/{id}', [AcademicController::class, 'updateGrade']);

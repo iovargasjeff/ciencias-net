@@ -13,7 +13,7 @@ class Grado extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = ['periodo_academico_id', 'nombre', 'nivel', 'orden', 'activo'];
+    protected $fillable = ['periodo_academico_id', 'catalog_code', 'nombre', 'nivel', 'orden', 'activo'];
 
     protected function casts(): array
     {
@@ -28,5 +28,10 @@ class Grado extends Model
     public function secciones(): HasMany
     {
         return $this->hasMany(Seccion::class);
+    }
+
+    public function cursos(): HasMany
+    {
+        return $this->hasMany(Curso::class);
     }
 }
