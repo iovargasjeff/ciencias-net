@@ -468,7 +468,7 @@ export function StudentAttendancePage() {
                   render: (record) => (
                     <div className="space-y-1 py-1">
                       <strong className="text-slate-900 font-bold text-sm block">{record.student_name}</strong>
-                      <span className="text-[10px] font-mono text-slate-500 block">{record.student_id}</span>
+                      <span className="text-[10px] font-mono text-slate-500 block">Ref. {record.student_id}</span>
                     </div>
                   )
                 },
@@ -878,7 +878,7 @@ export function StudentAttendancePage() {
               className="space-y-4"
             >
               <label htmlFor="manual-student-id" className="block text-xs font-bold text-slate-700 uppercase tracking-wide cursor-pointer space-y-1">
-                ID del Alumno (UUID)
+                Alumno por DNI o codigo interno
                 <input
                   id="manual-student-id"
                   type="text"
@@ -1140,7 +1140,7 @@ export function StudentAttendancePage() {
 
               {reviewOutcome === 'reassigned' && (
                 <label htmlFor="review-student-id" className="block text-xs font-bold text-slate-700 uppercase tracking-wide cursor-pointer space-y-1">
-                  ID del Alumno Correcto (UUID)
+                  Alumno correcto por DNI o codigo interno
                   <input
                     id="review-student-id"
                     type="text"
