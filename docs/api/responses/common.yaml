@@ -84,3 +84,15 @@ RateLimitedError:
     application/json:
       schema:
         $ref: '../openapi.yaml#/components/schemas/ErrorResponse'
+SecurityHeaders:
+  description: Respuesta con headers de seguridad y correlación
+  headers:
+    X-Request-Id:
+      schema:
+        type: string
+    X-Content-Type-Options:
+      schema:
+        type: string
+    Referrer-Policy:
+      schema:
+        type: string

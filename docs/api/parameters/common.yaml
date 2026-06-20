@@ -38,6 +38,15 @@ IdempotencyKey:
     type: string
     minLength: 8
     maxLength: 191
+RequestId:
+  name: X-Request-Id
+  in: header
+  required: false
+  schema:
+    type: string
+    minLength: 8
+    maxLength: 80
+  description: Identificador de correlación opcional; si no se envía, el backend genera uno.
 AccountId:
   name: accountId
   in: path

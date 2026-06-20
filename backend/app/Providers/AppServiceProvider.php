@@ -26,6 +26,9 @@ use App\Modules\Materiales\Infrastructure\Models\Material;
 use App\Modules\Materiales\Presentation\Policies\MaterialPolicy;
 use App\Modules\Psicologia\Infrastructure\Models\AtencionPsicologica;
 use App\Modules\Psicologia\Presentation\Policies\PsychologyCarePolicy;
+use App\Modules\Shared\Infrastructure\Commands\DeleteExpiredPrivateFiles;
+use App\Modules\Shared\Infrastructure\Models\PrivateFile;
+use App\Modules\Shared\Presentation\Policies\PrivateFilePolicy;
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Modules\Usuarios\Presentation\Policies\AlumnoPolicy;
@@ -98,6 +101,13 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Incidencia::class, IncidentPolicy::class);
         Gate::policy(AtencionPsicologica::class, PsychologyCarePolicy::class);
         Gate::policy(ReporteAcademico::class, AcademicReportPolicy::class);
+        Gate::policy(PrivateFile::class, PrivateFilePolicy::class);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                DeleteExpiredPrivateFiles::class,
+            ]);
+        }
 
         RateLimiter::for('human-login', fn (Request $request) => [
             Limit::perMinute(5)->by(mb_strtolower((string) $request->input('email')).'|'.$request->ip()),
@@ -113,6 +123,14 @@ class AppServiceProvider extends ServiceProvider
 
         RateLimiter::for('station-capture', fn (Request $request) => [
             Limit::perMinute(60)->by($request->ip()),
+        ]);
+
+        RateLimiter::for('private-files-upload', fn (Request $request) => [
+            Limit::perMinute(20)->by($request->user()?->id ?: $request->ip()),
+        ]);
+
+        RateLimiter::for('authenticated-api', fn (Request $request) => [
+            Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()),
         ]);
     }
 }

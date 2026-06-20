@@ -7,11 +7,17 @@ HealthResponse:
       type: object
       required:
         - status
+        - checks
       properties:
         status:
           type: string
           enum:
             - ok
+        checks:
+          type: object
+          additionalProperties:
+            type: string
+          description: Estado resumido de dependencias operativas sin secretos ni datos sensibles.
 LoginRequest:
   type: object
   required:
