@@ -20,6 +20,7 @@ use App\Modules\Incidencias\Presentation\Controllers\IncidentController;
 use App\Modules\Materiales\Presentation\Controllers\MaterialController;
 use App\Modules\Notificaciones\Presentation\Controllers\NotificationController;
 use App\Modules\Psicologia\Presentation\Controllers\PsychologyCareController;
+use App\Modules\Shared\Presentation\Controllers\PrivateFileController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Usuarios\Presentation\Controllers\DniSearchController;
@@ -30,6 +31,10 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/health', fn () => response()->json([
         'data' => ['status' => 'ok'],
     ]))->name('api.v1.health');
+
+    Route::get('private-files/{fileId}/signed-download', [PrivateFileController::class, 'signedDownload'])
+        ->middleware('signed')
+        ->name('api.v1.private-files.signed-download');
 
     Route::post('station-activations', [StationController::class, 'activate'])->middleware('throttle:station-activation');
 
@@ -52,6 +57,9 @@ Route::prefix('v1')->group(function (): void {
     });
 
     Route::middleware(['auth:sanctum', 'active.account'])->group(function (): void {
+        Route::post('private-files', [PrivateFileController::class, 'store'])->middleware('throttle:private-files-upload');
+        Route::get('private-files/{fileId}/download', [PrivateFileController::class, 'download'])->name('api.v1.private-files.download');
+
         Route::get('accounts', [AccountController::class, 'index']);
         Route::post('accounts', [AccountController::class, 'store']);
         Route::get('accounts/{accountId}', [AccountController::class, 'show']);
