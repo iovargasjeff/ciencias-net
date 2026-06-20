@@ -70,7 +70,7 @@
 
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
-| FE-024 | `[ ]` | `refine-academic-enrollment-ux` | Kiara | Vincenzo | FE-002, FE-003, FE-005, FE-007, FE-015, FE-018, Backend BE-029 |
+| FE-024 | `[~]` | `refine-academic-enrollment-ux` | Kiara | Vincenzo | FE-002, FE-003, FE-005, FE-007, FE-015, FE-018, Backend BE-029 |
 | FE-025 | `[ ]` | `refine-portals-communications-incidents-ux` | Vincenzo | Kiara | FE-002, FE-003, FE-006, FE-008, FE-014, FE-017, FE-019, FE-020, FE-021, Backend BE-030 |
 
 ## Regla de ejecución
