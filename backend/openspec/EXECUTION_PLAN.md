@@ -75,8 +75,8 @@
 |---|---|---|---|---|---|
 | BE-026 | `[~]` | `add-private-files-service` | André | Jefferson | BE-001 |
 | BE-027 | `[~]` | `harden-security-observability` | André | Jefferson | BE-003, BE-026 |
-| OPS-003 | `[ ]` | `add-production-deployment-backups` | André | Jefferson | OPS-002, BE-008 |
-| BE-028 | `[ ]` | `verify-backend-release` | André | Jefferson | BE-013, BE-017, BE-020, BE-023, BE-025, BE-027, OPS-003 |
+| OPS-003 | `[~]` | `add-production-deployment-backups` | André | Jefferson | OPS-002, BE-008 |
+| BE-028 | `[~]` | `verify-backend-release` | André | Jefferson | BE-013, BE-017, BE-020, BE-023, BE-025, BE-027, OPS-003 |
 
 ## Fase 7: Ajustes post revision
 
