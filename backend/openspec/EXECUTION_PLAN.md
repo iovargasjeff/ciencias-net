@@ -83,7 +83,7 @@
 | ID | Status | Change | Owner | Reviewer | Dependencies |
 |---|---|---|---|---|---|
 | BE-029 | `[~]` | `refine-academic-enrollment-rules` | Jefferson | Andre | BE-006, BE-018, BE-019, BE-022 |
-| BE-030 | `[ ]` | `refine-identity-family-role-rules` | Fatima | Jefferson | BE-004, BE-005, BE-017, BE-023, BE-024, BE-025 |
+| BE-030 | `[~]` | `refine-identity-family-role-rules` | Fatima | Jefferson | BE-004, BE-005, BE-017, BE-023, BE-024, BE-025 |
 
 ## Regla de ejecución
 

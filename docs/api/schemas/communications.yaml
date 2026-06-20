@@ -27,7 +27,7 @@ createAnnouncementRequest:
       uniqueItems: true
       items:
         type: string
-        format: uuid
+      description: Roles, secciones o cuentas reales segun `audience_type`.
     publish_at:
       type: string
       format: date-time

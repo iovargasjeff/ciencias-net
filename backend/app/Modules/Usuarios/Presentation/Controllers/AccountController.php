@@ -8,6 +8,10 @@ use App\Http\Requests\IdentityAccess\CreateAccountRequest;
 use App\Http\Requests\IdentityAccess\RolesRequest;
 use App\Http\Requests\IdentityAccess\UpdateAccountRequest;
 use App\Http\Resources\AccountResource;
+use App\Modules\Usuarios\Infrastructure\Models\Administrativo;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
+use App\Modules\Usuarios\Infrastructure\Models\Padre;
 use App\Modules\Usuarios\Infrastructure\Models\User;
 use App\Support\AuditLogger;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -48,6 +52,7 @@ class AccountController extends Controller
                 'password' => Str::password(24), 'activo' => true,
             ]);
             $account->syncRoles($roles);
+            $this->createRoleProfiles($account, $request, $roles);
 
             return $account;
         });
@@ -114,5 +119,70 @@ class AccountController extends Controller
             $audit->record($request, 'account.roles_rejected', $request->user(), $account, newValues: ['roles' => $roles]);
             Gate::forUser($request->user())->authorize('assignRoles', [$account, $roles]);
         }
+    }
+
+    private function createRoleProfiles(User $account, CreateAccountRequest $request, array $roles): void
+    {
+        $firstNames = $this->firstNames($request);
+        $lastNames = $request->string('last_names')->toString();
+
+        if (in_array('docente', $roles, true)) {
+            Docente::create([
+                'user_id' => $account->id,
+                'dni' => $request->string('dni')->toString(),
+                'nombres' => $firstNames,
+                'apellidos' => $lastNames,
+                'telefono' => $request->string('phone')->toString(),
+            ]);
+        }
+
+        if (in_array('padre', $roles, true)) {
+            Padre::create([
+                'user_id' => $account->id,
+                'dni' => $request->string('dni')->toString(),
+                'nombres' => $firstNames,
+                'apellidos' => $lastNames,
+                'celular' => $request->string('phone')->toString(),
+                'correo_notificaciones' => mb_strtolower($request->string('notification_email')->toString()),
+            ]);
+        }
+
+        if (in_array('alumno', $roles, true)) {
+            Alumno::create([
+                'user_id' => $account->id,
+                'dni' => $request->string('dni')->toString(),
+                'nombres' => $firstNames,
+                'apellidos' => $lastNames,
+            ]);
+        }
+
+        if (array_intersect($roles, ['administrativo', 'toe', 'auxiliar', 'psicologia']) !== []) {
+            Administrativo::create([
+                'user_id' => $account->id,
+                'nombres' => $request->string('name')->toString(),
+                'cargo' => $this->administrativeRole($roles),
+            ]);
+        }
+    }
+
+    private function firstNames(CreateAccountRequest $request): string
+    {
+        $lastNames = $request->string('last_names')->toString();
+        if ($lastNames === '') {
+            return $request->string('name')->toString();
+        }
+
+        return trim(Str::beforeLast($request->string('name')->toString(), $lastNames)) ?: $request->string('name')->toString();
+    }
+
+    private function administrativeRole(array $roles): string
+    {
+        foreach (['toe', 'auxiliar', 'psicologia', 'administrativo'] as $role) {
+            if (in_array($role, $roles, true)) {
+                return $role;
+            }
+        }
+
+        return 'administrativo';
     }
 }

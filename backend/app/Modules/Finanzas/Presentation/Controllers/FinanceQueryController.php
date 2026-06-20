@@ -19,11 +19,28 @@ class FinanceQueryController extends Controller
     public function listAccountStatements(Request $request): JsonResponse
     {
         $studentId = $request->query('student_id');
+        $studentIds = [];
 
         if (! $studentId) {
             $alumno = $request->user()->alumno;
             if ($alumno) {
                 $studentId = $alumno->id;
+            } elseif ($request->user()->padre) {
+                $studentIds = $request->user()->padre->alumnos()->pluck('alumnos.id')->all();
+                if ($studentIds === []) {
+                    return response()->json([
+                        'data' => [],
+                        'meta' => [
+                            'current_page' => 1,
+                            'from' => null,
+                            'last_page' => 1,
+                            'per_page' => min($request->integer('per_page', 20), 100),
+                            'to' => null,
+                            'total' => 0,
+                        ],
+                        'links' => ['first' => null, 'last' => null, 'prev' => null, 'next' => null],
+                    ]);
+                }
             } else {
                 return response()->json([
                     'error' => [
@@ -37,24 +54,26 @@ class FinanceQueryController extends Controller
             }
         }
 
-        $alumno = Alumno::findOrFail($studentId);
+        if ($studentId) {
+            $alumno = Alumno::findOrFail($studentId);
 
-        // Authorization check: admin with gestionar_finanzas can view any statement.
-        // Otherwise, the user must be the student themselves or a linked parent.
-        if (! $request->user()->can('gestionar_finanzas')) {
-            if (! $request->user()->can('viewLinked', $alumno)) {
-                return response()->json([
-                    'error' => [
-                        'code' => 'forbidden',
-                        'message' => 'No tienes permiso para consultar el estado de cuenta de este alumno.',
-                        'fields' => (object) [],
-                    ],
-                ], 403);
+            if (! $request->user()->can('gestionar_finanzas')) {
+                if (! $request->user()->can('viewLinked', $alumno)) {
+                    return response()->json([
+                        'error' => [
+                            'code' => 'forbidden',
+                            'message' => 'No tienes permiso para consultar el estado de cuenta de este alumno.',
+                            'fields' => (object) [],
+                        ],
+                    ], 403);
+                }
             }
+
+            $studentIds = [$alumno->id];
         }
 
         $query = ObligacionPago::query()
-            ->where('alumno_id', $alumno->id)
+            ->whereIn('alumno_id', $studentIds)
             ->with(['concepto', 'beneficio'])
             ->latest('fecha_vencimiento');
 

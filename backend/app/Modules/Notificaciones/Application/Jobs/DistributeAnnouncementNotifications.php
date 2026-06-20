@@ -45,7 +45,7 @@ class DistributeAnnouncementNotifications implements ShouldQueue
         }
     }
 
-    private function resolveUserIds(): array
+    public function resolveUserIds(): array
     {
         $destinatarios = $this->comunicado->destinatarios;
 
