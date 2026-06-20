@@ -2,7 +2,7 @@
 
 ## Source of Truth Check
 
-- Product docs reviewed: `docs/product/approved-requirements.md`, `CAMBIOS CIENCIASNET.docx`
+- Product docs reviewed: `docs/product/approved-requirements.md`; `CAMBIOS CIENCIASNET.docx` no está disponible localmente, por lo que OpenSpec se usa como fuente suficiente para este change.
 - Architecture docs reviewed: `docs/architecture/database-schema.md`, `docs/architecture/backend.md`
 - API contracts reviewed: `docs/api/openapi.yaml`, `docs/api/paths/academic.yaml`, `docs/api/paths/assessments.yaml`, `docs/api/paths/schedules.yaml`
 - Domain docs reviewed: `docs/domain/academic.md`, `docs/domain/use-case-catalog.md`
@@ -27,7 +27,7 @@ No domain models/controllers/use cases/policies may be created under root `app/`
 
 ## Sources and Invariants
 
-- `CAMBIOS CIENCIASNET.docx` requiere evitar cursos/grados duplicados, usar grados predefinidos, vincular matricula a grado/seccion y crear evaluaciones desde filtros academicos.
+- OpenSpec requiere evitar cursos/grados duplicados, usar grados predefinidos, vincular matricula a grado/seccion y crear evaluaciones desde filtros academicos.
 - Las reglas criticas de duplicidad, capacidad, permisos y filtros deben residir en backend.
 - El frontend puede ocultar opciones, pero el backend SHALL rechazar payloads incoherentes.
 

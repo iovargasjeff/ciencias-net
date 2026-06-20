@@ -9,19 +9,38 @@ use App\Modules\Horarios\Infrastructure\Models\EventoCalendario;
 use App\Modules\Horarios\Infrastructure\Models\Horario;
 use App\Modules\Horarios\Presentation\Requests\CreateCalendarEventRequest;
 use App\Modules\Horarios\Presentation\Requests\CreateScheduleRequest;
+use App\Modules\Usuarios\Infrastructure\Models\Alumno;
+use App\Modules\Usuarios\Infrastructure\Models\Docente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ScheduleController extends Controller
 {
     public function listSchedules(Request $request)
     {
-        $this->authorize('viewAny', Horario::class);
+        Gate::authorize('viewAny', Horario::class);
 
         $query = Horario::query();
 
-        // Si se provee carga_academica_id
         if ($request->has('carga_academica_id')) {
             $query->where('carga_academica_id', $request->input('carga_academica_id'));
+        }
+        if ($request->has('teacher_id')) {
+            $query->whereHas('cargaAcademica', fn ($q) => $q->where('docente_id', $request->input('teacher_id')));
+        }
+        if ($request->has('student_id')) {
+            $student = Alumno::findOrFail($request->input('student_id'));
+            $sectionIds = $student->matriculas()->whereIn('estado', ['activo', 'activa'])->pluck('seccion_id');
+            $query->whereHas('cargaAcademica', fn ($q) => $q->whereIn('seccion_id', $sectionIds));
+        }
+        if ($request->user()?->hasRole('docente') && ! $request->has('teacher_id')) {
+            $teacherId = Docente::where('user_id', $request->user()->id)->value('id');
+            $query->whereHas('cargaAcademica', fn ($q) => $q->where('docente_id', $teacherId));
+        }
+        if ($request->user()?->hasRole('alumno') && ! $request->has('student_id')) {
+            $student = Alumno::where('user_id', $request->user()->id)->first();
+            $sectionIds = $student?->matriculas()->whereIn('estado', ['activo', 'activa'])->pluck('seccion_id') ?? collect();
+            $query->whereHas('cargaAcademica', fn ($q) => $q->whereIn('seccion_id', $sectionIds));
         }
 
         $schedules = $query->paginate($request->input('per_page', 15));
@@ -44,7 +63,7 @@ class ScheduleController extends Controller
 
     public function listCalendarEvents(Request $request)
     {
-        $this->authorize('viewAny', EventoCalendario::class);
+        Gate::authorize('viewAny', EventoCalendario::class);
 
         $query = EventoCalendario::query();
 

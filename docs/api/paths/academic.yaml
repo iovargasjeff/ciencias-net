@@ -76,6 +76,14 @@ listGrades:
         $ref: '../openapi.yaml#/components/responses/ForbiddenError'
       '422':
         $ref: '../openapi.yaml#/components/responses/ValidationError'
+listGradeCatalog:
+  get:
+    tags:
+      - Academic
+    operationId: listGradeCatalog
+    responses:
+      '200':
+        $ref: '../openapi.yaml#/components/responses/CollectionResponse'
 listSections:
   get:
     tags:

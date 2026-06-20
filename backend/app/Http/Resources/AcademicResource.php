@@ -21,9 +21,16 @@ class AcademicResource extends JsonResource
                 'end_date' => $this->fecha_fin?->toDateString(), 'status' => match ($this->estado) {
                     'activo' => 'active', 'cerrado' => 'closed', default => 'draft',
                 },
+                'terms' => $this->whenLoaded('bimestres', fn () => $this->bimestres->map(fn ($term) => [
+                    'id' => $term->id,
+                    'name' => $term->nombre,
+                    'start_date' => $term->fecha_inicio?->toDateString(),
+                    'end_date' => $term->fecha_fin?->toDateString(),
+                ])->values()),
             ],
             $this->resource instanceof Grado => [
                 'id' => $this->id, 'academic_period_id' => $this->periodo_academico_id,
+                'catalog_code' => $this->catalog_code,
                 'name' => $this->nombre, 'level' => mb_strtolower($this->nivel), 'order' => $this->orden,
             ],
             $this->resource instanceof Seccion => [
@@ -31,7 +38,7 @@ class AcademicResource extends JsonResource
                 'capacity' => $this->capacidad,
             ],
             $this->resource instanceof Curso => [
-                'id' => $this->id, 'code' => $this->codigo, 'name' => $this->nombre,
+                'id' => $this->id, 'grade_id' => $this->grado_id, 'code' => $this->codigo, 'name' => $this->nombre,
                 'description' => $this->descripcion,
             ],
             $this->resource instanceof Matricula => [
