@@ -19,6 +19,23 @@ createAccountRequest:
       uniqueItems: true
       items:
         $ref: '../openapi.yaml#/components/schemas/Role'
+    dni:
+      type: string
+      minLength: 8
+      maxLength: 8
+      description: Requerido para docente, padre y alumno.
+    last_names:
+      type: string
+      maxLength: 150
+      description: Requerido para docente, padre y alumno.
+    phone:
+      type: string
+      maxLength: 15
+      description: Requerido para docente y padre.
+    notification_email:
+      type: string
+      format: email
+      description: Requerido para padre.
 updateAccountRequest:
   type: object
   additionalProperties: false

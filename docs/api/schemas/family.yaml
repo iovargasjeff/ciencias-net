@@ -18,3 +18,9 @@ createFamilyLinkRequest:
         - padre
         - madre
         - apoderado
+    is_primary_contact:
+      type: boolean
+      default: false
+    receives_notifications:
+      type: boolean
+      default: true

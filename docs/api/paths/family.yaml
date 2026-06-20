@@ -9,6 +9,17 @@ listFamilyLinks:
       - $ref: '../openapi.yaml#/components/parameters/Page'
       - $ref: '../openapi.yaml#/components/parameters/PerPage'
       - $ref: '../openapi.yaml#/components/parameters/StudentIdQuery'
+      - name: grade_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - name: section_id
+        in: query
+        schema:
+          type: string
+          format: uuid
+      - $ref: '../openapi.yaml#/components/parameters/Search'
     responses:
       '200':
         $ref: '../openapi.yaml#/components/responses/PaginatedResponse'

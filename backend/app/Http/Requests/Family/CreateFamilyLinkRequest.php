@@ -19,6 +19,8 @@ class CreateFamilyLinkRequest extends FormRequest
             'parent_account_id' => ['required', 'uuid', 'exists:users,id'],
             'student_id' => ['required', 'uuid', 'exists:alumnos,id'],
             'relationship' => ['required', Rule::in(['padre', 'madre', 'apoderado'])],
+            'is_primary_contact' => ['sometimes', 'boolean'],
+            'receives_notifications' => ['sometimes', 'boolean'],
         ];
     }
 

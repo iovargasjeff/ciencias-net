@@ -19,7 +19,38 @@ class FamilyLinkController extends Controller
     public function index(Request $request)
     {
         Gate::authorize('manageFamilyLinks', Alumno::class);
-        $query = $this->linksQuery()->when($request->filled('student_id'), fn ($q) => $q->where('ap.alumno_id', $request->string('student_id')));
+        $request->validate([
+            'student_id' => ['sometimes', 'uuid'],
+            'grade_id' => ['sometimes', 'uuid'],
+            'section_id' => ['sometimes', 'uuid'],
+            'search' => ['sometimes', 'string', 'max:150'],
+        ]);
+
+        $query = $this->linksQuery()
+            ->when($request->filled('student_id'), fn ($q) => $q->where('ap.alumno_id', $request->string('student_id')))
+            ->when($request->filled('grade_id'), fn ($q) => $q->whereExists(function ($sub) use ($request): void {
+                $sub->selectRaw('1')
+                    ->from('matriculas as m')
+                    ->join('secciones as s', 's.id', '=', 'm.seccion_id')
+                    ->whereColumn('m.alumno_id', 'ap.alumno_id')
+                    ->where('s.grado_id', $request->string('grade_id'));
+            }))
+            ->when($request->filled('section_id'), fn ($q) => $q->whereExists(function ($sub) use ($request): void {
+                $sub->selectRaw('1')
+                    ->from('matriculas as m')
+                    ->whereColumn('m.alumno_id', 'ap.alumno_id')
+                    ->where('m.seccion_id', $request->string('section_id'));
+            }))
+            ->when($request->filled('search'), function ($q) use ($request): void {
+                $term = '%'.$request->query('search').'%';
+                $q->where(fn ($inner) => $inner
+                    ->where('a.dni', 'like', $term)
+                    ->orWhere('a.nombres', 'like', $term)
+                    ->orWhere('a.apellidos', 'like', $term)
+                    ->orWhere('p.dni', 'like', $term)
+                    ->orWhere('p.nombres', 'like', $term)
+                    ->orWhere('p.apellidos', 'like', $term));
+            });
 
         return FamilyLinkResource::collection($query->paginate(min($request->integer('per_page', 20), 100)));
     }
@@ -44,7 +75,9 @@ class FamilyLinkController extends Controller
         $id = (string) Str::uuid();
         DB::table('alumno_padre')->insert([
             'id' => $id, 'alumno_id' => $request->string('student_id'), 'padre_id' => $parent->id,
-            'relacion' => $request->string('relationship'), 'es_contacto_principal' => false, 'recibe_notificaciones' => true,
+            'relacion' => $request->string('relationship'),
+            'es_contacto_principal' => $request->boolean('is_primary_contact'),
+            'recibe_notificaciones' => $request->boolean('receives_notifications', true),
         ]);
         $audit->record($request, 'family_link.created', $request->user(), subject: $id, newValues: $request->validated(), subjectType: 'family_link');
         $link = $this->linksQuery()->where('ap.id', $id)->firstOrFail();
@@ -97,6 +130,6 @@ class FamilyLinkController extends Controller
             ->join('alumnos as a', 'a.id', '=', 'ap.alumno_id')
             ->join('padres as p', 'p.id', '=', 'ap.padre_id')
             ->join('users as u', 'u.id', '=', 'p.user_id')
-            ->selectRaw("ap.id, ap.alumno_id, ap.padre_id, p.user_id as parent_account_id, ap.relacion, a.nombres || ' ' || a.apellidos as student_name, p.nombres || ' ' || p.apellidos as parent_name");
+            ->selectRaw("ap.id, ap.alumno_id, ap.padre_id, p.user_id as parent_account_id, ap.relacion, ap.es_contacto_principal, ap.recibe_notificaciones, a.nombres || ' ' || a.apellidos as student_name, p.nombres || ' ' || p.apellidos as parent_name");
     }
 }
