@@ -227,7 +227,7 @@ class AcademicController extends Controller
         return $this->created(Curso::create([
             'grado_id' => $request->string('grade_id'),
             'codigo' => $request->string('code'), 'nombre' => $request->string('name'),
-            'nombre_normalizado' => $normalized,
+            'nombre_normalizado' => $this->normalizeName($request->string('name')->toString()),
             'descripcion' => $request->input('description'), 'activo' => true,
         ]));
     }
