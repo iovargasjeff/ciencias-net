@@ -35,9 +35,13 @@ test('renders tabbed academic tables, enrollment filters and historical validity
   await expect(browserPage.getByRole('tab', { name: /Carga docente/ })).toBeVisible()
 
   await browserPage.getByRole('tab', { name: /Matriculas/ }).click()
+  await browserPage.waitForSelector('input[placeholder="Filtrar por nombre, DNI, correo o codigo"]', { timeout: 10000 })
   await expect(browserPage.getByText('1 matriculas filtradas')).toBeVisible()
   await expect(browserPage.getByText(/Ana Alumna/)).toBeVisible()
-  await browserPage.getByPlaceholder('Filtrar por nombre, DNI, correo o codigo').fill('ana')
+  
+  const filterInput = browserPage.getByPlaceholder('Filtrar por nombre, DNI, correo o codigo')
+  await filterInput.waitFor({ state: 'visible' })
+  await filterInput.fill('ana')
   await expect(browserPage.getByText(/Ana Alumna/)).toBeVisible()
 
   await browserPage.getByRole('tab', { name: /Carga docente/ }).click()

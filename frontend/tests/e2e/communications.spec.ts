@@ -125,7 +125,7 @@ async function mockCommsApis(page: Page, userSession = superadmin) {
       list = list.filter(user => user.roles.includes(role))
     }
     
-    return route.fulfill({ json: { data: list } })
+    return route.fulfill({ json: { data: list, meta: { total: list.length } } })
   })
 
   // Mock Family links
