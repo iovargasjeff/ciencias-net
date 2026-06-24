@@ -47,19 +47,17 @@ class DniSearchController extends Controller
 
         $request->validate(['dni' => 'required|string']);
 
-        $alumno = Alumno::where('dni', $request->query('dni'))->first();
-        if (! $alumno) {
+        $students = $query->limit(20)->get();
+        if ($request->filled('dni') && $students->isEmpty()) {
             return response()->json(['data' => null], 404);
         }
 
-        return response()->json([
-            'data' => [
-                'id' => $alumno->id,
-                'user_id' => $alumno->user_id,
-                'dni' => $alumno->dni,
-                'name' => trim($alumno->nombres.' '.$alumno->apellidos),
-            ],
-        ]);
+        return response()->json(['data' => $students->map(fn (Alumno $alumno) => [
+            'id' => $alumno->id,
+            'user_id' => $alumno->user_id,
+            'dni' => $alumno->dni,
+            'name' => trim($alumno->nombres.' '.$alumno->apellidos),
+        ])->values()]);
     }
 
     public function searchParents(Request $request): JsonResponse
@@ -84,21 +82,26 @@ class DniSearchController extends Controller
 
     public function searchTeachers(Request $request): JsonResponse
     {
-        Gate::authorize('manage', User::class);
-        $request->validate(['dni' => 'required|string']);
+        Gate::authorize('lookupAcademic', User::class);
+        $request->validate(['dni' => 'sometimes|string', 'search' => 'sometimes|string|max:150']);
 
-        $docente = Docente::where('dni', $request->query('dni'))->first();
-        if (! $docente) {
+        $query = Docente::query();
+        $query->when($request->filled('dni'), fn ($q) => $q->where('dni', $request->query('dni')));
+        $query->when($request->filled('search'), function ($q) use ($request): void {
+            $term = '%'.$request->query('search').'%';
+            $q->where(fn ($inner) => $inner->where('nombres', 'like', $term)->orWhere('apellidos', 'like', $term)->orWhere('dni', 'like', $term));
+        });
+
+        $teachers = $query->limit(20)->get();
+        if ($request->filled('dni') && $teachers->isEmpty()) {
             return response()->json(['data' => null], 404);
         }
 
-        return response()->json([
-            'data' => [
-                'id' => $docente->id,
-                'user_id' => $docente->user_id,
-                'dni' => $docente->dni,
-                'name' => trim($docente->nombres.' '.$docente->apellidos),
-            ],
-        ]);
+        return response()->json(['data' => $teachers->map(fn (Docente $docente) => [
+            'id' => $docente->id,
+            'user_id' => $docente->user_id,
+            'dni' => $docente->dni,
+            'name' => trim($docente->nombres.' '.$docente->apellidos),
+        ])->values()]);
     }
 }

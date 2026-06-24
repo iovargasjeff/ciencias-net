@@ -68,6 +68,9 @@
                                                     <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-health">
                                 <a href="#endpoints-GETapi-v1-health">GET api/v1/health</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-private-files--fileId--signed-download">
+                                <a href="#endpoints-GETapi-v1-private-files--fileId--signed-download">GET api/v1/private-files/{fileId}/signed-download</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-station-activations">
                                 <a href="#endpoints-POSTapi-v1-station-activations">POST api/v1/station-activations</a>
                             </li>
@@ -91,6 +94,12 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-auth-logout">
                                 <a href="#endpoints-POSTapi-v1-auth-logout">POST api/v1/auth/logout</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-POSTapi-v1-private-files">
+                                <a href="#endpoints-POSTapi-v1-private-files">POST api/v1/private-files</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-private-files--fileId--download">
+                                <a href="#endpoints-GETapi-v1-private-files--fileId--download">GET api/v1/private-files/{fileId}/download</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-accounts">
                                 <a href="#endpoints-GETapi-v1-accounts">GET api/v1/accounts</a>
@@ -148,6 +157,12 @@
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-PATCHapi-v1-academic-periods--academicPeriodId-">
                                 <a href="#endpoints-PATCHapi-v1-academic-periods--academicPeriodId-">PATCH api/v1/academic-periods/{academicPeriodId}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-v1-academic-periods--academicPeriodId-">
+                                <a href="#endpoints-DELETEapi-v1-academic-periods--academicPeriodId-">DELETE api/v1/academic-periods/{academicPeriodId}</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-grade-catalog">
+                                <a href="#endpoints-GETapi-v1-grade-catalog">GET api/v1/grade-catalog</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-v1-grades">
                                 <a href="#endpoints-GETapi-v1-grades">GET api/v1/grades</a>
@@ -462,7 +477,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 9, 2026</li>
+        <li>Last updated: June 24, 2026</li>
     </ul>
 </div>
 
@@ -530,15 +545,25 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 21bc6942-780a-44b6-a91d-e180d717fcc0
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: {
-        &quot;status&quot;: &quot;ok&quot;
+        &quot;status&quot;: &quot;ok&quot;,
+        &quot;checks&quot;: {
+            &quot;api&quot;: &quot;ok&quot;,
+            &quot;queue&quot;: &quot;sync&quot;,
+            &quot;cache&quot;: &quot;array&quot;
+        }
     }
 }</code>
  </pre>
@@ -598,6 +623,139 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>application/json</code></p>
             </div>
                         </form>
+
+                    <h2 id="endpoints-GETapi-v1-private-files--fileId--signed-download">GET api/v1/private-files/{fileId}/signed-download</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-private-files--fileId--signed-download">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/private-files/architecto/signed-download" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/private-files/architecto/signed-download"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-private-files--fileId--signed-download">
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-store, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 47d43b96-ab76-4d1e-9011-ba39c0bf0930
+access-control-allow-origin: http://localhost:5173
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: {
+        &quot;code&quot;: &quot;http_error&quot;,
+        &quot;message&quot;: &quot;Invalid signature.&quot;,
+        &quot;fields&quot;: {}
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-private-files--fileId--signed-download" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-private-files--fileId--signed-download"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-private-files--fileId--signed-download"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-private-files--fileId--signed-download" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-private-files--fileId--signed-download">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-private-files--fileId--signed-download" data-method="GET"
+      data-path="api/v1/private-files/{fileId}/signed-download"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-private-files--fileId--signed-download', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/private-files/{fileId}/signed-download</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-private-files--fileId--signed-download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-private-files--fileId--signed-download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>fileId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="fileId"                data-endpoint="GETapi-v1-private-files--fileId--signed-download"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                    </form>
 
                     <h2 id="endpoints-POSTapi-v1-station-activations">POST api/v1/station-activations</h2>
 
@@ -772,8 +930,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: ae6ca953-3a5b-48c0-b0ec-ecea60996473
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -860,8 +1023,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "camera_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
-    --form "captured_at=2026-06-09T02:19:40"\
-    --form "image=@/tmp/phpjaZHhR" </code></pre></div>
+    --form "captured_at=2026-06-24T17:13:04"\
+    --form "image=@/tmp/phpfHWZgb" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -876,7 +1039,7 @@ const headers = {
 
 const body = new FormData();
 body.append('camera_id', '6ff8f7f6-1eb3-3525-be4a-3932c805afed');
-body.append('captured_at', '2026-06-09T02:19:40');
+body.append('captured_at', '2026-06-24T17:13:04');
 body.append('image', document.querySelector('input[name="image"]').files[0]);
 
 fetch(url, {
@@ -954,7 +1117,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must be an image. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpjaZHhR</code></p>
+<p>Must be a file. Must be an image. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpfHWZgb</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>camera_id</code></b>&nbsp;&nbsp;
@@ -975,10 +1138,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="captured_at"                data-endpoint="POSTapi-v1-station-captures"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
         </form>
 
@@ -1437,8 +1600,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 712b6525-a2a0-4012-aa76-abb919493f25
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -1602,6 +1770,318 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                         </form>
 
+                    <h2 id="endpoints-POSTapi-v1-private-files">POST api/v1/private-files</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-v1-private-files">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/v1/private-files" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"file\": \"architecto\",
+    \"purpose\": \"report\",
+    \"checksum_sha256\": \"922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d\",
+    \"expires_at\": \"2052-07-18\",
+    \"metadata\": [
+        \"n\"
+    ]
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/private-files"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "file": "architecto",
+    "purpose": "report",
+    "checksum_sha256": "922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d",
+    "expires_at": "2052-07-18",
+    "metadata": [
+        "n"
+    ]
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-v1-private-files">
+</span>
+<span id="execution-results-POSTapi-v1-private-files" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-v1-private-files"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-v1-private-files"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-v1-private-files" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-v1-private-files">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-v1-private-files" data-method="POST"
+      data-path="api/v1/private-files"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-v1-private-files', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/v1/private-files</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-v1-private-files"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-v1-private-files"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>file</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="file"                data-endpoint="POSTapi-v1-private-files"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>purpose</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="purpose"                data-endpoint="POSTapi-v1-private-files"
+               value="report"
+               data-component="body">
+    <br>
+<p>Example: <code>report</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>material</code></li> <li><code>incident_evidence</code></li> <li><code>psychology</code></li> <li><code>biometric_exception</code></li> <li><code>report</code></li> <li><code>other</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>checksum_sha256</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="checksum_sha256"                data-endpoint="POSTapi-v1-private-files"
+               value="922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d"
+               data-component="body">
+    <br>
+<p>Must match the regex /^[a-fA-F0-9]{64}$/. Example: <code>922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>expires_at</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="expires_at"                data-endpoint="POSTapi-v1-private-files"
+               value="2052-07-18"
+               data-component="body">
+    <br>
+<p>Must be a valid date. Must be a date after <code>now</code>. Example: <code>2052-07-18</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>metadata</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="metadata[0]"                data-endpoint="POSTapi-v1-private-files"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="metadata[1]"                data-endpoint="POSTapi-v1-private-files"
+               data-component="body">
+    <br>
+<p>Must not be greater than 200 characters.</p>
+        </div>
+        </form>
+
+                    <h2 id="endpoints-GETapi-v1-private-files--fileId--download">GET api/v1/private-files/{fileId}/download</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-private-files--fileId--download">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/private-files/architecto/download" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/private-files/architecto/download"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-private-files--fileId--download">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-store, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 53a7c63f-6aee-4e97-a4e2-134b1f5e5aec
+access-control-allow-origin: http://localhost:5173
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: {
+        &quot;code&quot;: &quot;unauthenticated&quot;,
+        &quot;message&quot;: &quot;Debes iniciar sesi&oacute;n.&quot;,
+        &quot;fields&quot;: {}
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-private-files--fileId--download" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-private-files--fileId--download"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-private-files--fileId--download"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-private-files--fileId--download" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-private-files--fileId--download">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-private-files--fileId--download" data-method="GET"
+      data-path="api/v1/private-files/{fileId}/download"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-private-files--fileId--download', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/private-files/{fileId}/download</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-private-files--fileId--download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-private-files--fileId--download"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>fileId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="fileId"                data-endpoint="GETapi-v1-private-files--fileId--download"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
                     <h2 id="endpoints-GETapi-v1-accounts">GET api/v1/accounts</h2>
 
 <p>
@@ -1646,8 +2126,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: cf0893c2-d29c-4a2d-921b-a4abaf5a57d6
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -1910,8 +2395,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 9aaf8d84-5caa-4ced-ad5f-30b0de8cd6cc
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2546,7 +3036,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"dni\": \"architecto\"
+    \"dni\": \"architecto\",
+    \"search\": \"n\",
+    \"grade_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
+    \"section_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\"
 }"
 </code></pre></div>
 
@@ -2562,7 +3055,10 @@ const headers = {
 };
 
 let body = {
-    "dni": "architecto"
+    "dni": "architecto",
+    "search": "n",
+    "grade_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
+    "section_id": "977e5426-8d13-3824-86aa-b092f8ae52c5"
 };
 
 fetch(url, {
@@ -2581,8 +3077,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 5d871444-61c4-4650-95d8-6ec4b97af0aa
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2654,7 +3155,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>dni</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="dni"                data-endpoint="GETapi-v1-search-students"
@@ -2662,6 +3163,42 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-search-students"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 150 characters. Example: <code>n</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>grade_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="grade_id"                data-endpoint="GETapi-v1-search-students"
+               value="6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. Example: <code>6b72fe4a-5b40-307c-bc24-f79acf9a1bb9</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>section_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="section_id"                data-endpoint="GETapi-v1-search-students"
+               value="977e5426-8d13-3824-86aa-b092f8ae52c5"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. Example: <code>977e5426-8d13-3824-86aa-b092f8ae52c5</code></p>
         </div>
         </form>
 
@@ -2717,8 +3254,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: c66fc1d4-b240-4452-86fb-de484c5c9d18
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2818,7 +3360,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"dni\": \"architecto\"
+    \"dni\": \"architecto\",
+    \"search\": \"n\"
 }"
 </code></pre></div>
 
@@ -2834,7 +3377,8 @@ const headers = {
 };
 
 let body = {
-    "dni": "architecto"
+    "dni": "architecto",
+    "search": "n"
 };
 
 fetch(url, {
@@ -2853,8 +3397,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: ee167ae8-018c-4d32-9627-ef137fb69f80
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2926,7 +3475,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
         <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>dni</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="dni"                data-endpoint="GETapi-v1-search-teachers"
@@ -2934,6 +3483,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-v1-search-teachers"
+               value="n"
+               data-component="body">
+    <br>
+<p>Must not be greater than 150 characters. Example: <code>n</code></p>
         </div>
         </form>
 
@@ -2981,8 +3542,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 2b6a5efa-cedd-4105-a5b9-e2c0c58765b1
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3348,8 +3914,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 293cd49c-dc95-455a-895c-6c701f7ce16d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3463,8 +4034,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 9e8bac1d-a845-4d13-b02a-f09ef22faefa
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3591,8 +4167,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 7326b47a-654c-4b73-b24f-8f675c7884e5
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3682,7 +4263,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"Año académico 2026\",
     \"start_date\": \"2026-03-01\",
     \"end_date\": \"2026-12-20\",
-    \"status\": \"active\"
+    \"status\": \"active\",
+    \"terms\": [
+        {
+            \"name\": \"b\",
+            \"start_date\": \"2026-06-24T17:13:04\",
+            \"end_date\": \"2026-06-24T17:13:04\"
+        }
+    ]
 }"
 </code></pre></div>
 
@@ -3701,7 +4289,14 @@ let body = {
     "name": "Año académico 2026",
     "start_date": "2026-03-01",
     "end_date": "2026-12-20",
-    "status": "active"
+    "status": "active",
+    "terms": [
+        {
+            "name": "b",
+            "start_date": "2026-06-24T17:13:04",
+            "end_date": "2026-06-24T17:13:04"
+        }
+    ]
 };
 
 fetch(url, {
@@ -3819,6 +4414,54 @@ You can check the Dev Tools console for debugging information.</code></pre>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>draft</code></li> <li><code>active</code></li> <li><code>closed</code></li></ul>
         </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>terms</code></b>&nbsp;&nbsp;
+<small>object[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+<br>
+<p>Must contain 4 items.</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="terms.0.name"                data-endpoint="POSTapi-v1-academic-periods"
+               value="b"
+               data-component="body">
+    <br>
+<p>This field is required when <code>terms</code> is present. Must not be greater than 60 characters. Example: <code>b</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>start_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="terms.0.start_date"                data-endpoint="POSTapi-v1-academic-periods"
+               value="2026-06-24T17:13:04"
+               data-component="body">
+    <br>
+<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="terms.0.end_date"                data-endpoint="POSTapi-v1-academic-periods"
+               value="2026-06-24T17:13:04"
+               data-component="body">
+    <br>
+<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
+                    </div>
+                                    </details>
+        </div>
         </form>
 
                     <h2 id="endpoints-GETapi-v1-academic-periods--academicPeriodId-">GET api/v1/academic-periods/{academicPeriodId}</h2>
@@ -3865,8 +4508,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: b3f2c0ae-2072-4dec-bbf1-2188901c3490
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4121,6 +4769,233 @@ Must be one of:
         </div>
         </form>
 
+                    <h2 id="endpoints-DELETEapi-v1-academic-periods--academicPeriodId-">DELETE api/v1/academic-periods/{academicPeriodId}</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-v1-academic-periods--academicPeriodId-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost/api/v1/academic-periods/architecto" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/academic-periods/architecto"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-v1-academic-periods--academicPeriodId-">
+</span>
+<span id="execution-results-DELETEapi-v1-academic-periods--academicPeriodId-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-v1-academic-periods--academicPeriodId-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-v1-academic-periods--academicPeriodId-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-v1-academic-periods--academicPeriodId-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-v1-academic-periods--academicPeriodId-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-v1-academic-periods--academicPeriodId-" data-method="DELETE"
+      data-path="api/v1/academic-periods/{academicPeriodId}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-v1-academic-periods--academicPeriodId-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/v1/academic-periods/{academicPeriodId}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-v1-academic-periods--academicPeriodId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-v1-academic-periods--academicPeriodId-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>academicPeriodId</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="academicPeriodId"                data-endpoint="DELETEapi-v1-academic-periods--academicPeriodId-"
+               value="architecto"
+               data-component="url">
+    <br>
+<p>Example: <code>architecto</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="endpoints-GETapi-v1-grade-catalog">GET api/v1/grade-catalog</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-v1-grade-catalog">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/v1/grade-catalog" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/v1/grade-catalog"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-grade-catalog">
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-store, private
+content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 71408041-92a5-43b3-9945-897b209bcaaf
+access-control-allow-origin: http://localhost:5173
+access-control-allow-credentials: true
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;error&quot;: {
+        &quot;code&quot;: &quot;unauthenticated&quot;,
+        &quot;message&quot;: &quot;Debes iniciar sesi&oacute;n.&quot;,
+        &quot;fields&quot;: {}
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-grade-catalog" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-v1-grade-catalog"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-grade-catalog"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-grade-catalog" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-grade-catalog">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-v1-grade-catalog" data-method="GET"
+      data-path="api/v1/grade-catalog"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-grade-catalog', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/grade-catalog</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-grade-catalog"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-grade-catalog"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
                     <h2 id="endpoints-GETapi-v1-grades">GET api/v1/grades</h2>
 
 <p>
@@ -4165,8 +5040,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 871b0856-48b0-40c3-9c66-7bab6f36b3c4
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4253,6 +5133,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
+    \"catalog_code\": \"b\",
     \"name\": \"Quinto de secundaria\",
     \"level\": \"secundaria\",
     \"order\": 5,
@@ -4272,6 +5153,7 @@ const headers = {
 };
 
 let body = {
+    "catalog_code": "b",
     "name": "Quinto de secundaria",
     "level": "secundaria",
     "order": 5,
@@ -4344,21 +5226,33 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>catalog_code</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="catalog_code"                data-endpoint="POSTapi-v1-grades"
+               value="b"
+               data-component="body">
+    <br>
+<p>This field is required when <code>name</code> is not present. Must not be greater than 40 characters. Example: <code>b</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="name"                data-endpoint="POSTapi-v1-grades"
                value="Quinto de secundaria"
                data-component="body">
     <br>
-<p>Nombre del grado. Must not be greater than 100 characters. Example: <code>Quinto de secundaria</code></p>
+<p>Nombre del grado. This field is required when <code>catalog_code</code> is not present. Must not be greater than 100 characters. Example: <code>Quinto de secundaria</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>level</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
- &nbsp;
+<i>optional</i> &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="level"                data-endpoint="POSTapi-v1-grades"
@@ -4653,8 +5547,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 7922b192-0c34-484e-a4e9-86de8f61796b
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -5125,8 +6024,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 892d553a-7ab5-4f13-8369-fc2ffe2c9df5
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -5213,6 +6117,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
+    \"grade_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"code\": \"MAT-5S\",
     \"name\": \"Matemática\",
     \"description\": \"Curso anual de matemática para quinto de secundaria.\"
@@ -5231,6 +6136,7 @@ const headers = {
 };
 
 let body = {
+    "grade_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "code": "MAT-5S",
     "name": "Matemática",
     "description": "Curso anual de matemática para quinto de secundaria."
@@ -5302,6 +6208,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>grade_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="grade_id"                data-endpoint="POSTapi-v1-courses"
+               value="6ff8f7f6-1eb3-3525-be4a-3932c805afed"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the grados table. Example: <code>6ff8f7f6-1eb3-3525-be4a-3932c805afed</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>code</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -5597,8 +6515,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 8381915a-8320-4c80-b269-842437e503fd
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -5686,9 +6609,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"55555555-5555-4555-8555-555555555555\",
+    \"grade_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"section_id\": \"66666666-6666-4666-8666-666666666666\",
     \"academic_period_id\": \"33333333-3333-4333-8333-333333333333\",
-    \"enrolled_at\": \"2026-03-05\"
+    \"enrolled_at\": \"2026-03-05\",
+    \"course_ids\": [
+        \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\"
+    ]
 }"
 </code></pre></div>
 
@@ -5705,9 +6632,13 @@ const headers = {
 
 let body = {
     "student_id": "55555555-5555-4555-8555-555555555555",
+    "grade_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "section_id": "66666666-6666-4666-8666-666666666666",
     "academic_period_id": "33333333-3333-4333-8333-333333333333",
-    "enrolled_at": "2026-03-05"
+    "enrolled_at": "2026-03-05",
+    "course_ids": [
+        "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
+    ]
 };
 
 fetch(url, {
@@ -5788,6 +6719,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Identificador del alumno. Must be a valid UUID. The <code>id</code> of an existing record in the alumnos table. Example: <code>55555555-5555-4555-8555-555555555555</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>grade_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="grade_id"                data-endpoint="POSTapi-v1-enrollments"
+               value="6ff8f7f6-1eb3-3525-be4a-3932c805afed"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the grados table. Example: <code>6ff8f7f6-1eb3-3525-be4a-3932c805afed</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>section_id</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -5822,6 +6765,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Fecha de matrícula. Must be a valid date. Example: <code>2026-03-05</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>course_ids</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="course_ids[0]"                data-endpoint="POSTapi-v1-enrollments"
+               data-component="body">
+        <input type="text" style="display: none"
+               name="course_ids[1]"                data-endpoint="POSTapi-v1-enrollments"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the cursos table.</p>
         </div>
         </form>
 
@@ -6083,8 +7040,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 6d6f1c75-85df-49e3-bcfd-f117c26b7e15
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -6172,6 +7134,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"teacher_id\": \"77777777-7777-4777-8777-777777777777\",
+    \"grade_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"course_id\": \"88888888-8888-4888-8888-888888888888\",
     \"section_id\": \"66666666-6666-4666-8666-666666666666\",
     \"academic_period_id\": \"33333333-3333-4333-8333-333333333333\"
@@ -6191,6 +7154,7 @@ const headers = {
 
 let body = {
     "teacher_id": "77777777-7777-4777-8777-777777777777",
+    "grade_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "course_id": "88888888-8888-4888-8888-888888888888",
     "section_id": "66666666-6666-4666-8666-666666666666",
     "academic_period_id": "33333333-3333-4333-8333-333333333333"
@@ -6272,6 +7236,18 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Identificador del docente. Must be a valid UUID. The <code>id</code> of an existing record in the docentes table. Example: <code>77777777-7777-4777-8777-777777777777</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>grade_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="grade_id"                data-endpoint="POSTapi-v1-teaching-assignments"
+               value="6ff8f7f6-1eb3-3525-be4a-3932c805afed"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the grados table. Example: <code>6ff8f7f6-1eb3-3525-be4a-3932c805afed</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>course_id</code></b>&nbsp;&nbsp;
@@ -6569,8 +7545,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: d9864373-d7a5-4e69-a20f-f961de898ef5
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -6660,7 +7641,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "titulo=g"\
     --form "descripcion=z"\
     --form "semana=17"\
-    --form "file=@/tmp/phpdkpX30" </code></pre></div>
+    --form "file=@/tmp/phpduB2pu" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -6803,7 +7784,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpdkpX30</code></p>
+<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpduB2pu</code></p>
         </div>
         </form>
 
@@ -6851,8 +7832,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 03b48990-72a0-4e11-8160-4207d8f072f4
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -6955,7 +7941,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"titulo\": \"b\",
     \"descripcion\": \"n\",
     \"semana\": 7,
-    \"activo\": false
+    \"activo\": true
 }"
 </code></pre></div>
 
@@ -6974,7 +7960,7 @@ let body = {
     "titulo": "b",
     "descripcion": "n",
     "semana": 7,
-    "activo": false
+    "activo": true
 };
 
 fetch(url, {
@@ -7111,7 +8097,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -7409,7 +8395,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/materials/architecto/file" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpEcOFWN" </code></pre></div>
+    --form "file=@/tmp/phpCtY0hS" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -7513,7 +8499,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpEcOFWN</code></p>
+<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpCtY0hS</code></p>
         </div>
         </form>
 
@@ -7561,8 +8547,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 0cfd7bc5-a874-4739-81ab-85842e259d26
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7847,8 +8838,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 69602633-29d1-43cc-8727-a7e772cd0c78
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7936,9 +8932,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"title\": \"b\",
-    \"starts_at\": \"2026-06-09T02:19:40\",
-    \"ends_at\": \"2052-07-02\",
-    \"event_type\": \"academic\",
+    \"starts_at\": \"2026-06-24T17:13:04\",
+    \"ends_at\": \"2052-07-17\",
+    \"event_type\": \"holiday\",
     \"description\": \"Et animi quos velit et fugiat.\"
 }"
 </code></pre></div>
@@ -7956,9 +8952,9 @@ const headers = {
 
 let body = {
     "title": "b",
-    "starts_at": "2026-06-09T02:19:40",
-    "ends_at": "2052-07-02",
-    "event_type": "academic",
+    "starts_at": "2026-06-24T17:13:04",
+    "ends_at": "2052-07-17",
+    "event_type": "holiday",
     "description": "Et animi quos velit et fugiat."
 };
 
@@ -8046,10 +9042,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="starts_at"                data-endpoint="POSTapi-v1-calendar-events"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ends_at</code></b>&nbsp;&nbsp;
@@ -8058,10 +9054,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="ends_at"                data-endpoint="POSTapi-v1-calendar-events"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>starts_at</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after <code>starts_at</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>event_type</code></b>&nbsp;&nbsp;
@@ -8070,10 +9066,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="event_type"                data-endpoint="POSTapi-v1-calendar-events"
-               value="academic"
+               value="holiday"
                data-component="body">
     <br>
-<p>Example: <code>academic</code></p>
+<p>Example: <code>holiday</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>academic</code></li> <li><code>holiday</code></li> <li><code>meeting</code></li> <li><code>other</code></li></ul>
         </div>
@@ -8135,8 +9131,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 8479cf59-6132-4e6e-802a-ea2d82f5feda
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -8225,9 +9226,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"incident_type\": \"g\",
-    \"severity\": \"low\",
+    \"severity\": \"medium\",
     \"description\": \"Quos velit et fugiat sunt nihil accusantium harum.\",
-    \"occurred_at\": \"2026-06-09T02:19:40\"
+    \"occurred_at\": \"2026-06-24T17:13:04\"
 }"
 </code></pre></div>
 
@@ -8245,9 +9246,9 @@ const headers = {
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "incident_type": "g",
-    "severity": "low",
+    "severity": "medium",
     "description": "Quos velit et fugiat sunt nihil accusantium harum.",
-    "occurred_at": "2026-06-09T02:19:40"
+    "occurred_at": "2026-06-24T17:13:04"
 };
 
 fetch(url, {
@@ -8346,10 +9347,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="severity"                data-endpoint="POSTapi-v1-incidents"
-               value="low"
+               value="medium"
                data-component="body">
     <br>
-<p>Example: <code>low</code></p>
+<p>Example: <code>medium</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>low</code></li> <li><code>medium</code></li> <li><code>high</code></li> <li><code>critical</code></li></ul>
         </div>
@@ -8372,10 +9373,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-incidents"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
         </form>
 
@@ -8540,7 +9541,7 @@ Must be one of:
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "note=b"\
-    --form "file=@/tmp/phpi3cr5A" </code></pre></div>
+    --form "file=@/tmp/phpeN6sQJ" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -8657,7 +9658,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Example: <code>/tmp/phpi3cr5A</code></p>
+<p>Must be a file. Example: <code>/tmp/phpeN6sQJ</code></p>
         </div>
         </form>
 
@@ -8678,11 +9679,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2026-06-09T02:19:40\",
-    \"to_date\": \"2052-07-02\",
-    \"format\": \"xlsx\",
+    \"from_date\": \"2026-06-24T17:13:04\",
+    \"to_date\": \"2052-07-17\",
+    \"format\": \"pdf\",
     \"status\": \"in_progress\",
-    \"severity\": \"low\"
+    \"severity\": \"medium\"
 }"
 </code></pre></div>
 
@@ -8698,11 +9699,11 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2026-06-09T02:19:40",
-    "to_date": "2052-07-02",
-    "format": "xlsx",
+    "from_date": "2026-06-24T17:13:04",
+    "to_date": "2052-07-17",
+    "format": "pdf",
     "status": "in_progress",
-    "severity": "low"
+    "severity": "medium"
 };
 
 fetch(url, {
@@ -8777,10 +9778,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -8789,10 +9790,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="to_date"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>from_date</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>format</code></b>&nbsp;&nbsp;
@@ -8801,10 +9802,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="format"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="xlsx"
+               value="pdf"
                data-component="body">
     <br>
-<p>Example: <code>xlsx</code></p>
+<p>Example: <code>pdf</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pdf</code></li> <li><code>xlsx</code></li></ul>
         </div>
@@ -8829,10 +9830,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="severity"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="low"
+               value="medium"
                data-component="body">
     <br>
-<p>Example: <code>low</code></p>
+<p>Example: <code>medium</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>low</code></li> <li><code>medium</code></li> <li><code>high</code></li> <li><code>critical</code></li></ul>
         </div>
@@ -8882,8 +9883,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 8c9ed14a-c80a-489e-b51d-2ee528e52e80
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -8971,7 +9977,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"occurred_at\": \"2026-06-09T02:19:40\",
+    \"occurred_at\": \"2026-06-24T17:13:04\",
     \"summary\": \"g\",
     \"confidential_notes\": \"z\",
     \"incident_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\"
@@ -8991,7 +9997,7 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "occurred_at": "2026-06-09T02:19:40",
+    "occurred_at": "2026-06-24T17:13:04",
     "summary": "g",
     "confidential_notes": "z",
     "incident_id": "977e5426-8d13-3824-86aa-b092f8ae52c5"
@@ -9081,10 +10087,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-psychology-cares"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>summary</code></b>&nbsp;&nbsp;
@@ -9143,11 +10149,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"b\",
     \"body\": \"n\",
-    \"audience_type\": \"all\",
+    \"audience_type\": \"accounts\",
     \"audience_ids\": [
         \"architecto\"
     ],
-    \"publish_at\": \"2026-06-09T02:19:40\"
+    \"publish_at\": \"2026-06-24T17:13:04\"
 }"
 </code></pre></div>
 
@@ -9165,11 +10171,11 @@ const headers = {
 let body = {
     "title": "b",
     "body": "n",
-    "audience_type": "all",
+    "audience_type": "accounts",
     "audience_ids": [
         "architecto"
     ],
-    "publish_at": "2026-06-09T02:19:40"
+    "publish_at": "2026-06-24T17:13:04"
 };
 
 fetch(url, {
@@ -9268,10 +10274,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="audience_type"                data-endpoint="POSTapi-v1-announcements"
-               value="all"
+               value="accounts"
                data-component="body">
     <br>
-<p>Example: <code>all</code></p>
+<p>Example: <code>accounts</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>all</code></li> <li><code>roles</code></li> <li><code>sections</code></li> <li><code>accounts</code></li></ul>
         </div>
@@ -9296,10 +10302,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="publish_at"                data-endpoint="POSTapi-v1-announcements"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:04"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:04</code></p>
         </div>
         </form>
 
@@ -9347,8 +10353,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 78f710da-c0e5-4a26-9a75-1bbba4fb7436
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -9676,8 +10687,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 7c82fe24-6432-44ad-a32a-9da4860e2b9a
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -9791,8 +10807,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 928a7cea-de07-47ab-a23d-06227ec9f47d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10468,8 +11489,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: c95dab79-6a57-45dd-a82f-900778760efa
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10571,7 +11597,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"label\": \"b\",
     \"device_identifier\": \"n\",
-    \"active\": true
+    \"active\": false
 }"
 </code></pre></div>
 
@@ -10589,7 +11615,7 @@ const headers = {
 let body = {
     "label": "b",
     "device_identifier": "n",
-    "active": true
+    "active": false
 };
 
 fetch(url, {
@@ -10714,7 +11740,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -10762,8 +11788,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 5f210f22-8742-4e41-8500-7f2b453ddb79
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10851,8 +11882,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"event_type\": \"exit\",
-    \"occurred_at\": \"2026-06-09T02:19:40\",
+    \"event_type\": \"absence\",
+    \"occurred_at\": \"2026-06-24T17:13:05\",
     \"reason\": \"g\"
 }"
 </code></pre></div>
@@ -10870,8 +11901,8 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "event_type": "exit",
-    "occurred_at": "2026-06-09T02:19:40",
+    "event_type": "absence",
+    "occurred_at": "2026-06-24T17:13:05",
     "reason": "g"
 };
 
@@ -10959,10 +11990,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="event_type"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="exit"
+               value="absence"
                data-component="body">
     <br>
-<p>Example: <code>exit</code></p>
+<p>Example: <code>absence</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>absence</code></li> <li><code>late</code></li></ul>
         </div>
@@ -10973,10 +12004,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -11009,7 +12040,7 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date\": \"2026-06-09T02:19:40\"
+    \"date\": \"2026-06-24T17:13:05\"
 }"
 </code></pre></div>
 
@@ -11025,7 +12056,7 @@ const headers = {
 };
 
 let body = {
-    "date": "2026-06-09T02:19:40"
+    "date": "2026-06-24T17:13:05"
 };
 
 fetch(url, {
@@ -11100,10 +12131,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-student-attendance-day-closures"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
         </form>
 
@@ -11151,8 +12182,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: e19e0cec-5288-44a2-a8e1-6e68fbba274c
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -11522,8 +12558,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 913c89df-0d73-401d-b237-8fe478e17095
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -11765,8 +12806,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: c39b3ad0-089b-477f-ad89-991326a621b9
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -11853,7 +12899,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"outcome\": \"confirmed\",
+    \"outcome\": \"rejected\",
     \"matched_student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"reason\": \"g\"
 }"
@@ -11871,7 +12917,7 @@ const headers = {
 };
 
 let body = {
-    "outcome": "confirmed",
+    "outcome": "rejected",
     "matched_student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "reason": "g"
 };
@@ -11961,10 +13007,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="outcome"                data-endpoint="POSTapi-v1-recognition-events--recognitionEventId--review"
-               value="confirmed"
+               value="rejected"
                data-component="body">
     <br>
-<p>Example: <code>confirmed</code></p>
+<p>Example: <code>rejected</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>confirmed</code></li> <li><code>rejected</code></li> <li><code>reassigned</code></li></ul>
         </div>
@@ -12038,8 +13084,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 54220642-8962-4dd5-92db-49614d3fceea
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -12127,8 +13178,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"date\": \"2026-06-09T02:19:40\",
-    \"adjustment_type\": \"add\",
+    \"date\": \"2026-06-24T17:13:05\",
+    \"adjustment_type\": \"subtract\",
     \"minutes\": 67,
     \"reason\": \"z\"
 }"
@@ -12147,8 +13198,8 @@ const headers = {
 
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "date": "2026-06-09T02:19:40",
-    "adjustment_type": "add",
+    "date": "2026-06-24T17:13:05",
+    "adjustment_type": "subtract",
     "minutes": 67,
     "reason": "z"
 };
@@ -12237,10 +13288,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>adjustment_type</code></b>&nbsp;&nbsp;
@@ -12249,10 +13300,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="adjustment_type"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="add"
+               value="subtract"
                data-component="body">
     <br>
-<p>Example: <code>add</code></p>
+<p>Example: <code>subtract</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>add</code></li> <li><code>subtract</code></li></ul>
         </div>
@@ -12582,8 +13633,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: e6e3a597-6765-41d1-a16d-ed5ecbc9fa84
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -12674,13 +13730,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"n\",
     \"amount\": \"642559\",
     \"academic_period_id\": \"947170af-7488-3f30-a16d-723355a9502f\",
-    \"type\": \"mensualidad\",
+    \"type\": \"otro\",
     \"year\": 2000,
     \"month\": 1,
     \"due_day\": 2,
-    \"recurrence\": \"single\",
+    \"recurrence\": \"monthly\",
     \"early_payment_discount\": \"642559\",
-    \"early_payment_deadline\": \"2026-06-09T02:19:40\"
+    \"early_payment_deadline\": \"2026-06-24T17:13:05\"
 }"
 </code></pre></div>
 
@@ -12700,13 +13756,13 @@ let body = {
     "name": "n",
     "amount": "642559",
     "academic_period_id": "947170af-7488-3f30-a16d-723355a9502f",
-    "type": "mensualidad",
+    "type": "otro",
     "year": 2000,
     "month": 1,
     "due_day": 2,
-    "recurrence": "single",
+    "recurrence": "monthly",
     "early_payment_discount": "642559",
-    "early_payment_deadline": "2026-06-09T02:19:40"
+    "early_payment_deadline": "2026-06-24T17:13:05"
 };
 
 fetch(url, {
@@ -12829,10 +13885,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="POSTapi-v1-payment-concepts"
-               value="mensualidad"
+               value="otro"
                data-component="body">
     <br>
-<p>Example: <code>mensualidad</code></p>
+<p>Example: <code>otro</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>cuota_ingreso</code></li> <li><code>matricula</code></li> <li><code>mensualidad</code></li> <li><code>otro</code></li></ul>
         </div>
@@ -12879,10 +13935,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="recurrence"                data-endpoint="POSTapi-v1-payment-concepts"
-               value="single"
+               value="monthly"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>monthly</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>monthly</code></li> <li><code>annual</code></li></ul>
         </div>
@@ -12905,10 +13961,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="early_payment_deadline"                data-endpoint="POSTapi-v1-payment-concepts"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
         </form>
 
@@ -12935,9 +13991,9 @@ Must be one of:
     \"year\": 2001,
     \"month\": 2,
     \"due_day\": 1,
-    \"recurrence\": \"monthly\",
+    \"recurrence\": \"single\",
     \"early_payment_discount\": \"642559\",
-    \"early_payment_deadline\": \"2026-06-09T02:19:40\"
+    \"early_payment_deadline\": \"2026-06-24T17:13:05\"
 }"
 </code></pre></div>
 
@@ -12959,9 +14015,9 @@ let body = {
     "year": 2001,
     "month": 2,
     "due_day": 1,
-    "recurrence": "monthly",
+    "recurrence": "single",
     "early_payment_discount": "642559",
-    "early_payment_deadline": "2026-06-09T02:19:40"
+    "early_payment_deadline": "2026-06-24T17:13:05"
 };
 
 fetch(url, {
@@ -13123,10 +14179,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="recurrence"                data-endpoint="PATCHapi-v1-payment-concepts--conceptId-"
-               value="monthly"
+               value="single"
                data-component="body">
     <br>
-<p>Example: <code>monthly</code></p>
+<p>Example: <code>single</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>monthly</code></li> <li><code>annual</code></li></ul>
         </div>
@@ -13149,10 +14205,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="early_payment_deadline"                data-endpoint="PATCHapi-v1-payment-concepts--conceptId-"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
         </form>
 
@@ -13200,8 +14256,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 7e20277d-5583-4a84-bdf1-95bc57dc726d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -13289,14 +14350,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"benefit_type\": \"fixed\",
+    \"benefit_type\": \"percentage\",
     \"value\": \"642559\",
     \"concept_ids\": [
         \"947170af-7488-3f30-a16d-723355a9502f\"
     ],
-    \"stackable_with_early_payment\": true,
-    \"starts_on\": \"2026-06-09T02:19:40\",
-    \"ends_on\": \"2052-07-02\",
+    \"stackable_with_early_payment\": false,
+    \"starts_on\": \"2026-06-24T17:13:05\",
+    \"ends_on\": \"2052-07-17\",
     \"reason\": \"n\"
 }"
 </code></pre></div>
@@ -13314,14 +14375,14 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "benefit_type": "fixed",
+    "benefit_type": "percentage",
     "value": "642559",
     "concept_ids": [
         "947170af-7488-3f30-a16d-723355a9502f"
     ],
-    "stackable_with_early_payment": true,
-    "starts_on": "2026-06-09T02:19:40",
-    "ends_on": "2052-07-02",
+    "stackable_with_early_payment": false,
+    "starts_on": "2026-06-24T17:13:05",
+    "ends_on": "2052-07-17",
     "reason": "n"
 };
 
@@ -13409,10 +14470,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="benefit_type"                data-endpoint="POSTapi-v1-student-benefits"
-               value="fixed"
+               value="percentage"
                data-component="body">
     <br>
-<p>Example: <code>fixed</code></p>
+<p>Example: <code>percentage</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>percentage</code></li> <li><code>fixed</code></li> <li><code>waiver</code></li></ul>
         </div>
@@ -13462,7 +14523,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>starts_on</code></b>&nbsp;&nbsp;
@@ -13471,10 +14532,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="starts_on"                data-endpoint="POSTapi-v1-student-benefits"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ends_on</code></b>&nbsp;&nbsp;
@@ -13483,10 +14544,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="ends_on"                data-endpoint="POSTapi-v1-student-benefits"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>starts_on</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>starts_on</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -13649,9 +14710,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"concept_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
-    \"estado\": \"pendiente\",
-    \"due_date_from\": \"2026-06-09T02:19:40\",
-    \"due_date_to\": \"2052-07-02\",
+    \"estado\": \"vencido\",
+    \"due_date_from\": \"2026-06-24T17:13:05\",
+    \"due_date_to\": \"2052-07-17\",
     \"per_page\": 22
 }"
 </code></pre></div>
@@ -13670,9 +14731,9 @@ const headers = {
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "concept_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
-    "estado": "pendiente",
-    "due_date_from": "2026-06-09T02:19:40",
-    "due_date_to": "2052-07-02",
+    "estado": "vencido",
+    "due_date_from": "2026-06-24T17:13:05",
+    "due_date_to": "2052-07-17",
     "per_page": 22
 };
 
@@ -13692,8 +14753,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 4a701891-3440-41d2-a4ef-9607ed590e8c
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -13793,10 +14859,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="estado"                data-endpoint="GETapi-v1-payment-obligations"
-               value="pendiente"
+               value="vencido"
                data-component="body">
     <br>
-<p>Example: <code>pendiente</code></p>
+<p>Example: <code>vencido</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pendiente</code></li> <li><code>pagado</code></li> <li><code>vencido</code></li></ul>
         </div>
@@ -13807,10 +14873,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="due_date_from"                data-endpoint="GETapi-v1-payment-obligations"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>due_date_to</code></b>&nbsp;&nbsp;
@@ -13819,10 +14885,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="due_date_to"                data-endpoint="GETapi-v1-payment-obligations"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>due_date_from</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>due_date_from</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
@@ -13857,7 +14923,7 @@ Must be one of:
     --data "{
     \"academic_period_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"concept_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
-    \"due_date\": \"2052-07-02\",
+    \"due_date\": \"2052-07-17\",
     \"student_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
     ]
@@ -13878,7 +14944,7 @@ const headers = {
 let body = {
     "academic_period_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "concept_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
-    "due_date": "2052-07-02",
+    "due_date": "2052-07-17",
     "student_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
     ]
@@ -13980,10 +15046,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="due_date"                data-endpoint="POSTapi-v1-payment-obligations"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>today</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after <code>today</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>student_ids</code></b>&nbsp;&nbsp;
@@ -14045,8 +15111,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: fbff9e8e-4cd4-4a58-92b3-5429f3422902
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -14530,8 +15601,8 @@ Must be one of:
     \"obligation_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"movement_type\": \"reversal\",
     \"amount\": \"642559\",
-    \"occurred_at\": \"2026-06-09T02:19:40\",
-    \"method\": \"cash\",
+    \"occurred_at\": \"2026-06-24T17:13:05\",
+    \"method\": \"plin\",
     \"reference\": \"j\",
     \"reason\": \"n\"
 }"
@@ -14552,8 +15623,8 @@ let body = {
     "obligation_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "movement_type": "reversal",
     "amount": "642559",
-    "occurred_at": "2026-06-09T02:19:40",
-    "method": "cash",
+    "occurred_at": "2026-06-24T17:13:05",
+    "method": "plin",
     "reference": "j",
     "reason": "n"
 };
@@ -14668,10 +15739,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-payment-movements"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d\TH:i:s</code>. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date in the format <code>Y-m-d\TH:i:s</code>. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>method</code></b>&nbsp;&nbsp;
@@ -14680,10 +15751,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="method"                data-endpoint="POSTapi-v1-payment-movements"
-               value="cash"
+               value="plin"
                data-component="body">
     <br>
-<p>This field is required when <code>movement_type</code> is <code>payment</code>. Example: <code>cash</code></p>
+<p>This field is required when <code>movement_type</code> is <code>payment</code>. Example: <code>plin</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>cash</code></li> <li><code>transfer</code></li> <li><code>card</code></li> <li><code>yape</code></li> <li><code>plin</code></li> <li><code>other</code></li></ul>
         </div>
@@ -14757,8 +15828,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: b50bbcba-0260-4ebd-8790-f034f51e63b9
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -14885,8 +15961,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 691cc1d5-40e2-41ca-9168-89b69efeaf37
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15000,8 +16081,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: ac0e4ba3-6fd2-490e-9907-7ddacb7aa091
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15115,8 +16201,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: a63df2fc-0dbd-44ad-8634-6e7c4c3ded3d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15367,8 +16458,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: ae388aa9-b479-4a98-84cd-83ab7b1faf3e
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15457,8 +16553,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hourly_rate\": \"642559\",
-    \"effective_from\": \"2026-06-09T02:19:40\",
-    \"effective_until\": \"2052-07-02\"
+    \"effective_from\": \"2026-06-24T17:13:05\",
+    \"effective_until\": \"2052-07-17\"
 }"
 </code></pre></div>
 
@@ -15476,8 +16572,8 @@ const headers = {
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hourly_rate": "642559",
-    "effective_from": "2026-06-09T02:19:40",
-    "effective_until": "2052-07-02"
+    "effective_from": "2026-06-24T17:13:05",
+    "effective_until": "2052-07-17"
 };
 
 fetch(url, {
@@ -15576,10 +16672,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from"                data-endpoint="POSTapi-v1-teacher-payroll-rates"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>effective_until</code></b>&nbsp;&nbsp;
@@ -15588,10 +16684,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_until"                data-endpoint="POSTapi-v1-teacher-payroll-rates"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>effective_from</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>effective_from</code>. Example: <code>2052-07-17</code></p>
         </div>
         </form>
 
@@ -15639,8 +16735,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: b5d841c7-3673-4bb7-9a8d-5c9cafc31a1a
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15727,8 +16828,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-09T02:19:40\",
-    \"period_end\": \"2052-07-02\",
+    \"period_start\": \"2026-06-24T17:13:05\",
+    \"period_end\": \"2052-07-17\",
     \"teacher_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
     ]
@@ -15747,8 +16848,8 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-09T02:19:40",
-    "period_end": "2052-07-02",
+    "period_start": "2026-06-24T17:13:05",
+    "period_end": "2052-07-17",
     "teacher_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
     ]
@@ -15826,10 +16927,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-teacher-payroll-liquidations"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -15838,10 +16939,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_end"                data-endpoint="POSTapi-v1-teacher-payroll-liquidations"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>period_start</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>period_start</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>teacher_ids</code></b>&nbsp;&nbsp;
@@ -15983,8 +17084,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-09T02:19:40\",
-    \"period_end\": \"2052-07-02\",
+    \"period_start\": \"2026-06-24T17:13:05\",
+    \"period_end\": \"2052-07-17\",
     \"format\": \"xlsx\",
     \"teacher_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
@@ -16004,8 +17105,8 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-09T02:19:40",
-    "period_end": "2052-07-02",
+    "period_start": "2026-06-24T17:13:05",
+    "period_end": "2052-07-17",
     "format": "xlsx",
     "teacher_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
@@ -16084,10 +17185,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-teacher-payroll-reports"
-               value="2026-06-09T02:19:40"
+               value="2026-06-24T17:13:05"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-09T02:19:40</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T17:13:05</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -16096,10 +17197,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_end"                data-endpoint="POSTapi-v1-teacher-payroll-reports"
-               value="2052-07-02"
+               value="2052-07-17"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after or equal to <code>period_start</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after or equal to <code>period_start</code>. Example: <code>2052-07-17</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>format</code></b>&nbsp;&nbsp;
@@ -16175,8 +17276,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: a03f9489-1617-4f05-a686-92b9af8edf17
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16265,7 +17371,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"legal_basis\": \"g\",
-    \"expires_at\": \"2052-07-02\"
+    \"expires_at\": \"2052-07-18\"
 }"
 </code></pre></div>
 
@@ -16283,7 +17389,7 @@ const headers = {
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "legal_basis": "g",
-    "expires_at": "2052-07-02"
+    "expires_at": "2052-07-18"
 };
 
 fetch(url, {
@@ -16382,10 +17488,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="expires_at"                data-endpoint="POSTapi-v1-biometric-consents"
-               value="2052-07-02"
+               value="2052-07-18"
                data-component="body">
     <br>
-<p>Must be a valid date. Must be a date after <code>now</code>. Example: <code>2052-07-02</code></p>
+<p>Must be a valid date. Must be a date after <code>now</code>. Example: <code>2052-07-18</code></p>
         </div>
         </form>
 
@@ -16535,7 +17641,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --form "student_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
     --form "consent_id=6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"\
-    --form "images[]=@/tmp/phpazUtRZ" </code></pre></div>
+    --form "images[]=@/tmp/phpZhKiJy" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -16702,8 +17808,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: ffad0cf6-1241-4af6-b25d-9c869a979d71
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16790,6 +17901,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
+    \"grade_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
+    \"section_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
+    \"course_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\",
     \"teaching_assignment_id\": \"99999999-9999-4999-8999-999999999999\",
     \"title\": \"Semanal 1 - I Bimestre\",
     \"assessment_type\": \"exam\",
@@ -16812,6 +17926,9 @@ const headers = {
 };
 
 let body = {
+    "grade_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
+    "section_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
+    "course_id": "977e5426-8d13-3824-86aa-b092f8ae52c5",
     "teaching_assignment_id": "99999999-9999-4999-8999-999999999999",
     "title": "Semanal 1 - I Bimestre",
     "assessment_type": "exam",
@@ -16887,6 +18004,42 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                                 <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>grade_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="grade_id"                data-endpoint="POSTapi-v1-assessments"
+               value="6ff8f7f6-1eb3-3525-be4a-3932c805afed"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the grados table. Example: <code>6ff8f7f6-1eb3-3525-be4a-3932c805afed</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>section_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="section_id"                data-endpoint="POSTapi-v1-assessments"
+               value="6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the secciones table. Example: <code>6b72fe4a-5b40-307c-bc24-f79acf9a1bb9</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>course_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="course_id"                data-endpoint="POSTapi-v1-assessments"
+               value="977e5426-8d13-3824-86aa-b092f8ae52c5"
+               data-component="body">
+    <br>
+<p>Must be a valid UUID. The <code>id</code> of an existing record in the cursos table. Example: <code>977e5426-8d13-3824-86aa-b092f8ae52c5</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>teaching_assignment_id</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
  &nbsp;
@@ -17100,7 +18253,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"closed\": true
+    \"closed\": false
 }"
 </code></pre></div>
 
@@ -17116,7 +18269,7 @@ const headers = {
 };
 
 let body = {
-    "closed": true
+    "closed": false
 };
 
 fetch(url, {
@@ -17217,7 +18370,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -17265,8 +18418,13 @@ fetch(url, {
             <summary style="cursor: pointer;">
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
+            <pre><code class="language-http">cache-control: no-store, private
 content-type: application/json
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+referrer-policy: no-referrer
+permissions-policy: camera=(), microphone=(), geolocation=()
+x-request-id: 412f9de0-57b5-40d2-a343-1bb72a7f5ee5
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -17353,7 +18511,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"format\": \"pdf\",
+    \"format\": \"xlsx\",
     \"report_type\": \"ranking\",
     \"academic_period_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"section_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
@@ -17373,7 +18531,7 @@ const headers = {
 };
 
 let body = {
-    "format": "pdf",
+    "format": "xlsx",
     "report_type": "ranking",
     "academic_period_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "section_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
@@ -17452,10 +18610,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="format"                data-endpoint="POSTapi-v1-academic-reports"
-               value="pdf"
+               value="xlsx"
                data-component="body">
     <br>
-<p>Example: <code>pdf</code></p>
+<p>Example: <code>xlsx</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pdf</code></li> <li><code>xlsx</code></li></ul>
         </div>
@@ -17671,7 +18829,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"matricula_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"estado\": \"ausente\",
+    \"estado\": \"exonerado\",
     \"puntaje\": 84,
     \"observacion\": \"z\"
 }"
@@ -17690,7 +18848,7 @@ const headers = {
 
 let body = {
     "matricula_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "estado": "ausente",
+    "estado": "exonerado",
     "puntaje": 84,
     "observacion": "z"
 };
@@ -17792,10 +18950,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="estado"                data-endpoint="POSTapi-v1-assessments--examen_id--grades"
-               value="ausente"
+               value="exonerado"
                data-component="body">
     <br>
-<p>Example: <code>ausente</code></p>
+<p>Example: <code>exonerado</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>registrada</code></li> <li><code>ausente</code></li> <li><code>exonerado</code></li> <li><code>pendiente</code></li></ul>
         </div>
@@ -17842,11 +19000,11 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"preview\": true,
+    \"preview\": false,
     \"notas\": [
         {
             \"matricula_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-            \"estado\": \"exonerado\",
+            \"estado\": \"registrada\",
             \"puntaje\": 84,
             \"observacion\": \"z\"
         }
@@ -17866,11 +19024,11 @@ const headers = {
 };
 
 let body = {
-    "preview": true,
+    "preview": false,
     "notas": [
         {
             "matricula_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-            "estado": "exonerado",
+            "estado": "registrada",
             "puntaje": 84,
             "observacion": "z"
         }
@@ -17975,7 +19133,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -18006,10 +19164,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="notas.0.estado"                data-endpoint="POSTapi-v1-assessments--examen_id--grades-import"
-               value="exonerado"
+               value="registrada"
                data-component="body">
     <br>
-<p>Example: <code>exonerado</code></p>
+<p>Example: <code>registrada</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>registrada</code></li> <li><code>ausente</code></li> <li><code>exonerado</code></li> <li><code>pendiente</code></li></ul>
                     </div>
@@ -18059,7 +19217,7 @@ Must be one of:
     --header "Accept: application/json" \
     --data "{
     \"matricula_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"estado\": \"pendiente\",
+    \"estado\": \"ausente\",
     \"puntaje\": 84,
     \"observacion\": \"z\"
 }"
@@ -18078,7 +19236,7 @@ const headers = {
 
 let body = {
     "matricula_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "estado": "pendiente",
+    "estado": "ausente",
     "puntaje": 84,
     "observacion": "z"
 };
@@ -18180,10 +19338,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="estado"                data-endpoint="PUTapi-v1-grades--nota_id-"
-               value="pendiente"
+               value="ausente"
                data-component="body">
     <br>
-<p>Example: <code>pendiente</code></p>
+<p>Example: <code>ausente</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>registrada</code></li> <li><code>ausente</code></li> <li><code>exonerado</code></li> <li><code>pendiente</code></li></ul>
         </div>

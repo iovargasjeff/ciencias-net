@@ -2,12 +2,12 @@
 
 ## Source of Truth Check
 
-- Product docs reviewed:
-- Architecture docs reviewed:
-- API contracts reviewed:
-- Domain docs reviewed:
-- Security docs reviewed:
-- Conflicts found: yes/no
+- Product docs reviewed: `docs/README.md`
+- Architecture docs reviewed: `docs/architecture/backend.md`, `docs/architecture/deployment.md`
+- API contracts reviewed: `docs/api/openapi.yaml`, `docs/api/parameters/common.yaml`, `docs/api/responses/common.yaml`, `docs/api/schemas/common.yaml`, `docs/api/security-schemes/common.yaml`
+- Domain docs reviewed: `docs/domain/use-case-catalog.md`
+- Security docs reviewed: `docs/security/overview.md`, `docs/security/audit-and-operations.md`, `docs/security/data-and-files.md`
+- Conflicts found: no
 
 If any conflict exists, do not implement until docs are corrected or the task is rewritten.
 
@@ -16,7 +16,7 @@ If any conflict exists, do not implement until docs are corrected or the task is
 All backend domain code must be placed under:
 
 ```text
-backend/app/Modules/<ModuleName>/
+backend/app/Modules/Shared/
 ├── Domain/
 ├── Application/
 ├── Infrastructure/

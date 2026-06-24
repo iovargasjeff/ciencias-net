@@ -571,6 +571,10 @@ jobs:
 
 ## B.8. Backups Integrales (Docker)
 
+La configuración ejecutable de producción vive en [`../../docker-compose.production.yml`](../../docker-compose.production.yml)
+y las tareas de operación en [`../../ops/production/README.md`](../../ops/production/README.md). Usar esos artefactos
+como base para validar puertos privados, scheduler, worker, backup cifrado y restore aislado.
+
 ```bash
 mkdir -p /backups/postgresql
 crontab -e

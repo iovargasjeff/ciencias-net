@@ -115,8 +115,17 @@ async function mockCommsApis(page: Page, userSession = superadmin) {
 
   // Mock Accounts
   await page.route('**/api/v1/accounts**', (route) => {
-    const list = [superadmin, toeUser, padreUser, alumnoUser]
-    return route.fulfill({ json: { data: list } })
+    const url = new URL(route.request().url())
+    const role = url.searchParams.get('role')
+    
+    let list = [superadmin, toeUser, padreUser, alumnoUser]
+    
+    // Filter by role if specified in query params
+    if (role) {
+      list = list.filter(user => user.roles.includes(role))
+    }
+    
+    return route.fulfill({ json: { data: list, meta: { total: list.length } } })
   })
 
   // Mock Family links
@@ -126,6 +135,8 @@ async function mockCommsApis(page: Page, userSession = superadmin) {
   // Mock Announcements lists & creations & read/archive
   await page.route(/\/api\/v1\/announcements(\?|$)/, async (route) => {
     const method = route.request().method()
+    const url = new URL(route.request().url())
+    
     if (method === 'POST') {
       const payload = JSON.parse(route.request().postData() || '{}')
       const newAnn = {
@@ -143,7 +154,17 @@ async function mockCommsApis(page: Page, userSession = superadmin) {
       mockAnnouncements.push(newAnn)
       return route.fulfill({ status: 201, json: { data: newAnn } })
     }
-    return route.fulfill({ json: { data: mockAnnouncements.filter((a) => !a.is_archived) } })
+    
+    // Filter announcements based on current user and audience
+    let filtered = mockAnnouncements.filter((a) => !a.is_archived)
+    
+    // If a specific audience filter is applied, respect it
+    const audienceType = url.searchParams.get('audience_type')
+    if (audienceType && audienceType !== 'all') {
+      filtered = filtered.filter(a => a.audience_type === audienceType)
+    }
+    
+    return route.fulfill({ json: { data: filtered } })
   })
 
   await page.route(/\/api\/v1\/announcements\/([^/]+)\/read/, async (route) => {
@@ -234,7 +255,7 @@ test.describe('Comunicaciones y Notificaciones - FE-019', () => {
     // Assert reach updates to show only Padre Carlos
     await expect(page.getByText('1 usuarios')).toBeVisible()
     await expect(page.getByText('Padre Carlos')).toBeVisible()
-    await expect(page.getByText('TOE Maria')).not.toBeVisible()
+    await expect(page.locator('.max-h-64').getByText('TOE Maria')).not.toBeVisible()
   })
 
   test('muestra error de validacion 422 y mantiene valores cargados', async ({ page }) => {

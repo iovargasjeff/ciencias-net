@@ -124,7 +124,6 @@ export function AcademicAdminPage() {
       })
     return [...byCourse.values()]
   }, [assignments, courses, selectedSectionId])
-  const formSectionCourseKey = formSectionCourses.map((course) => course.id).join('|')
   const enrollmentFilterSections = useMemo(
     () => sections.filter((section) => !enrollmentGradeFilter || section.grade_id === enrollmentGradeFilter),
     [enrollmentGradeFilter, sections],
@@ -182,18 +181,13 @@ export function AcademicAdminPage() {
     }
   }, [entity, form, periodScopedGrades, selectedGradeId, selectedPeriodId])
 
-  useEffect(() => {
-    if (!enrollmentGradeFilter) return
-    if (enrollmentSectionFilter && !enrollmentFilterSections.some((section) => section.id === enrollmentSectionFilter)) {
-      setEnrollmentSectionFilter('')
-    }
-  }, [enrollmentFilterSections, enrollmentGradeFilter, enrollmentSectionFilter])
+
 
   useEffect(() => {
     if (entity !== 'enrollments' || !selectedSectionId) return
     const ids = formSectionCourses.map((course) => course.id)
     form.setValue('course_ids', ids)
-  }, [entity, form, formSectionCourseKey, selectedSectionId])
+  }, [entity, form, formSectionCourses, selectedSectionId])
 
   async function lookupStudent() {
     const search = studentSearch.trim()
@@ -435,7 +429,10 @@ export function AcademicAdminPage() {
           </div>
           {entity === 'enrollments' && (
             <div className="table-controls">
-              <select className="glass-input-light" value={enrollmentGradeFilter} onChange={(event) => setEnrollmentGradeFilter(event.target.value)}>
+              <select className="glass-input-light" value={enrollmentGradeFilter} onChange={(event) => {
+                setEnrollmentGradeFilter(event.target.value)
+                setEnrollmentSectionFilter('')
+              }}>
                 <option value="">Todos los grados</option>
                 {grades.map((grade) => <option key={grade.id} value={grade.id}>{grade.name}</option>)}
               </select>

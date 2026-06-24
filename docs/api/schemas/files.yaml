@@ -17,3 +17,56 @@ uploadPrivateFileRequest:
         - biometric_exception
         - report
         - other
+    checksum_sha256:
+      type: string
+      pattern: '^[a-fA-F0-9]{64}$'
+      description: Checksum SHA-256 opcional calculado por el cliente para verificar integridad.
+    expires_at:
+      type: string
+      format: date-time
+      nullable: true
+      description: Fecha de expiración obligatoria para evidencia biométrica excepcional.
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: Metadatos no sensibles para trazabilidad.
+privateFile:
+  type: object
+  additionalProperties: false
+  required:
+    - id
+    - purpose
+    - original_name
+    - mime_type
+    - size_bytes
+    - checksum_sha256
+    - disk
+    - created_at
+  properties:
+    id:
+      type: string
+      format: uuid
+    purpose:
+      type: string
+    original_name:
+      type: string
+    mime_type:
+      type: string
+    size_bytes:
+      type: integer
+    checksum_sha256:
+      type: string
+    disk:
+      type: string
+    expires_at:
+      type: string
+      format: date-time
+      nullable: true
+    deleted_at:
+      type: string
+      format: date-time
+      nullable: true
+    created_at:
+      type: string
+      format: date-time

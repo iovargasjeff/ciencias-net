@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { X } from '@phosphor-icons/react'
@@ -16,7 +16,7 @@ export function RegisterPaymentForm({ obligation, onSuccess, onCancel }: { oblig
     defaultValues: { obligation_id: obligation.id, payment_method: 'cash', reference: '' }
   })
 
-  const method = form.watch('payment_method')
+  const method = useWatch({ control: form.control, name: 'payment_method' })
 
   const mutation = useMutation({
     mutationFn: (values: RegisterPaymentFormValues) => createPaymentMovement(values),
