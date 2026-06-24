@@ -48,21 +48,26 @@ class DniSearchController extends Controller
     public function searchParents(Request $request): JsonResponse
     {
         Gate::authorize('manage', User::class);
-        $request->validate(['dni' => 'required|string']);
+        $request->validate(['dni' => 'sometimes|string', 'search' => 'sometimes|string|max:150']);
 
-        $padre = Padre::where('dni', $request->query('dni'))->first();
-        if (! $padre) {
+        $query = Padre::query();
+        $query->when($request->filled('dni'), fn ($q) => $q->where('dni', $request->query('dni')));
+        $query->when($request->filled('search'), function ($q) use ($request): void {
+            $term = '%'.$request->query('search').'%';
+            $q->where(fn ($inner) => $inner->where('nombres', 'like', $term)->orWhere('apellidos', 'like', $term)->orWhere('dni', 'like', $term));
+        });
+
+        $parents = $query->limit(20)->get();
+        if ($request->filled('dni') && $parents->isEmpty()) {
             return response()->json(['data' => null], 404);
         }
 
-        return response()->json([
-            'data' => [
-                'id' => $padre->id,
-                'user_id' => $padre->user_id,
-                'dni' => $padre->dni,
-                'name' => trim($padre->nombres.' '.$padre->apellidos),
-            ],
-        ]);
+        return response()->json(['data' => $parents->map(fn (Padre $padre) => [
+            'id' => $padre->id,
+            'user_id' => $padre->user_id,
+            'dni' => $padre->dni,
+            'name' => trim($padre->nombres.' '.$padre->apellidos),
+        ])->values()]);
     }
 
     public function searchTeachers(Request $request): JsonResponse

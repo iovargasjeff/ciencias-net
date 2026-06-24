@@ -27,6 +27,10 @@ class UserPolicy
             return false;
         }
 
+        if (in_array('superadmin', $roles, true)) {
+            return false;
+        }
+
         return $actor->hasRole('superadmin')
             || count(array_intersect($roles, ['superadmin', 'gestor_usuarios'])) === 0;
     }

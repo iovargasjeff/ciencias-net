@@ -8,32 +8,41 @@ use App\Modules\Comunicados\Application\UseCases\CreateAnnouncement;
 use App\Modules\Comunicados\Application\UseCases\MarkAnnouncementRead;
 use App\Modules\Comunicados\Infrastructure\Models\Comunicado;
 use App\Modules\Comunicados\Presentation\Requests\CreateAnnouncementRequest;
+use App\Modules\Notificaciones\Application\Jobs\DistributeAnnouncementNotifications;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Gate;
 
 class CommunicationController extends Controller
 {
     public function listAnnouncements(Request $request): JsonResponse
     {
-        // El usuario solo puede ver comunicados donde fue incluido (vía notificación)
-        // O los comunicados donde `destinatarios` incluye 'all' o roles suyos
         $userId = $request->user()->id;
 
-        $comunicados = Comunicado::whereHas('lecturas', function ($q) use ($userId) {
-            $q->where('user_id', $userId)->whereNull('archivado_en');
-        })
-            ->orWhere(function ($query) use ($userId) {
-                $query->whereIn('id', function ($sub) use ($userId) {
-                    $sub->selectRaw("CAST(datos->>'comunicado_id' AS UUID)")
-                        ->from('notificaciones')
-                        ->where('user_id', $userId)
-                        ->where('tipo', 'comunicado');
-                });
-            })
-            ->with('publicadoPor:id,name')
+        $visible = Comunicado::with(['publicadoPor:id,name', 'lecturas' => fn ($q) => $q->where('user_id', $userId)])
             ->orderByDesc('fecha_publicacion')
-            ->paginate(15);
+            ->get()
+            ->filter(function (Comunicado $comunicado) use ($userId): bool {
+                $reading = $comunicado->lecturas->first();
+                if ($reading?->archivado_en !== null) {
+                    return false;
+                }
+
+                return $reading !== null
+                    || in_array($userId, (new DistributeAnnouncementNotifications($comunicado))->resolveUserIds(), true);
+            })
+            ->values();
+
+        $perPage = min($request->integer('per_page', 15), 100);
+        $page = max($request->integer('page', 1), 1);
+        $comunicados = new LengthAwarePaginator(
+            $visible->forPage($page, $perPage)->values(),
+            $visible->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
 
         return response()->json($comunicados);
     }

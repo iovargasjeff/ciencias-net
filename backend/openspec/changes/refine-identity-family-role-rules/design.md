@@ -2,7 +2,7 @@
 
 ## Source of Truth Check
 
-- Product docs reviewed: `docs/product/approved-requirements.md`, `CAMBIOS CIENCIASNET.docx`
+- Product docs reviewed: `docs/product/approved-requirements.md`; `CAMBIOS CIENCIASNET.docx` no está disponible localmente, por lo que OpenSpec se usa como fuente suficiente para este change.
 - Architecture docs reviewed: `docs/architecture/database-schema.md`, `docs/architecture/backend.md`
 - API contracts reviewed: `docs/api/openapi.yaml`, paquetes IAM, FAMILY, COMMUNICATIONS, FINANCE-QUERIES, INCIDENTS, PSYCHOLOGY
 - Domain docs reviewed: `docs/domain/identity-access.md`, `docs/domain/finance.md`, `docs/domain/incidents-communications.md`
@@ -27,7 +27,7 @@ No domain models/controllers/use cases/policies may be created under root `app/`
 
 ## Sources and Invariants
 
-- Las reglas por rol del documento adjunto deben traducirse a validaciones server-side.
+- Las reglas por rol de OpenSpec deben traducirse a validaciones server-side.
 - Staff administrativo usa datos base y cargo derivado del rol; docente, padre y alumno exigen campos propios.
 - Superadmin no se crea ni se asigna desde flujos ordinarios.
 - Familia, comunicaciones, finanzas, incidencias y psicologia deben consultar datos reales y autorizados.
