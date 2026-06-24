@@ -322,7 +322,7 @@ class DemoCompleteSeeder extends Seeder
                     ]);
                 }
 
-                if (!DB::table('alumno_padre')->where('alumno_id', $alumno->id)->where('padre_id', $padre->id)->exists()) {
+                if (! DB::table('alumno_padre')->where('alumno_id', $alumno->id)->where('padre_id', $padre->id)->exists()) {
                     DB::table('alumno_padre')->insert([
                         'id'                   => (string) Str::uuid(),
                         'alumno_id'            => $alumno->id,
@@ -467,7 +467,7 @@ class DemoCompleteSeeder extends Seeder
         $fechas = [];
         $d = now()->subDays(14);
         while (count($fechas) < 10) {
-            if (!in_array($d->dayOfWeek, [0, 6])) { // omitir fin de semana
+            if (! in_array($d->dayOfWeek, [0, 6])) { // omitir fin de semana
                 $fechas[] = $d->toDateString();
             }
             $d->addDay();
@@ -541,7 +541,7 @@ class DemoCompleteSeeder extends Seeder
         ];
 
         foreach ($eventos as [$tipo, $titulo, $inicio, $fin]) {
-            if (!DB::table('eventos_calendario')->where('titulo', $titulo)->where('periodo_academico_id', $period->id)->exists()) {
+            if (! DB::table('eventos_calendario')->where('titulo', $titulo)->where('periodo_academico_id', $period->id)->exists()) {
                 DB::table('eventos_calendario')->insert([
                     'id'                   => (string) Str::uuid(),
                     'periodo_academico_id' => $period->id,
@@ -601,7 +601,7 @@ class DemoCompleteSeeder extends Seeder
         ];
 
         foreach ($comunicados as $c) {
-            if (!DB::table('comunicados')->where('titulo', $c['titulo'])->exists()) {
+            if (! DB::table('comunicados')->where('titulo', $c['titulo'])->exists()) {
                 DB::table('comunicados')->insert([
                     'id'                => (string) Str::uuid(),
                     'titulo'            => $c['titulo'],
@@ -623,7 +623,7 @@ class DemoCompleteSeeder extends Seeder
     private function seedFinanzas(PeriodoAcademico $period): void
     {
         // Configuración financiera
-        if (!DB::table('configuraciones_financieras')->where('periodo_academico_id', $period->id)->exists()) {
+        if (! DB::table('configuraciones_financieras')->where('periodo_academico_id', $period->id)->exists()) {
             DB::table('configuraciones_financieras')->insert([
                 'id'                           => (string) Str::uuid(),
                 'periodo_academico_id'         => $period->id,
@@ -654,7 +654,7 @@ class DemoCompleteSeeder extends Seeder
                 ->where('periodo_academico_id', $period->id)
                 ->first();
 
-            if (!$existing) {
+            if (! $existing) {
                 $cid = (string) Str::uuid();
                 DB::table('conceptos_pago')->insert([
                     'id'                       => $cid,
@@ -682,7 +682,7 @@ class DemoCompleteSeeder extends Seeder
         foreach (array_slice($this->alumnos, 0, 5) as $aIdx => $alumno) {
             foreach (array_slice($conceptoIds, 0, 4) as $cIdx => $conceptoId) {
                 $concepto = DB::table('conceptos_pago')->find($conceptoId);
-                if (!$concepto) {
+                if (! $concepto) {
                     continue;
                 }
 
