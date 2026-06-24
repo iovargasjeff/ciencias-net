@@ -35,6 +35,11 @@ class PeriodoAcademico extends Model
         return $this->hasMany(Grado::class);
     }
 
+    public function bimestres(): HasMany
+    {
+        return $this->hasMany(BimestreAcademico::class);
+    }
+
     public function configuracionesFinancieras(): HasMany
     {
         return $this->hasMany(ConfiguracionFinanciera::class);

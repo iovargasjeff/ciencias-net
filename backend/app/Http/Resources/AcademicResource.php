@@ -26,10 +26,17 @@ class AcademicResource extends JsonResource
                     'cerrado' => 'closed',
                     default => 'draft',
                 },
+                'terms' => $this->whenLoaded('bimestres', fn () => $this->bimestres->map(fn ($term) => [
+                    'id' => $term->id,
+                    'name' => $term->nombre,
+                    'start_date' => $term->fecha_inicio?->toDateString(),
+                    'end_date' => $term->fecha_fin?->toDateString(),
+                ])->values()),
             ],
             $this->resource instanceof Grado => [
                 'id' => $this->id,
                 'academic_period_id' => $this->periodo_academico_id,
+                'catalog_code' => $this->catalog_code,
                 'name' => $this->nombre,
                 'level' => mb_strtolower($this->nivel),
                 'order' => $this->orden,

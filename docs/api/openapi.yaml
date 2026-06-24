@@ -86,6 +86,8 @@ paths:
     $ref: './paths/academic.yaml#/getAcademicPeriod'
   /api/v1/grades:
     $ref: './paths/academic.yaml#/listGrades'
+  /api/v1/grade-catalog:
+    $ref: './paths/academic.yaml#/listGradeCatalog'
   /api/v1/sections:
     $ref: './paths/academic.yaml#/listSections'
   /api/v1/courses:

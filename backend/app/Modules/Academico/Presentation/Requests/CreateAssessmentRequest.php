@@ -2,7 +2,9 @@
 
 namespace App\Modules\Academico\Presentation\Requests;
 
+use App\Modules\Academico\Infrastructure\Models\CargaAcademica;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class CreateAssessmentRequest extends FormRequest
 {
@@ -14,6 +16,9 @@ class CreateAssessmentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'grade_id' => ['required', 'uuid', 'exists:grados,id'],
+            'section_id' => ['required', 'uuid', 'exists:secciones,id'],
+            'course_id' => ['required', 'uuid', 'exists:cursos,id'],
             'teaching_assignment_id' => ['required', 'uuid', 'exists:carga_academica,id'],
             'title' => ['required', 'string', 'min:1', 'max:150'],
             'assessment_type' => ['required', 'string', 'in:exam,practice,project,participation,other'],
@@ -21,6 +26,34 @@ class CreateAssessmentRequest extends FormRequest
             'assessment_date' => ['required', 'date'],
             'channel' => ['nullable', 'string', 'in:general,sciences,humanities'],
             'total_questions' => ['nullable', 'integer', 'min:1'],
+        ];
+    }
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                if ($validator->errors()->isNotEmpty()) {
+                    return;
+                }
+
+                $assignment = CargaAcademica::with('seccion')->find($this->input('teaching_assignment_id'));
+                if (! $assignment) {
+                    return;
+                }
+
+                if ($assignment->seccion_id !== $this->input('section_id')) {
+                    $validator->errors()->add('section_id', 'La sección no corresponde a la carga académica seleccionada.');
+                }
+
+                if ($assignment->curso_id !== $this->input('course_id')) {
+                    $validator->errors()->add('course_id', 'El curso no corresponde a la carga académica seleccionada.');
+                }
+
+                if ($assignment->seccion?->grado_id !== $this->input('grade_id')) {
+                    $validator->errors()->add('grade_id', 'El grado no corresponde a la carga académica seleccionada.');
+                }
+            },
         ];
     }
 

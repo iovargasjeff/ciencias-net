@@ -19,6 +19,13 @@ downloadPrivateFile:
     tags:
       - Files
     operationId: downloadPrivateFile
+    parameters:
+      - name: temporary
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Si es true, devuelve una URL firmada de corta duración en lugar del binario.
     responses:
       '200':
         $ref: '../openapi.yaml#/components/responses/BinaryDownload'

@@ -13,7 +13,7 @@ class Curso extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = ['grado_id', 'codigo', 'nombre', 'area', 'descripcion', 'activo'];
+    protected $fillable = ['grado_id', 'codigo', 'nombre', 'nombre_normalizado', 'area', 'descripcion', 'activo'];
 
     protected function casts(): array
     {

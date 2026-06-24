@@ -207,7 +207,15 @@ export function SchedulesPortalPage() {
     ? `${getGradeName(enrolledSections[0].grade_id)} "${enrolledSections[0].name}"`
     : ''
 
-  const dayEvents = selectedDate ? getEventsForDay(selectedDate) : []
+  const selectedDateEvents = selectedDate ? getEventsForDay(selectedDate) : []
+  const orderedEvents = [...events].sort((a, b) => a.starts_at.localeCompare(b.starts_at))
+  const firstEvent = orderedEvents.find((event) => event.event_type === 'academic') ?? orderedEvents[0]
+  const firstEventDate = firstEvent ? new Date(firstEvent.starts_at) : null
+  const effectiveSelectedDate =
+    selectedDateEvents.length === 0 && firstEventDate
+      ? new Date(firstEventDate.getFullYear(), firstEventDate.getMonth(), firstEventDate.getDate())
+      : selectedDate
+  const dayEvents = effectiveSelectedDate ? getEventsForDay(effectiveSelectedDate) : []
 
   return (
     <section className="space-y-6 p-2 md:p-4 text-slate-800">
@@ -381,10 +389,10 @@ export function SchedulesPortalPage() {
                     if (!day) return <div key={`empty-${idx}`} className="h-10 md:h-12 bg-slate-50/30 rounded-xl" />
 
                     const dayEvents = getEventsForDay(day)
-                    const isSelected = selectedDate &&
-                      selectedDate.getFullYear() === day.getFullYear() &&
-                      selectedDate.getMonth() === day.getMonth() &&
-                      selectedDate.getDate() === day.getDate()
+                    const isSelected = effectiveSelectedDate &&
+                      effectiveSelectedDate.getFullYear() === day.getFullYear() &&
+                      effectiveSelectedDate.getMonth() === day.getMonth() &&
+                      effectiveSelectedDate.getDate() === day.getDate()
 
                     const hasHoliday = dayEvents.some((e) => e.event_type === 'holiday')
                     const hasAcademic = dayEvents.some((e) => e.event_type === 'academic')
@@ -431,10 +439,10 @@ export function SchedulesPortalPage() {
                   Actividades del Día
                 </h3>
 
-                {selectedDate ? (
+                {effectiveSelectedDate ? (
                   <div className="flex-1 space-y-3 overflow-y-auto">
                     <p className="text-[10px] text-slate-450 font-extrabold">
-                      {selectedDate.toLocaleDateString('es-PE', {
+                      {effectiveSelectedDate.toLocaleDateString('es-PE', {
                         weekday: 'long',
                         day: 'numeric',
                         month: 'long',

@@ -2,12 +2,24 @@ createAssessmentRequest:
   type: object
   additionalProperties: false
   required:
+    - grade_id
+    - section_id
+    - course_id
     - teaching_assignment_id
     - title
     - assessment_type
     - max_score
     - assessment_date
   properties:
+    grade_id:
+      type: string
+      format: uuid
+    section_id:
+      type: string
+      format: uuid
+    course_id:
+      type: string
+      format: uuid
     teaching_assignment_id:
       type: string
       format: uuid

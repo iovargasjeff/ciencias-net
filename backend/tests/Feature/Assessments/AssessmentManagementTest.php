@@ -60,6 +60,9 @@ class AssessmentManagementTest extends TestCase
         $otherCarga = $this->createCargaAcademica(); // Belongs to another docente
 
         $payload = [
+            'grade_id' => $otherCarga->seccion->grado_id,
+            'section_id' => $otherCarga->seccion_id,
+            'course_id' => $otherCarga->curso_id,
             'teaching_assignment_id' => $otherCarga->id,
             'title' => 'Examen Parcial',
             'assessment_type' => 'exam',
@@ -83,6 +86,9 @@ class AssessmentManagementTest extends TestCase
         $carga = $this->createCargaAcademica($docente);
 
         $payload = [
+            'grade_id' => $carga->seccion->grado_id,
+            'section_id' => $carga->seccion_id,
+            'course_id' => $carga->curso_id,
             'teaching_assignment_id' => $carga->id,
             'title' => 'Examen Parcial',
             'assessment_type' => 'exam',
@@ -110,6 +116,9 @@ class AssessmentManagementTest extends TestCase
         $carga = $this->createCargaAcademica();
 
         $payload = [
+            'grade_id' => $carga->seccion->grado_id,
+            'section_id' => $carga->seccion_id,
+            'course_id' => $carga->curso_id,
             'teaching_assignment_id' => $carga->id,
             'title' => 'Simulacro',
             'assessment_type' => 'practice',
