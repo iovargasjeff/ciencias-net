@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Middleware\CorrelateRequest;
 use App\Http\Middleware\EnsureActiveHumanAccount;
 use App\Http\Middleware\EnsureIdempotentRequest;
+use App\Http\Middleware\SecurityHeaders;
 use App\Modules\Asistencia\Presentation\Middleware\EnsureStationSession;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -25,6 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->statefulApi();
         $middleware->encryptCookies(except: ['cienciasnet_station_session']);
+        $middleware->append(CorrelateRequest::class);
+        $middleware->append(SecurityHeaders::class);
 
         $middleware->alias([
             'active.account' => EnsureActiveHumanAccount::class,

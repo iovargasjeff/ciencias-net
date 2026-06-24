@@ -30,8 +30,8 @@ class AuditLogger
             'action' => $action,
             'model' => $model,
             'model_id' => $modelId,
-            'old_values' => $oldValues === null ? null : json_encode($oldValues),
-            'new_values' => $newValues === null ? null : json_encode($newValues),
+            'old_values' => $oldValues === null ? null : json_encode(SensitiveDataRedactor::redact($oldValues)),
+            'new_values' => $newValues === null ? null : json_encode(SensitiveDataRedactor::redact($newValues)),
             'ip' => $request?->ip(),
             'created_at' => now(),
         ]);
