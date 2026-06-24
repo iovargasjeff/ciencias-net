@@ -229,7 +229,7 @@ class DemoCompleteSeeder extends Seeder
             foreach ($grado->secciones as $seccion) {
                 foreach ($cursosSec as [$cod, $nom, $area]) {
                     $curso = Curso::updateOrCreate(
-                        ['codigo' => $cod . '-' . str_replace(' ', '', $grado->nombre)],
+                        ['codigo' => sprintf('%s-%s', $cod, str_replace(' ', '', $grado->nombre))],
                         ['grado_id' => $grado->id, 'nombre' => $nom, 'area' => $area, 'activo' => true]
                     );
                     $docente = $this->docentes[$docenteIdx % count($this->docentes)];
@@ -308,7 +308,7 @@ class DemoCompleteSeeder extends Seeder
                         'dni'                   => $dniPadre,
                         'nombres'               => 'Juan',
                         'apellidos'             => $apellido1,
-                        'celular'               => '9' . str_pad($alumnoCounter + 1, 8, '0', STR_PAD_LEFT),
+                        'celular'               => sprintf('9%08d', $alumnoCounter + 1),
                         'correo_notificaciones' => $emailPadre,
                     ]);
                 } else {
@@ -317,7 +317,7 @@ class DemoCompleteSeeder extends Seeder
                         'dni'                   => $dniPadre,
                         'nombres'               => 'Juan',
                         'apellidos'             => $apellido1,
-                        'celular'               => '9' . str_pad($alumnoCounter + 1, 8, '0', STR_PAD_LEFT),
+                        'celular'               => sprintf('9%08d', $alumnoCounter + 1),
                         'correo_notificaciones' => $emailPadre,
                     ]);
                 }
@@ -682,7 +682,9 @@ class DemoCompleteSeeder extends Seeder
         foreach (array_slice($this->alumnos, 0, 5) as $aIdx => $alumno) {
             foreach (array_slice($conceptoIds, 0, 4) as $cIdx => $conceptoId) {
                 $concepto = DB::table('conceptos_pago')->find($conceptoId);
-                if (!$concepto) continue;
+                if (!$concepto) {
+                    continue;
+                }
 
                 $estado  = $estadosPago[($aIdx + $cIdx) % count($estadosPago)];
                 $pagado  = $estado === 'pagado';
@@ -693,7 +695,9 @@ class DemoCompleteSeeder extends Seeder
                     ->where('concepto_id', $conceptoId)
                     ->first();
 
-                if ($existing) continue;
+                if ($existing) {
+                    continue;
+                }
 
                 $montoOrd = $concepto->monto_base;
                 $montoPP  = $montoOrd - ($concepto->descuento_pronto_pago ?? 0);
@@ -746,7 +750,9 @@ class DemoCompleteSeeder extends Seeder
     // =========================================================================
     private function seedIncidenciasYPsicologia(): void
     {
-        if (empty($this->alumnos)) return;
+        if (empty($this->alumnos)) {
+            return;
+        }
 
         $incidencias = [
             [
