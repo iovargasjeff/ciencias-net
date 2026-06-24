@@ -20,6 +20,7 @@ use App\Modules\Incidencias\Presentation\Controllers\IncidentController;
 use App\Modules\Materiales\Presentation\Controllers\MaterialController;
 use App\Modules\Notificaciones\Presentation\Controllers\NotificationController;
 use App\Modules\Psicologia\Presentation\Controllers\PsychologyCareController;
+use App\Modules\Shared\Presentation\Controllers\PrivateFileController;
 use App\Modules\Usuarios\Presentation\Controllers\AccountController;
 use App\Modules\Usuarios\Presentation\Controllers\BiometricController;
 use App\Modules\Usuarios\Presentation\Controllers\DniSearchController;
@@ -28,8 +29,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/health', fn () => response()->json([
-        'data' => ['status' => 'ok'],
+        'data' => [
+            'status' => 'ok',
+            'checks' => [
+                'api' => 'ok',
+                'queue' => config('queue.default'),
+                'cache' => config('cache.default'),
+            ],
+        ],
     ]))->name('api.v1.health');
+
+    Route::get('private-files/{fileId}/signed-download', [PrivateFileController::class, 'signedDownload'])
+        ->middleware('signed')
+        ->name('api.v1.private-files.signed-download');
 
     Route::post('station-activations', [StationController::class, 'activate'])->middleware('throttle:station-activation');
 
@@ -51,7 +63,10 @@ Route::prefix('v1')->group(function (): void {
         });
     });
 
-    Route::middleware(['auth:sanctum', 'active.account'])->group(function (): void {
+    Route::middleware(['auth:sanctum', 'active.account', 'throttle:authenticated-api'])->group(function (): void {
+        Route::post('private-files', [PrivateFileController::class, 'store'])->middleware('throttle:private-files-upload');
+        Route::get('private-files/{fileId}/download', [PrivateFileController::class, 'download'])->name('api.v1.private-files.download');
+
         Route::get('accounts', [AccountController::class, 'index']);
         Route::post('accounts', [AccountController::class, 'store']);
         Route::get('accounts/{accountId}', [AccountController::class, 'show']);
@@ -74,6 +89,8 @@ Route::prefix('v1')->group(function (): void {
         Route::post('academic-periods', [AcademicController::class, 'storePeriod'])->name('api.v1.academic-periods.store');
         Route::get('academic-periods/{academicPeriodId}', [AcademicController::class, 'showPeriod']);
         Route::patch('academic-periods/{academicPeriodId}', [AcademicController::class, 'updatePeriod'])->name('api.v1.academic-periods.update');
+        Route::delete('academic-periods/{academicPeriodId}', [AcademicController::class, 'destroyPeriod']);
+        Route::get('grade-catalog', [AcademicController::class, 'gradeCatalog']);
         Route::get('grades', [AcademicController::class, 'grades']);
         Route::post('grades', [AcademicController::class, 'storeGrade'])->name('api.v1.grades.store');
         Route::patch('grades/{id}', [AcademicController::class, 'updateGrade']);

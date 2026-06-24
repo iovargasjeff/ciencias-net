@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { DataTable } from '@/components/shared/DataTable'
 import { getApiError } from '@/lib/api/client'
@@ -61,7 +61,9 @@ export function FamilyAdminPage() {
     }
   }, [studentDni, form])
 
-  const isValidForm = !!form.watch('parent_account_id') && !!form.watch('student_id')
+  const parentAccountId = useWatch({ control: form.control, name: 'parent_account_id' })
+  const studentId = useWatch({ control: form.control, name: 'student_id' })
+  const isValidForm = !!parentAccountId && !!studentId
 
   return (
     <section className="page-stack">

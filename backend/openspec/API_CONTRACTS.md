@@ -38,6 +38,7 @@ Un paquete listado aquí todavía requiere aprobación explícita antes de inici
 | `harden-security-observability` | Modifica/verifica transversalmente | `API-CORE` y seguridad común | `openapi.yaml`, `parameters/common.yaml`, `responses/common.yaml`, `schemas/common.yaml`, `security-schemes/common.yaml` |
 | `add-production-deployment-backups` | Sin contrato HTTP | Operación y despliegue | No implementa operaciones HTTP nuevas |
 | `verify-backend-release` | Verifica | Todos los paquetes públicos e internos | `../../docs/api/openapi.yaml`, `../../docs/api/internal/facial-openapi.yaml` |
+| `refine-academic-enrollment-rules` | Modifica | `API-ACADEMIC`, `API-ASSESSMENTS`, `API-SCHEDULES` | `paths/academic.yaml`, `paths/assessments.yaml`, `paths/schedules.yaml`, request-bodies y schemas homonimos |
+| `refine-identity-family-role-rules` | Modifica | `API-IAM`, `API-FAMILY`, `API-COMMUNICATIONS`, `API-FINANCE-QUERIES`, `API-INCIDENTS`, `API-PSYCHOLOGY` | `paths/identity-access.yaml`, `paths/family.yaml`, `paths/communications.yaml`, `paths/finance-queries.yaml`, `paths/incidents.yaml`, `paths/psychology.yaml`, request-bodies y schemas homonimos |
 
 Todos los paths indicados son relativos a `../../docs/api/`.
-

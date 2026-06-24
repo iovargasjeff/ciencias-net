@@ -29,6 +29,7 @@ export function PortalLayout() {
 
   const unreadAnnouncementsCount = announcementsQuery.data?.data?.filter((ann) => !ann.is_read)?.length || 0
   const canManagePsychology = auth.user?.roles?.some((role) => ['superadmin', 'psicologia'].includes(role))
+  const primaryRole = auth.user?.roles?.[0]?.replaceAll('_', ' ') ?? 'sin rol'
 
 
   async function closeSession() {
@@ -70,6 +71,13 @@ export function PortalLayout() {
           )}
           {isAdmin && canManagePsychology && <Link className="nav-link" to="/admin/psicologia"><Brain aria-hidden /> Psicología</Link>}
         </nav>
+        {auth.user && (
+          <section className="panel user-session-card" aria-label="Cuenta actual">
+            <strong>{auth.user.name}</strong>
+            <small>{auth.user.email}</small>
+            <span>{primaryRole}</span>
+          </section>
+        )}
         <button className="nav-link nav-button" type="button" onClick={closeSession}><SignOut aria-hidden /> Salir</button>
       </aside>
       <main className="workspace-content"><Outlet /></main>

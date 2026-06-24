@@ -42,10 +42,18 @@ export interface AcademicItem {
   status?: string
   level?: string
   student_id?: string
+  student_name?: string
+  student_dni?: string
   teacher_id?: string
   section_id?: string
+  section_name?: string
   course_id?: string
+  course_ids?: string[]
+  assignment_ids?: string[]
+  courses?: Array<{ assignment_id: string; course_id: string; name?: string; code?: string; teacher?: string | null }>
   grade_id?: string
+  grade_name?: string
+  period_name?: string
   academic_period_id?: string
   valid_from?: string
   valid_until?: string | null

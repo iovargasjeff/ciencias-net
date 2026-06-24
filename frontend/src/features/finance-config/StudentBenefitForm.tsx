@@ -1,10 +1,10 @@
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createStudentBenefitSchema, type CreateStudentBenefitInput } from './schemas'
 import { useCreateStudentBenefit } from './hooks'
 
 export function StudentBenefitForm({ onSuccess, onCancel }: { onSuccess: () => void; onCancel: () => void }) {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateStudentBenefitInput>({
+  const { register, handleSubmit, control, formState: { errors } } = useForm<CreateStudentBenefitInput>({
     resolver: zodResolver(createStudentBenefitSchema),
     defaultValues: {
       benefit_type: 'percentage',
@@ -12,7 +12,7 @@ export function StudentBenefitForm({ onSuccess, onCancel }: { onSuccess: () => v
     }
   })
   
-  const benefitType = watch('benefit_type')
+  const benefitType = useWatch({ control, name: 'benefit_type' })
   const { mutate, isPending, isError, error } = useCreateStudentBenefit()
 
   const onSubmit = (data: CreateStudentBenefitInput) => {

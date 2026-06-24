@@ -25,6 +25,8 @@ contratos aprobados desde `../../docs/api/openapi.yaml`; no utiliza changes back
 | `add-private-psychology-portal` | Consume | `API-PSYCHOLOGY`, `API-FILES` | `paths/psychology.yaml`, `paths/files.yaml` y componentes relacionados |
 | `harden-accessibility-performance` | Verifica transversalmente | `API-CORE` y todos los paquetes consumidos | `openapi.yaml` y componentes comunes |
 | `verify-frontend-release-e2e` | Verifica | Todos los paquetes públicos consumidos | `../../docs/api/openapi.yaml` |
+| `refine-academic-enrollment-ux` | Consume | `API-IAM`, `API-ACADEMIC`, `API-ASSESSMENTS`, `API-SCHEDULES` | `paths/identity-access.yaml`, `paths/academic.yaml`, `paths/assessments.yaml`, `paths/schedules.yaml` y componentes relacionados |
+| `refine-portals-communications-incidents-ux` | Consume | `API-IAM`, `API-FAMILY`, `API-COMMUNICATIONS`, `API-MATERIALS`, `API-FILES`, `API-INCIDENTS`, `API-PSYCHOLOGY`, `API-FINANCE-QUERIES`, `API-STUDENT-ATTENDANCE` | paths y schemas de los paquetes consumidos |
 
 Todos los paths indicados son relativos a `../../docs/api/`.
 

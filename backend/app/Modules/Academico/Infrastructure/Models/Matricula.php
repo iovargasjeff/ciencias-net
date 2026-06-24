@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Matricula extends Model
@@ -28,5 +29,11 @@ class Matricula extends Model
     public function seccion(): BelongsTo
     {
         return $this->belongsTo(Seccion::class);
+    }
+
+    public function cargasAcademicas(): BelongsToMany
+    {
+        return $this->belongsToMany(CargaAcademica::class, 'matricula_carga_academica')
+            ->withPivot('created_at');
     }
 }
