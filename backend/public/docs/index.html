@@ -551,7 +551,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: d4428722-57ce-4284-897a-e8964bdc29d6
+x-request-id: ab690e5f-b842-4ead-9561-9209e41f2849
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -674,7 +674,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 2467804d-1cf7-4ee9-8fe2-27266c7b460a
+x-request-id: 2f4ff1f1-99b9-44c0-82f7-a6ab6eb76aa4
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -936,7 +936,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 65fa04b4-d8b3-40ff-944f-cbabe828404b
+x-request-id: d57fc69f-27e7-45f8-a904-bfd135c00af7
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -1023,8 +1023,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "camera_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
-    --form "captured_at=2026-06-24T19:27:53"\
-    --form "image=@/tmp/phpTJg5yx" </code></pre></div>
+    --form "captured_at=2026-06-24T21:04:07"\
+    --form "image=@/tmp/phpPhXtUx" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -1039,7 +1039,7 @@ const headers = {
 
 const body = new FormData();
 body.append('camera_id', '6ff8f7f6-1eb3-3525-be4a-3932c805afed');
-body.append('captured_at', '2026-06-24T19:27:53');
+body.append('captured_at', '2026-06-24T21:04:07');
 body.append('image', document.querySelector('input[name="image"]').files[0]);
 
 fetch(url, {
@@ -1117,7 +1117,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must be an image. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpTJg5yx</code></p>
+<p>Must be a file. Must be an image. Must not be greater than 5120 kilobytes. Example: <code>/tmp/phpPhXtUx</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>camera_id</code></b>&nbsp;&nbsp;
@@ -1138,10 +1138,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="captured_at"                data-endpoint="POSTapi-v1-station-captures"
-               value="2026-06-24T19:27:53"
+               value="2026-06-24T21:04:07"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:53</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:07</code></p>
         </div>
         </form>
 
@@ -1606,7 +1606,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 1ca42eb5-7aba-489c-a5cf-3bac4384b23f
+x-request-id: ff1ccdf7-d395-4d2f-91aa-f131dc505eb4
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -1788,7 +1788,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"file\": \"architecto\",
-    \"purpose\": \"psychology\",
+    \"purpose\": \"report\",
     \"checksum_sha256\": \"922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d\",
     \"expires_at\": \"2052-07-18\",
     \"metadata\": [
@@ -1810,7 +1810,7 @@ const headers = {
 
 let body = {
     "file": "architecto",
-    "purpose": "psychology",
+    "purpose": "report",
     "checksum_sha256": "922815dFbEa128eAeaAAa185508fe078bECeFBBE9f0F6B8F711A7aB5A0B6C57d",
     "expires_at": "2052-07-18",
     "metadata": [
@@ -1902,10 +1902,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="purpose"                data-endpoint="POSTapi-v1-private-files"
-               value="psychology"
+               value="report"
                data-component="body">
     <br>
-<p>Example: <code>psychology</code></p>
+<p>Example: <code>report</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>material</code></li> <li><code>incident_evidence</code></li> <li><code>psychology</code></li> <li><code>biometric_exception</code></li> <li><code>report</code></li> <li><code>other</code></li></ul>
         </div>
@@ -1999,7 +1999,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 2a94a63a-8147-4a59-98eb-025047dc9a30
+x-request-id: 1d1d2e6b-570a-44e7-b24c-8818b027da02
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2132,7 +2132,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 63a6e6f0-a3ac-4f92-b1d4-af692079019d
+x-request-id: 632afc34-cfd1-4480-8b90-c70f5245c42f
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -2401,7 +2401,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: af3fed9f-5d31-4708-a642-b265904ec109
+x-request-id: 44e3e63c-363f-4aab-81b4-7603b216e61d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3079,7 +3079,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 015f04a0-72d1-4096-8341-c4887473df14
+x-request-id: 9701f891-7b66-4dc7-9fa0-ebafd5f083c0
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3232,7 +3232,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 99f734bf-bafc-4d0e-9454-d697b7514d59
+x-request-id: 34dc5721-ffe4-445f-bca3-2614c299b943
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3375,7 +3375,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: ef88ab3d-a337-4fc4-839c-d05ec5ccc145
+x-request-id: 290d6d0f-53f2-4472-bb88-59f448d74732
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3520,7 +3520,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: c347986f-8dfb-4861-9e93-a6955a04a9e9
+x-request-id: cf14d96e-9e48-467a-8f7c-37499adf0a7f
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -3892,7 +3892,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: a4a1ebe5-9623-496d-ab0d-8f813535856e
+x-request-id: e17bfdfc-4b29-4ab5-b307-19638ccb9c2e
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4012,7 +4012,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 3e70a2d3-30c7-48bc-bf09-8de834eaa86b
+x-request-id: f6282be9-ea65-4681-aa68-7027988c66aa
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4145,7 +4145,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 5b98c901-2a5f-40b9-ab55-52acf65eda5b
+x-request-id: 529d7aa7-537c-4fa0-a828-42ba5281b5af
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4239,8 +4239,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"terms\": [
         {
             \"name\": \"b\",
-            \"start_date\": \"2026-06-24T19:27:54\",
-            \"end_date\": \"2026-06-24T19:27:54\"
+            \"start_date\": \"2026-06-24T21:04:07\",
+            \"end_date\": \"2026-06-24T21:04:07\"
         }
     ]
 }"
@@ -4265,8 +4265,8 @@ let body = {
     "terms": [
         {
             "name": "b",
-            "start_date": "2026-06-24T19:27:54",
-            "end_date": "2026-06-24T19:27:54"
+            "start_date": "2026-06-24T21:04:07",
+            "end_date": "2026-06-24T21:04:07"
         }
     ]
 };
@@ -4415,10 +4415,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="terms.0.start_date"                data-endpoint="POSTapi-v1-academic-periods"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:07"
                data-component="body">
     <br>
-<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T21:04:07</code></p>
                     </div>
                                                                 <div style="margin-left: 14px; clear: unset;">
                         <b style="line-height: 2;"><code>end_date</code></b>&nbsp;&nbsp;
@@ -4427,10 +4427,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="terms.0.end_date"                data-endpoint="POSTapi-v1-academic-periods"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:07"
                data-component="body">
     <br>
-<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>This field is required when <code>terms</code> is present. Must be a valid date. Example: <code>2026-06-24T21:04:07</code></p>
                     </div>
                                     </details>
         </div>
@@ -4486,7 +4486,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 77f35e23-2455-41bb-be07-056dc74416d8
+x-request-id: acba1fa5-fdb9-45a1-ad2d-0989902513cf
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -4898,7 +4898,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 6bb85acc-4ad6-40b0-b3bb-700420b2f0ee
+x-request-id: aa11da3a-b613-45dd-a39e-298c543ce48d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -5018,7 +5018,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 31079c91-ce51-4318-8188-1231f7eebe7f
+x-request-id: 033809dc-1a25-4244-8b18-9db7033f73ba
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -5525,7 +5525,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: e4b1d21c-28f2-46f3-b005-d08c4d8a8e4b
+x-request-id: 53b63c06-d74b-4173-a007-21999c5a8417
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -6002,7 +6002,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 147b0525-9334-4122-bc77-714aca3274a8
+x-request-id: bf2f26ce-ec3d-4248-9f78-3ba4e00b82f0
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -6493,7 +6493,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: f9268b94-24e0-476a-b6ad-4f9cc44dd950
+x-request-id: d1082d64-5439-4629-b4b8-75c277b26212
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7018,7 +7018,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: d62e572e-938b-4378-a942-650548e2565b
+x-request-id: ec82282d-c641-47e2-865e-2574e35b1974
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7523,7 +7523,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 738df154-e6e8-497f-bc31-12b65c5b6cf2
+x-request-id: bfd3bc06-c73f-4515-859d-82ede51dae07
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7613,7 +7613,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --form "titulo=g"\
     --form "descripcion=z"\
     --form "semana=17"\
-    --form "file=@/tmp/phpASJBKE" </code></pre></div>
+    --form "file=@/tmp/phpvimCpk" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -7756,7 +7756,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpASJBKE</code></p>
+<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpvimCpk</code></p>
         </div>
         </form>
 
@@ -7810,7 +7810,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 747a38b1-4ee6-4748-bba9-157989f830f7
+x-request-id: d8123dfb-d4d5-428f-9f6d-1ed247ec0ec4
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -7913,7 +7913,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"titulo\": \"b\",
     \"descripcion\": \"n\",
     \"semana\": 7,
-    \"activo\": true
+    \"activo\": false
 }"
 </code></pre></div>
 
@@ -7932,7 +7932,7 @@ let body = {
     "titulo": "b",
     "descripcion": "n",
     "semana": 7,
-    "activo": true
+    "activo": false
 };
 
 fetch(url, {
@@ -8069,7 +8069,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -8367,7 +8367,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     "http://localhost/api/v1/materials/architecto/file" \
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
-    --form "file=@/tmp/phpuFkdn1" </code></pre></div>
+    --form "file=@/tmp/php3sRJ1r" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -8471,7 +8471,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/phpuFkdn1</code></p>
+<p>Must be a file. Must not be greater than 51200 kilobytes. Example: <code>/tmp/php3sRJ1r</code></p>
         </div>
         </form>
 
@@ -8525,7 +8525,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 066858e3-aa34-4ae8-b13a-4cddab013bca
+x-request-id: f095810e-dc9e-4d2a-af21-6ac06eb7e76d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -8816,7 +8816,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 87201b35-0765-4476-aaae-dc37a093bf88
+x-request-id: 45e5ca69-16a4-47ee-a9c8-6f33e4816f3a
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -8904,9 +8904,9 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"title\": \"b\",
-    \"starts_at\": \"2026-06-24T19:27:54\",
+    \"starts_at\": \"2026-06-24T21:04:08\",
     \"ends_at\": \"2052-07-17\",
-    \"event_type\": \"meeting\",
+    \"event_type\": \"holiday\",
     \"description\": \"Et animi quos velit et fugiat.\"
 }"
 </code></pre></div>
@@ -8924,9 +8924,9 @@ const headers = {
 
 let body = {
     "title": "b",
-    "starts_at": "2026-06-24T19:27:54",
+    "starts_at": "2026-06-24T21:04:08",
     "ends_at": "2052-07-17",
-    "event_type": "meeting",
+    "event_type": "holiday",
     "description": "Et animi quos velit et fugiat."
 };
 
@@ -9014,10 +9014,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="starts_at"                data-endpoint="POSTapi-v1-calendar-events"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ends_at</code></b>&nbsp;&nbsp;
@@ -9038,10 +9038,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="event_type"                data-endpoint="POSTapi-v1-calendar-events"
-               value="meeting"
+               value="holiday"
                data-component="body">
     <br>
-<p>Example: <code>meeting</code></p>
+<p>Example: <code>holiday</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>academic</code></li> <li><code>holiday</code></li> <li><code>meeting</code></li> <li><code>other</code></li></ul>
         </div>
@@ -9109,7 +9109,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: e074038e-46b8-495a-a470-51ea93b1963b
+x-request-id: 133a51bb-b1bc-4129-b89e-b7495463c4cf
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -9200,7 +9200,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"incident_type\": \"g\",
     \"severity\": \"critical\",
     \"description\": \"Quos velit et fugiat sunt nihil accusantium harum.\",
-    \"occurred_at\": \"2026-06-24T19:27:54\"
+    \"occurred_at\": \"2026-06-24T21:04:08\"
 }"
 </code></pre></div>
 
@@ -9220,7 +9220,7 @@ let body = {
     "incident_type": "g",
     "severity": "critical",
     "description": "Quos velit et fugiat sunt nihil accusantium harum.",
-    "occurred_at": "2026-06-24T19:27:54"
+    "occurred_at": "2026-06-24T21:04:08"
 };
 
 fetch(url, {
@@ -9345,10 +9345,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-incidents"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
         </form>
 
@@ -9369,7 +9369,7 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"target_status\": \"parent_notified\",
+    \"target_status\": \"resolved\",
     \"reason\": \"b\"
 }"
 </code></pre></div>
@@ -9386,7 +9386,7 @@ const headers = {
 };
 
 let body = {
-    "target_status": "parent_notified",
+    "target_status": "resolved",
     "reason": "b"
 };
 
@@ -9475,10 +9475,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="target_status"                data-endpoint="POSTapi-v1-incidents--incident--transitions"
-               value="parent_notified"
+               value="resolved"
                data-component="body">
     <br>
-<p>Example: <code>parent_notified</code></p>
+<p>Example: <code>resolved</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>open</code></li> <li><code>referred_toe</code></li> <li><code>referred_psychology</code></li> <li><code>parent_notified</code></li> <li><code>in_progress</code></li> <li><code>resolved</code></li> <li><code>closed</code></li></ul>
         </div>
@@ -9513,7 +9513,7 @@ Must be one of:
     --header "Content-Type: multipart/form-data" \
     --header "Accept: application/json" \
     --form "note=b"\
-    --form "file=@/tmp/phpkgbq36" </code></pre></div>
+    --form "file=@/tmp/phpJ0WPke" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -9630,7 +9630,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Must be a file. Example: <code>/tmp/phpkgbq36</code></p>
+<p>Must be a file. Example: <code>/tmp/phpJ0WPke</code></p>
         </div>
         </form>
 
@@ -9651,11 +9651,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"from_date\": \"2026-06-24T19:27:54\",
+    \"from_date\": \"2026-06-24T21:04:08\",
     \"to_date\": \"2052-07-17\",
-    \"format\": \"xlsx\",
+    \"format\": \"pdf\",
     \"status\": \"closed\",
-    \"severity\": \"critical\"
+    \"severity\": \"medium\"
 }"
 </code></pre></div>
 
@@ -9671,11 +9671,11 @@ const headers = {
 };
 
 let body = {
-    "from_date": "2026-06-24T19:27:54",
+    "from_date": "2026-06-24T21:04:08",
     "to_date": "2052-07-17",
-    "format": "xlsx",
+    "format": "pdf",
     "status": "closed",
-    "severity": "critical"
+    "severity": "medium"
 };
 
 fetch(url, {
@@ -9750,10 +9750,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="from_date"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>to_date</code></b>&nbsp;&nbsp;
@@ -9774,10 +9774,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="format"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="xlsx"
+               value="pdf"
                data-component="body">
     <br>
-<p>Example: <code>xlsx</code></p>
+<p>Example: <code>pdf</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pdf</code></li> <li><code>xlsx</code></li></ul>
         </div>
@@ -9802,10 +9802,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="severity"                data-endpoint="POSTapi-v1-incidents-reports"
-               value="critical"
+               value="medium"
                data-component="body">
     <br>
-<p>Example: <code>critical</code></p>
+<p>Example: <code>medium</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>low</code></li> <li><code>medium</code></li> <li><code>high</code></li> <li><code>critical</code></li></ul>
         </div>
@@ -9861,7 +9861,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 0341452b-7cdb-48f6-af0e-22f3cb35fa0b
+x-request-id: 023a7fc2-cffa-4408-b835-67dabfadc391
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -9949,7 +9949,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"occurred_at\": \"2026-06-24T19:27:54\",
+    \"occurred_at\": \"2026-06-24T21:04:08\",
     \"summary\": \"g\",
     \"confidential_notes\": \"z\",
     \"incident_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\"
@@ -9969,7 +9969,7 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "occurred_at": "2026-06-24T19:27:54",
+    "occurred_at": "2026-06-24T21:04:08",
     "summary": "g",
     "confidential_notes": "z",
     "incident_id": "977e5426-8d13-3824-86aa-b092f8ae52c5"
@@ -10059,10 +10059,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-psychology-cares"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>summary</code></b>&nbsp;&nbsp;
@@ -10121,11 +10121,11 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"title\": \"b\",
     \"body\": \"n\",
-    \"audience_type\": \"all\",
+    \"audience_type\": \"roles\",
     \"audience_ids\": [
         \"architecto\"
     ],
-    \"publish_at\": \"2026-06-24T19:27:54\"
+    \"publish_at\": \"2026-06-24T21:04:08\"
 }"
 </code></pre></div>
 
@@ -10143,11 +10143,11 @@ const headers = {
 let body = {
     "title": "b",
     "body": "n",
-    "audience_type": "all",
+    "audience_type": "roles",
     "audience_ids": [
         "architecto"
     ],
-    "publish_at": "2026-06-24T19:27:54"
+    "publish_at": "2026-06-24T21:04:08"
 };
 
 fetch(url, {
@@ -10246,10 +10246,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="audience_type"                data-endpoint="POSTapi-v1-announcements"
-               value="all"
+               value="roles"
                data-component="body">
     <br>
-<p>Example: <code>all</code></p>
+<p>Example: <code>roles</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>all</code></li> <li><code>roles</code></li> <li><code>sections</code></li> <li><code>accounts</code></li></ul>
         </div>
@@ -10274,10 +10274,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="publish_at"                data-endpoint="POSTapi-v1-announcements"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
         </form>
 
@@ -10331,7 +10331,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: f856fd22-36f1-482e-8bc2-58244d9f0029
+x-request-id: 1b297d06-3e3a-46a6-aa3a-e009a84e19bd
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10665,7 +10665,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 4686cfed-6ead-4644-b87d-8b49a9d41455
+x-request-id: 057125a2-6b55-45d9-8706-e9920633d727
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10785,7 +10785,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: d1f09826-1ea0-4162-9509-6ae01e69602f
+x-request-id: c32a91d7-3d3b-4761-bc1c-96ec310111aa
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -10874,7 +10874,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"name\": \"b\",
     \"location\": \"n\",
-    \"mode\": \"exit\"
+    \"mode\": \"entry\"
 }"
 </code></pre></div>
 
@@ -10892,7 +10892,7 @@ const headers = {
 let body = {
     "name": "b",
     "location": "n",
-    "mode": "exit"
+    "mode": "entry"
 };
 
 fetch(url, {
@@ -10991,10 +10991,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="mode"                data-endpoint="POSTapi-v1-stations"
-               value="exit"
+               value="entry"
                data-component="body">
     <br>
-<p>Example: <code>exit</code></p>
+<p>Example: <code>entry</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>mixed</code></li></ul>
         </div>
@@ -11019,8 +11019,8 @@ Must be one of:
     --data "{
     \"name\": \"b\",
     \"location\": \"n\",
-    \"mode\": \"exit\",
-    \"active\": false
+    \"mode\": \"mixed\",
+    \"active\": true
 }"
 </code></pre></div>
 
@@ -11038,8 +11038,8 @@ const headers = {
 let body = {
     "name": "b",
     "location": "n",
-    "mode": "exit",
-    "active": false
+    "mode": "mixed",
+    "active": true
 };
 
 fetch(url, {
@@ -11151,10 +11151,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="mode"                data-endpoint="PATCHapi-v1-stations--stationId-"
-               value="exit"
+               value="mixed"
                data-component="body">
     <br>
-<p>Example: <code>exit</code></p>
+<p>Example: <code>mixed</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>mixed</code></li></ul>
         </div>
@@ -11178,7 +11178,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
         </form>
 
@@ -11467,7 +11467,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 4243725b-4942-4bc2-8fab-d25d0c8133be
+x-request-id: f68227f0-6ad5-42c6-921e-d1b4a74160ab
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -11766,7 +11766,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: c4600908-05af-4d01-8bcd-419e18a1f4a8
+x-request-id: 2fa985d4-675e-41b4-ab04-bbb7de9ce1de
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -11854,8 +11854,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"event_type\": \"entry\",
-    \"occurred_at\": \"2026-06-24T19:27:54\",
+    \"event_type\": \"exit\",
+    \"occurred_at\": \"2026-06-24T21:04:08\",
     \"reason\": \"g\"
 }"
 </code></pre></div>
@@ -11873,8 +11873,8 @@ const headers = {
 
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "event_type": "entry",
-    "occurred_at": "2026-06-24T19:27:54",
+    "event_type": "exit",
+    "occurred_at": "2026-06-24T21:04:08",
     "reason": "g"
 };
 
@@ -11962,10 +11962,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="event_type"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="entry"
+               value="exit"
                data-component="body">
     <br>
-<p>Example: <code>entry</code></p>
+<p>Example: <code>exit</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>entry</code></li> <li><code>exit</code></li> <li><code>absence</code></li> <li><code>late</code></li></ul>
         </div>
@@ -11976,10 +11976,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-student-attendance-manual-events"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>reason</code></b>&nbsp;&nbsp;
@@ -12012,7 +12012,7 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"date\": \"2026-06-24T19:27:54\"
+    \"date\": \"2026-06-24T21:04:08\"
 }"
 </code></pre></div>
 
@@ -12028,7 +12028,7 @@ const headers = {
 };
 
 let body = {
-    "date": "2026-06-24T19:27:54"
+    "date": "2026-06-24T21:04:08"
 };
 
 fetch(url, {
@@ -12103,10 +12103,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-student-attendance-day-closures"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
         </form>
 
@@ -12160,7 +12160,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 9a5630b5-7447-4062-a407-e26e5905ee3a
+x-request-id: 9014b6b1-6ad1-4f51-80a6-5444824307c3
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -12536,7 +12536,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: cf9e257c-f9ef-4c0c-84d9-96f290be89c6
+x-request-id: a8832d5e-8dcc-48e6-a6bb-f707f4bafa4d
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -12784,7 +12784,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: a432a5bc-0590-40ae-ad53-6bdb9f259128
+x-request-id: bd40a7e0-8a52-4351-8e7f-a0cebedf53c3
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -12871,7 +12871,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"outcome\": \"rejected\",
+    \"outcome\": \"confirmed\",
     \"matched_student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"reason\": \"g\"
 }"
@@ -12889,7 +12889,7 @@ const headers = {
 };
 
 let body = {
-    "outcome": "rejected",
+    "outcome": "confirmed",
     "matched_student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "reason": "g"
 };
@@ -12979,10 +12979,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="outcome"                data-endpoint="POSTapi-v1-recognition-events--recognitionEventId--review"
-               value="rejected"
+               value="confirmed"
                data-component="body">
     <br>
-<p>Example: <code>rejected</code></p>
+<p>Example: <code>confirmed</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>confirmed</code></li> <li><code>rejected</code></li> <li><code>reassigned</code></li></ul>
         </div>
@@ -13062,7 +13062,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 43ef895b-b384-41f7-851c-23890240822e
+x-request-id: d13b0802-653f-49cb-8559-967d5283d522
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -13150,8 +13150,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"date\": \"2026-06-24T19:27:54\",
-    \"adjustment_type\": \"subtract\",
+    \"date\": \"2026-06-24T21:04:08\",
+    \"adjustment_type\": \"add\",
     \"minutes\": 67,
     \"reason\": \"z\"
 }"
@@ -13170,8 +13170,8 @@ const headers = {
 
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "date": "2026-06-24T19:27:54",
-    "adjustment_type": "subtract",
+    "date": "2026-06-24T21:04:08",
+    "adjustment_type": "add",
     "minutes": 67,
     "reason": "z"
 };
@@ -13260,10 +13260,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="date"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>adjustment_type</code></b>&nbsp;&nbsp;
@@ -13272,10 +13272,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="adjustment_type"                data-endpoint="POSTapi-v1-teacher-attendance-adjustments"
-               value="subtract"
+               value="add"
                data-component="body">
     <br>
-<p>Example: <code>subtract</code></p>
+<p>Example: <code>add</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>add</code></li> <li><code>subtract</code></li></ul>
         </div>
@@ -13611,7 +13611,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: ac501ddf-7617-4cf6-8bed-c81e98d75ed3
+x-request-id: e266c0d0-4629-4533-ab7d-c18135944dd5
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -13702,13 +13702,13 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"name\": \"n\",
     \"amount\": \"642559\",
     \"academic_period_id\": \"947170af-7488-3f30-a16d-723355a9502f\",
-    \"type\": \"matricula\",
+    \"type\": \"otro\",
     \"year\": 2000,
     \"month\": 1,
     \"due_day\": 2,
     \"recurrence\": \"annual\",
     \"early_payment_discount\": \"642559\",
-    \"early_payment_deadline\": \"2026-06-24T19:27:54\"
+    \"early_payment_deadline\": \"2026-06-24T21:04:08\"
 }"
 </code></pre></div>
 
@@ -13728,13 +13728,13 @@ let body = {
     "name": "n",
     "amount": "642559",
     "academic_period_id": "947170af-7488-3f30-a16d-723355a9502f",
-    "type": "matricula",
+    "type": "otro",
     "year": 2000,
     "month": 1,
     "due_day": 2,
     "recurrence": "annual",
     "early_payment_discount": "642559",
-    "early_payment_deadline": "2026-06-24T19:27:54"
+    "early_payment_deadline": "2026-06-24T21:04:08"
 };
 
 fetch(url, {
@@ -13857,10 +13857,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="POSTapi-v1-payment-concepts"
-               value="matricula"
+               value="otro"
                data-component="body">
     <br>
-<p>Example: <code>matricula</code></p>
+<p>Example: <code>otro</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>cuota_ingreso</code></li> <li><code>matricula</code></li> <li><code>mensualidad</code></li> <li><code>otro</code></li></ul>
         </div>
@@ -13933,10 +13933,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="early_payment_deadline"                data-endpoint="POSTapi-v1-payment-concepts"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
         </form>
 
@@ -13959,13 +13959,13 @@ Must be one of:
     --data "{
     \"name\": \"b\",
     \"amount\": \"642559\",
-    \"type\": \"mensualidad\",
+    \"type\": \"otro\",
     \"year\": 2001,
     \"month\": 2,
     \"due_day\": 1,
-    \"recurrence\": \"single\",
+    \"recurrence\": \"annual\",
     \"early_payment_discount\": \"642559\",
-    \"early_payment_deadline\": \"2026-06-24T19:27:54\"
+    \"early_payment_deadline\": \"2026-06-24T21:04:08\"
 }"
 </code></pre></div>
 
@@ -13983,13 +13983,13 @@ const headers = {
 let body = {
     "name": "b",
     "amount": "642559",
-    "type": "mensualidad",
+    "type": "otro",
     "year": 2001,
     "month": 2,
     "due_day": 1,
-    "recurrence": "single",
+    "recurrence": "annual",
     "early_payment_discount": "642559",
-    "early_payment_deadline": "2026-06-24T19:27:54"
+    "early_payment_deadline": "2026-06-24T21:04:08"
 };
 
 fetch(url, {
@@ -14101,10 +14101,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PATCHapi-v1-payment-concepts--conceptId-"
-               value="mensualidad"
+               value="otro"
                data-component="body">
     <br>
-<p>Example: <code>mensualidad</code></p>
+<p>Example: <code>otro</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>cuota_ingreso</code></li> <li><code>matricula</code></li> <li><code>mensualidad</code></li> <li><code>otro</code></li></ul>
         </div>
@@ -14151,10 +14151,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="recurrence"                data-endpoint="PATCHapi-v1-payment-concepts--conceptId-"
-               value="single"
+               value="annual"
                data-component="body">
     <br>
-<p>Example: <code>single</code></p>
+<p>Example: <code>annual</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>single</code></li> <li><code>monthly</code></li> <li><code>annual</code></li></ul>
         </div>
@@ -14177,10 +14177,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="early_payment_deadline"                data-endpoint="PATCHapi-v1-payment-concepts--conceptId-"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
         </form>
 
@@ -14234,7 +14234,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 8917f76c-335a-4ddf-ac98-1e41483f294e
+x-request-id: 5c801f92-4efa-47b7-9ca8-af2ab8a0d4b8
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -14327,8 +14327,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"concept_ids\": [
         \"947170af-7488-3f30-a16d-723355a9502f\"
     ],
-    \"stackable_with_early_payment\": true,
-    \"starts_on\": \"2026-06-24T19:27:54\",
+    \"stackable_with_early_payment\": false,
+    \"starts_on\": \"2026-06-24T21:04:08\",
     \"ends_on\": \"2052-07-17\",
     \"reason\": \"n\"
 }"
@@ -14352,8 +14352,8 @@ let body = {
     "concept_ids": [
         "947170af-7488-3f30-a16d-723355a9502f"
     ],
-    "stackable_with_early_payment": true,
-    "starts_on": "2026-06-24T19:27:54",
+    "stackable_with_early_payment": false,
+    "starts_on": "2026-06-24T21:04:08",
     "ends_on": "2052-07-17",
     "reason": "n"
 };
@@ -14495,7 +14495,7 @@ Must be one of:
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>starts_on</code></b>&nbsp;&nbsp;
@@ -14504,10 +14504,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="starts_on"                data-endpoint="POSTapi-v1-student-benefits"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>ends_on</code></b>&nbsp;&nbsp;
@@ -14682,8 +14682,8 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"student_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"concept_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
-    \"estado\": \"pagado\",
-    \"due_date_from\": \"2026-06-24T19:27:54\",
+    \"estado\": \"vencido\",
+    \"due_date_from\": \"2026-06-24T21:04:08\",
     \"due_date_to\": \"2052-07-17\",
     \"per_page\": 22
 }"
@@ -14703,8 +14703,8 @@ const headers = {
 let body = {
     "student_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "concept_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
-    "estado": "pagado",
-    "due_date_from": "2026-06-24T19:27:54",
+    "estado": "vencido",
+    "due_date_from": "2026-06-24T21:04:08",
     "due_date_to": "2052-07-17",
     "per_page": 22
 };
@@ -14731,7 +14731,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: b40c16fa-5db7-40bf-88bc-1000315b4b17
+x-request-id: a997fad7-a4d1-4411-a4c2-917fe84d3301
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -14831,10 +14831,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="estado"                data-endpoint="GETapi-v1-payment-obligations"
-               value="pagado"
+               value="vencido"
                data-component="body">
     <br>
-<p>Example: <code>pagado</code></p>
+<p>Example: <code>vencido</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>pendiente</code></li> <li><code>pagado</code></li> <li><code>vencido</code></li></ul>
         </div>
@@ -14845,10 +14845,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="due_date_from"                data-endpoint="GETapi-v1-payment-obligations"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>due_date_to</code></b>&nbsp;&nbsp;
@@ -15089,7 +15089,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 2ddc666f-0484-49d8-a3dc-99edfe61fe3e
+x-request-id: a31ba069-139b-458d-9d80-8add969abbf1
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15355,7 +15355,7 @@ Must be one of:
         \"grade_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\",
         \"section_id\": \"d6fa562b-acd5-35ff-babb-d11194d3737b\"
     },
-    \"adjustment_type\": \"waiver\",
+    \"adjustment_type\": \"charge\",
     \"amount\": 42,
     \"reason\": \"l\"
 }"
@@ -15381,7 +15381,7 @@ let body = {
         "grade_id": "977e5426-8d13-3824-86aa-b092f8ae52c5",
         "section_id": "d6fa562b-acd5-35ff-babb-d11194d3737b"
     },
-    "adjustment_type": "waiver",
+    "adjustment_type": "charge",
     "amount": 42,
     "reason": "l"
 };
@@ -15520,10 +15520,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="adjustment_type"                data-endpoint="POSTapi-v1-payment-obligations-bulk-adjustments"
-               value="waiver"
+               value="charge"
                data-component="body">
     <br>
-<p>Example: <code>waiver</code></p>
+<p>Example: <code>charge</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>charge</code></li> <li><code>discount</code></li> <li><code>waiver</code></li></ul>
         </div>
@@ -15573,8 +15573,8 @@ Must be one of:
     \"obligation_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"movement_type\": \"refund\",
     \"amount\": \"642559\",
-    \"occurred_at\": \"2026-06-24T19:27:54\",
-    \"method\": \"plin\",
+    \"occurred_at\": \"2026-06-24T21:04:08\",
+    \"method\": \"yape\",
     \"reference\": \"j\",
     \"reason\": \"n\"
 }"
@@ -15595,8 +15595,8 @@ let body = {
     "obligation_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "movement_type": "refund",
     "amount": "642559",
-    "occurred_at": "2026-06-24T19:27:54",
-    "method": "plin",
+    "occurred_at": "2026-06-24T21:04:08",
+    "method": "yape",
     "reference": "j",
     "reason": "n"
 };
@@ -15711,10 +15711,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="occurred_at"                data-endpoint="POSTapi-v1-payment-movements"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date in the format <code>Y-m-d\TH:i:s</code>. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date in the format <code>Y-m-d\TH:i:s</code>. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>method</code></b>&nbsp;&nbsp;
@@ -15723,10 +15723,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="method"                data-endpoint="POSTapi-v1-payment-movements"
-               value="plin"
+               value="yape"
                data-component="body">
     <br>
-<p>This field is required when <code>movement_type</code> is <code>payment</code>. Example: <code>plin</code></p>
+<p>This field is required when <code>movement_type</code> is <code>payment</code>. Example: <code>yape</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>cash</code></li> <li><code>transfer</code></li> <li><code>card</code></li> <li><code>yape</code></li> <li><code>plin</code></li> <li><code>other</code></li></ul>
         </div>
@@ -15806,7 +15806,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: a517949a-0457-4503-8b23-31d31aad0c44
+x-request-id: 81aad3f7-e10a-4dd5-b6ed-ed75aea07b78
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -15939,7 +15939,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 1c0ed7cb-16a5-49e8-9eb7-44d560eb5776
+x-request-id: 3f7c728d-085a-448a-b962-4398da29f2a9
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16059,7 +16059,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 01ec495d-a0b4-49a4-8627-947b1a5068aa
+x-request-id: 4ebfb285-362a-4549-a640-a966f8252867
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16179,7 +16179,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 00c43f35-b9c9-42ef-b397-e7b3329b0be9
+x-request-id: 06f49e3e-abac-4305-ad6b-6a7aaa0ce6d2
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16269,7 +16269,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"obligation_ids\": [
         \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\"
     ],
-    \"channel\": \"both\"
+    \"channel\": \"email\"
 }"
 </code></pre></div>
 
@@ -16288,7 +16288,7 @@ let body = {
     "obligation_ids": [
         "6ff8f7f6-1eb3-3525-be4a-3932c805afed"
     ],
-    "channel": "both"
+    "channel": "email"
 };
 
 fetch(url, {
@@ -16377,10 +16377,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="channel"                data-endpoint="POSTapi-v1-payment-reminders"
-               value="both"
+               value="email"
                data-component="body">
     <br>
-<p>Example: <code>both</code></p>
+<p>Example: <code>email</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>email</code></li> <li><code>in_app</code></li> <li><code>both</code></li></ul>
         </div>
@@ -16436,7 +16436,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 79518828-5c60-40e0-97a0-9dc0a80528dd
+x-request-id: 816f1df1-ccd4-4092-bd5b-b7d9e0bbd508
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16525,7 +16525,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --data "{
     \"teacher_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"hourly_rate\": \"642559\",
-    \"effective_from\": \"2026-06-24T19:27:54\",
+    \"effective_from\": \"2026-06-24T21:04:08\",
     \"effective_until\": \"2052-07-17\"
 }"
 </code></pre></div>
@@ -16544,7 +16544,7 @@ const headers = {
 let body = {
     "teacher_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "hourly_rate": "642559",
-    "effective_from": "2026-06-24T19:27:54",
+    "effective_from": "2026-06-24T21:04:08",
     "effective_until": "2052-07-17"
 };
 
@@ -16644,10 +16644,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="effective_from"                data-endpoint="POSTapi-v1-teacher-payroll-rates"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>effective_until</code></b>&nbsp;&nbsp;
@@ -16713,7 +16713,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: c8a6035c-4e3c-4adf-9ca9-f64688f1497f
+x-request-id: 8315ad1c-b027-4323-a67c-66af9c421d1f
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -16800,7 +16800,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-24T19:27:54\",
+    \"period_start\": \"2026-06-24T21:04:08\",
     \"period_end\": \"2052-07-17\",
     \"teacher_ids\": [
         \"a4855dc5-0acb-33c3-b921-f4291f719ca0\"
@@ -16820,7 +16820,7 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-24T19:27:54",
+    "period_start": "2026-06-24T21:04:08",
     "period_end": "2052-07-17",
     "teacher_ids": [
         "a4855dc5-0acb-33c3-b921-f4291f719ca0"
@@ -16899,10 +16899,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-teacher-payroll-liquidations"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -17056,7 +17056,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"period_start\": \"2026-06-24T19:27:54\",
+    \"period_start\": \"2026-06-24T21:04:08\",
     \"period_end\": \"2052-07-17\",
     \"format\": \"pdf\",
     \"teacher_ids\": [
@@ -17077,7 +17077,7 @@ const headers = {
 };
 
 let body = {
-    "period_start": "2026-06-24T19:27:54",
+    "period_start": "2026-06-24T21:04:08",
     "period_end": "2052-07-17",
     "format": "pdf",
     "teacher_ids": [
@@ -17157,10 +17157,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="period_start"                data-endpoint="POSTapi-v1-teacher-payroll-reports"
-               value="2026-06-24T19:27:54"
+               value="2026-06-24T21:04:08"
                data-component="body">
     <br>
-<p>Must be a valid date. Example: <code>2026-06-24T19:27:54</code></p>
+<p>Must be a valid date. Example: <code>2026-06-24T21:04:08</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>period_end</code></b>&nbsp;&nbsp;
@@ -17254,7 +17254,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 57fe6b94-60b6-4d9d-b8e8-6b423832dd06
+x-request-id: b11e3010-355f-449a-896c-6aa8c4108f42
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -17613,7 +17613,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --form "student_id=6ff8f7f6-1eb3-3525-be4a-3932c805afed"\
     --form "consent_id=6b72fe4a-5b40-307c-bc24-f79acf9a1bb9"\
-    --form "images[]=@/tmp/phpRTw0SA" </code></pre></div>
+    --form "images[]=@/tmp/phpiIR5FZ" </code></pre></div>
 
 
 <div class="javascript-example">
@@ -17786,7 +17786,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: 0f3a173d-87c6-4293-a2ad-a22a30a5d1a4
+x-request-id: b876e38b-827c-4841-b00f-d45c0f14093b
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -18225,7 +18225,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"closed\": true
+    \"closed\": false
 }"
 </code></pre></div>
 
@@ -18241,7 +18241,7 @@ const headers = {
 };
 
 let body = {
-    "closed": true
+    "closed": false
 };
 
 fetch(url, {
@@ -18342,7 +18342,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>true</code></p>
+<p>Example: <code>false</code></p>
         </div>
         </form>
 
@@ -18396,7 +18396,7 @@ x-content-type-options: nosniff
 x-frame-options: SAMEORIGIN
 referrer-policy: no-referrer
 permissions-policy: camera=(), microphone=(), geolocation=()
-x-request-id: e88bb8ee-f9ea-4229-b3a1-6c0bbb1b96cd
+x-request-id: 70bba2ae-f180-4c23-804b-4af7e2d8b7c9
 access-control-allow-origin: http://localhost:5173
 access-control-allow-credentials: true
  </code></pre></details>         <pre>
@@ -18484,7 +18484,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"format\": \"xlsx\",
-    \"report_type\": \"grade_summary\",
+    \"report_type\": \"report_card\",
     \"academic_period_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
     \"section_id\": \"6b72fe4a-5b40-307c-bc24-f79acf9a1bb9\",
     \"student_id\": \"977e5426-8d13-3824-86aa-b092f8ae52c5\"
@@ -18504,7 +18504,7 @@ const headers = {
 
 let body = {
     "format": "xlsx",
-    "report_type": "grade_summary",
+    "report_type": "report_card",
     "academic_period_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
     "section_id": "6b72fe4a-5b40-307c-bc24-f79acf9a1bb9",
     "student_id": "977e5426-8d13-3824-86aa-b092f8ae52c5"
@@ -18596,10 +18596,10 @@ Must be one of:
  &nbsp;
                 <input type="text" style="display: none"
                               name="report_type"                data-endpoint="POSTapi-v1-academic-reports"
-               value="grade_summary"
+               value="report_card"
                data-component="body">
     <br>
-<p>Example: <code>grade_summary</code></p>
+<p>Example: <code>report_card</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>report_card</code></li> <li><code>grade_summary</code></li> <li><code>ranking</code></li></ul>
         </div>
@@ -18801,7 +18801,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"matricula_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-    \"estado\": \"ausente\",
+    \"estado\": \"pendiente\",
     \"puntaje\": 84,
     \"observacion\": \"z\"
 }"
@@ -18820,7 +18820,7 @@ const headers = {
 
 let body = {
     "matricula_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-    "estado": "ausente",
+    "estado": "pendiente",
     "puntaje": 84,
     "observacion": "z"
 };
@@ -18922,10 +18922,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="estado"                data-endpoint="POSTapi-v1-assessments--examen_id--grades"
-               value="ausente"
+               value="pendiente"
                data-component="body">
     <br>
-<p>Example: <code>ausente</code></p>
+<p>Example: <code>pendiente</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>registrada</code></li> <li><code>ausente</code></li> <li><code>exonerado</code></li> <li><code>pendiente</code></li></ul>
         </div>
@@ -18972,11 +18972,11 @@ Must be one of:
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"preview\": false,
+    \"preview\": true,
     \"notas\": [
         {
             \"matricula_id\": \"6ff8f7f6-1eb3-3525-be4a-3932c805afed\",
-            \"estado\": \"registrada\",
+            \"estado\": \"pendiente\",
             \"puntaje\": 84,
             \"observacion\": \"z\"
         }
@@ -18996,11 +18996,11 @@ const headers = {
 };
 
 let body = {
-    "preview": false,
+    "preview": true,
     "notas": [
         {
             "matricula_id": "6ff8f7f6-1eb3-3525-be4a-3932c805afed",
-            "estado": "registrada",
+            "estado": "pendiente",
             "puntaje": 84,
             "observacion": "z"
         }
@@ -19105,7 +19105,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
             <code>false</code>
         </label>
     <br>
-<p>Example: <code>false</code></p>
+<p>Example: <code>true</code></p>
         </div>
                 <div style=" padding-left: 28px;  clear: unset;">
         <details>
@@ -19136,10 +19136,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="notas.0.estado"                data-endpoint="POSTapi-v1-assessments--examen_id--grades-import"
-               value="registrada"
+               value="pendiente"
                data-component="body">
     <br>
-<p>Example: <code>registrada</code></p>
+<p>Example: <code>pendiente</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>registrada</code></li> <li><code>ausente</code></li> <li><code>exonerado</code></li> <li><code>pendiente</code></li></ul>
                     </div>
