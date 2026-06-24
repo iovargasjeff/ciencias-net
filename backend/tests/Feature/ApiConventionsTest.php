@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Route;
 it('returns the versioned health contract', function () {
     $this->getJson('/api/v1/health')
         ->assertOk()
-        ->assertExactJson(['data' => ['status' => 'ok']]);
+        ->assertJsonPath('data.status', 'ok')
+        ->assertJsonStructure(['data' => ['status', 'checks' => ['api', 'queue', 'cache']]]);
 });
 
 it('returns stable validation errors', function () {

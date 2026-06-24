@@ -11,6 +11,11 @@ class UserPolicy
         return $actor->hasRole('superadmin') || $actor->can('gestionar_usuarios');
     }
 
+    public function lookupAcademic(User $actor): bool
+    {
+        return $this->manage($actor) || $actor->hasRole('coordinador_academico');
+    }
+
     public function changeSensitiveState(User $actor, User $target): bool
     {
         return $this->manage($actor) && $actor->isNot($target);
