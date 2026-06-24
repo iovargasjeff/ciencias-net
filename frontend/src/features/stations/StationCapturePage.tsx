@@ -18,6 +18,7 @@ import { getApiError } from '@/lib/api/client'
 
 interface LocalCamera {
   deviceId: string
+  registeredCameraId?: string
   label: string
   active: boolean
   mode: 'entry' | 'exit' | 'mixed'
@@ -106,9 +107,10 @@ export function StationCapturePage() {
       // Populate local camera configurations
       const populated: LocalCamera[] = videoDevices.map((device, idx) => ({
         deviceId: device.deviceId,
+        registeredCameraId: station.cameras.find((camera) => camera.device_identifier === device.deviceId)?.id,
         label: device.label || `Cámara ${idx + 1}`,
         active: idx === 0,
-        mode: 'mixed',
+        mode: station.cameras.find((camera) => camera.device_identifier === device.deviceId)?.mode ?? station.mode,
       }))
 
       setLocalCameras(populated)
@@ -207,6 +209,11 @@ export function StationCapturePage() {
     const video = videoRefs.current[camera.deviceId]
     const stream = streamsRef.current[camera.deviceId]
     if (!video || !stream) return
+    if (!camera.registeredCameraId) {
+      setErrorMessage('Esta camara no esta registrada para la estacion. Registrala en Biometria > Estaciones y Camaras usando su ID del navegador.')
+      return
+    }
+    const registeredCameraId = camera.registeredCameraId
 
     setCaptureStatus('processing')
     setErrorMessage(null)
@@ -234,7 +241,7 @@ export function StationCapturePage() {
         const idempotencyKey = crypto.randomUUID()
         const capturedAt = new Date().toISOString()
         
-        const apiPromise = submitStationCapture(blob, camera.deviceId, capturedAt, idempotencyKey)
+        const apiPromise = submitStationCapture(blob, registeredCameraId, capturedAt, idempotencyKey)
         const timeoutPromise = new Promise<never>((_, reject) =>
           setTimeout(() => reject(new Error('timeout')), 5000)
         )
@@ -446,6 +453,11 @@ export function StationCapturePage() {
                         <span className="px-2.5 py-1 text-[10px] font-semibold rounded-lg bg-slate-900/90 text-slate-350 border border-slate-800 backdrop-blur-md">
                           {camera.label}
                         </span>
+                        {!camera.registeredCameraId && (
+                          <span className="px-2.5 py-1 text-[10px] font-semibold rounded-lg bg-amber-900/90 text-amber-200 border border-amber-700 backdrop-blur-md">
+                            No registrada
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -456,7 +468,8 @@ export function StationCapturePage() {
                       </span>
                       <button
                         onClick={() => handleCapture(camera)}
-                        className="flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition active:scale-[0.98] shadow-md shadow-indigo-600/25 border border-indigo-500/20 cursor-pointer"
+                        disabled={!camera.registeredCameraId}
+                        className="flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition active:scale-[0.98] shadow-md shadow-indigo-600/25 border border-indigo-500/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Camera size={14} /> Registrar Asistencia
                       </button>
@@ -495,6 +508,11 @@ export function StationCapturePage() {
                             <span className="text-[9px] text-slate-400 block mt-0.5 font-mono">
                               ID: {camera.deviceId.substring(0, 12)}
                             </span>
+                            {!camera.registeredCameraId && (
+                              <span className="text-[9px] text-amber-300 block mt-1">
+                                Registra este ID en el panel antes de capturar.
+                              </span>
+                            )}
                           </div>
                         </label>
                       </div>

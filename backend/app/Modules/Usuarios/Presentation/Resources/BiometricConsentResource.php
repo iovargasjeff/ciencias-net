@@ -9,11 +9,18 @@ class BiometricConsentResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $status = match (true) {
+            $this->estado === 'revocado' => 'revoked',
+            $this->expira_en !== null && $this->expira_en->isPast() => 'expired',
+            default => 'active',
+        };
+
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
             'student_id' => $this->whenLoaded('user', fn () => $this->user?->alumno?->id),
-            'status' => $this->estado,
+            'student_name' => $this->whenLoaded('user', fn () => $this->user?->name),
+            'status' => $status,
             'legal_basis' => $this->fundamento_legal,
             'granted_by' => $this->otorgado_por,
             'granted_at' => $this->otorgado_en?->toISOString(),

@@ -19,10 +19,10 @@ use App\Modules\Asistencia\Presentation\Resources\StationCameraResource;
 use App\Modules\Asistencia\Presentation\Resources\StationResource;
 use App\Modules\Usuarios\Domain\Models\PerfilFacial;
 use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceClient;
+use App\Modules\Usuarios\Infrastructure\Facial\FacialServiceUnavailable;
 use App\Modules\Usuarios\Infrastructure\Models\Alumno;
 use App\Modules\Usuarios\Infrastructure\Security\BiometricEmbeddingEncryptor;
 use App\Support\AuditLogger;
-use App\Support\Facial\FacialServiceUnavailable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -145,7 +145,10 @@ class StationController extends Controller
 
     public function session(Request $request): JsonResponse
     {
-        return response()->json(['data' => new StationResource($request->attributes->get('station'))]);
+        $station = $request->attributes->get('station');
+        $station?->loadMissing('camaras');
+
+        return response()->json(['data' => new StationResource($station)]);
     }
 
     public function capture(
@@ -203,13 +206,17 @@ class StationController extends Controller
                 'attendance_id' => $movement->asistencia_alumno_id,
                 'movement_id' => $movement->id,
                 'student_id' => $student->id,
+                'student_name' => $student->user?->name,
                 'status' => 'accepted',
+                'outcome' => 'accepted',
                 'event_type' => match ($movement->tipo) {
                     'ingreso' => 'entry',
                     'salida' => 'exit',
                     default => 're_entry',
                 },
                 'confidence' => (float) $event->fresh()->confianza,
+                'score' => (float) $event->fresh()->confianza,
+                'occurred_at' => $movement->ocurrido_en->toISOString(),
             ]], 201);
         }
 
@@ -218,7 +225,10 @@ class StationController extends Controller
             'station_id' => $station->id,
             'camera_id' => $camera->id,
             'status' => 'pending_review',
+            'outcome' => 'review',
             'captured_at' => $event->capturado_en->toISOString(),
+            'occurred_at' => $event->capturado_en->toISOString(),
+            'score' => (float) $event->fresh()->confianza,
         ]], 201);
     }
 

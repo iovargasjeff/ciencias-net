@@ -8,6 +8,17 @@ export async function listBiometricConsents(): Promise<Page<BiometricConsent>> {
   return (await apiClient.get<Page<BiometricConsent>>('/api/v1/biometric-consents')).data
 }
 
+export interface StudentLookup {
+  id: string
+  user_id: string
+  dni: string
+  name: string
+}
+
+export async function searchStudents(search: string): Promise<StudentLookup[]> {
+  return getData(await apiClient.get('/api/v1/search/students', { params: { search } }))
+}
+
 export async function grantBiometricConsent(input: {
   student_id: string
   legal_basis: string

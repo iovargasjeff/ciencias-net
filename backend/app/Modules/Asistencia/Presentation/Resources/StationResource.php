@@ -19,6 +19,7 @@ class StationResource extends JsonResource
             'activated_at' => $this->activado_en?->toISOString(),
             'revoked_at' => $this->revocado_en?->toISOString(),
             'last_seen_at' => $this->ultimo_contacto?->toISOString(),
+            'cameras' => StationCameraResource::collection($this->whenLoaded('camaras')),
             'created_at' => $this->created_at?->toISOString(),
         ];
     }

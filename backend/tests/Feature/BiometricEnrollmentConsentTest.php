@@ -77,7 +77,7 @@ it('grants and lists biometric consent only for device managers', function () {
 
     $response->assertCreated()
         ->assertJsonPath('data.student_id', $student->id)
-        ->assertJsonPath('data.status', 'otorgado');
+        ->assertJsonPath('data.status', 'active');
 
     $this->actingAs($manager)->getJson('/api/v1/biometric-consents')
         ->assertOk()
@@ -162,7 +162,7 @@ it('revokes consent, deactivates active profile, and schedules private file dele
     $this->actingAs($manager)->postJson("/api/v1/biometric-consents/{$consentId}/revocation", [
         'reason' => 'Solicitud del apoderado.',
     ])->assertOk()
-        ->assertJsonPath('data.status', 'revocado');
+        ->assertJsonPath('data.status', 'revoked');
 
     expect(PerfilFacial::firstOrFail()->fresh()->activo)->toBeFalse()
         ->and(ArchivoBiometrico::whereNull('expira_en')->count())->toBe(0);

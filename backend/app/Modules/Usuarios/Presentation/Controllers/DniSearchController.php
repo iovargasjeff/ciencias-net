@@ -17,22 +17,23 @@ class DniSearchController extends Controller
     {
         Gate::authorize('lookupAcademic', User::class);
         $request->validate([
-            'dni' => 'sometimes|string',
-            'search' => 'sometimes|string|max:150',
-            'grade_id' => 'sometimes|uuid',
-            'section_id' => 'sometimes|uuid',
+            'dni' => ['nullable', 'string'],
+            'search' => ['nullable', 'string', 'min:3'],
         ]);
 
-        $query = Alumno::query();
+        $query = Alumno::query()->with('user');
         $query->when($request->filled('dni'), fn ($q) => $q->where('dni', $request->query('dni')));
         $query->when($request->filled('search'), function ($q) use ($request): void {
-            $term = '%'.$request->query('search').'%';
-            $q->where(fn ($inner) => $inner->where('nombres', 'like', $term)->orWhere('apellidos', 'like', $term)->orWhere('dni', 'like', $term));
+            $term = '%'.trim($request->string('search')->toString()).'%';
+            $q->where(function ($inner) use ($term): void {
+                $inner->where('dni', 'like', $term)
+                    ->orWhere('nombres', 'like', $term)
+                    ->orWhere('apellidos', 'like', $term)
+                    ->orWhereHas('user', fn ($userQuery) => $userQuery->where('name', 'like', $term));
+            });
         });
-        $query->when($request->filled('grade_id'), fn ($q) => $q->whereHas('matriculas.seccion', fn ($mq) => $mq->where('grado_id', $request->query('grade_id'))));
-        $query->when($request->filled('section_id'), fn ($q) => $q->whereHas('matriculas', fn ($mq) => $mq->where('seccion_id', $request->query('section_id'))));
 
-        $students = $query->limit(20)->get();
+        $students = $query->orderBy('apellidos')->limit(20)->get();
         if ($request->filled('dni') && $students->isEmpty()) {
             return response()->json(['data' => null], 404);
         }

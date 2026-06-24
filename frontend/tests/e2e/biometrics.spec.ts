@@ -35,6 +35,12 @@ const mockStationActive = {
   status: 'active'
 }
 
+const mockStudents = [
+  { id: mockConsentActive.student_id, user_id: 'user-active-uuid', dni: '70000001', name: mockConsentActive.student_name },
+  { id: mockConsentRevoked.student_id, user_id: 'user-revoked-uuid', dni: '70000002', name: mockConsentRevoked.student_name },
+  { id: '019e9eff-new-student-uuid', user_id: 'user-new-uuid', dni: '70000003', name: 'Alumno Nuevo' }
+]
+
 interface MockConsent {
   id: string
   student_id: string
@@ -66,6 +72,13 @@ async function mockBiometricsApis(page: Page, user = superadmin) {
 
   await page.route('**/sanctum/csrf-cookie', (route) => route.fulfill({ status: 204 }))
   await page.route('**/api/v1/auth/session', route => route.fulfill({ json: { data: user } }))
+  await page.route('**/api/v1/search/students**', async (route) => {
+    const search = new URL(route.request().url()).searchParams.get('search')?.toLowerCase() ?? ''
+    const students = mockStudents.filter((student) =>
+      student.dni.includes(search) || student.name.toLowerCase().includes(search)
+    )
+    return route.fulfill({ json: { data: students } })
+  })
 
   // Consents API
   await page.route('**/api/v1/biometric-consents', async (route) => {
@@ -158,6 +171,14 @@ async function mockBiometricsApis(page: Page, user = superadmin) {
   })
 }
 
+async function selectStudent(page: Page, search: string, studentName: string) {
+  await page.getByLabel('Alumno por DNI o nombre').fill(search)
+  await page.getByRole('button', { name: 'Buscar' }).evaluate((button: HTMLButtonElement) => button.click())
+  const result = page.getByRole('button', { name: new RegExp(studentName) })
+  await expect(result).toBeVisible()
+  await result.evaluate((button: HTMLButtonElement) => button.click())
+}
+
 test.describe('Administración Biométrica y de Dispositivos - FE-009A', () => {
 
   test('debe restringir acceso si el usuario no tiene permisos', async ({ page }) => {
@@ -176,9 +197,10 @@ test.describe('Administración Biométrica y de Dispositivos - FE-009A', () => {
     await expect(page.getByRole('heading', { name: 'Otorgar Consentimiento' })).toBeVisible()
 
     // Grant new consent
-    await page.getByLabel('ID del Alumno (UUID)').fill('019e9eff-new-student-uuid')
+    await selectStudent(page, '70000003', 'Alumno Nuevo')
     await page.getByLabel('Base Legal / Documentación').fill('Consentimiento firmado por madre')
-    await page.getByRole('button', { name: 'Registrar Consentimiento' }).click({ force: true })
+    await page.getByRole('checkbox').check()
+    await page.getByRole('button', { name: 'Registrar Consentimiento' }).click()
 
     await expect(page.getByText('Consentimiento biométrico otorgado con éxito.')).toBeVisible()
 
@@ -200,11 +222,11 @@ test.describe('Administración Biométrica y de Dispositivos - FE-009A', () => {
     await expect(page.getByRole('heading', { name: 'Verificar Consentimiento' })).toBeVisible()
 
     // Enter a student ID without consent (revoked student)
-    await page.getByLabel('ID del Alumno (UUID)').fill(mockConsentRevoked.student_id)
+    await selectStudent(page, '70000002', 'Luis Alumno')
     await expect(page.getByText('Enrolamiento Bloqueado')).toBeVisible()
 
     // Verify camera option is locked (camera container shows placeholder)
-    await expect(page.getByText('Ingresa un ID con consentimiento activo')).toBeVisible()
+    await expect(page.getByText('Selecciona un alumno con consentimiento activo')).toBeVisible()
   })
 
   test('debe permitir enrolar perfil facial con fotos cuando existe consentimiento', async ({ page }) => {
@@ -213,7 +235,7 @@ test.describe('Administración Biométrica y de Dispositivos - FE-009A', () => {
     await page.getByRole('button', { name: 'Enrolamiento Facial' }).click({ force: true })
 
     // Enter student ID with active consent
-    await page.getByLabel('ID del Alumno (UUID)').fill(mockConsentActive.student_id)
+    await selectStudent(page, '70000001', 'Ana Alumna')
     await expect(page.getByText('Consentimiento Activo Encontrado')).toBeVisible()
     await expect(page.getByText('Enrolamiento Bloqueado')).not.toBeVisible()
 
@@ -294,7 +316,7 @@ test.describe('Administración Biométrica y de Dispositivos - FE-009A', () => {
     await mockBiometricsApis(page)
     await page.goto('/admin/biometria')
     await page.getByRole('button', { name: 'Enrolamiento Facial' }).click({ force: true })
-    await page.getByLabel('ID del Alumno (UUID)').fill(mockConsentActive.student_id)
+    await selectStudent(page, '70000001', 'Ana Alumna')
 
     await page.locator('input[type="file"]').setInputFiles([
       { name: 'photo1.jpg', mimeType: 'image/jpeg', buffer: Buffer.from('photo1') },

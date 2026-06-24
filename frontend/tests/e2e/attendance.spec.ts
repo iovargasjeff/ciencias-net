@@ -243,7 +243,8 @@ test.describe('Supervisión de Asistencia - FE-010', () => {
     await mockAttendanceApis(page, superadmin)
     await page.goto('/admin/asistencia')
 
-    await page.getByRole('button', { name: 'Registrar Evento Manual' }).click({ force: true })
+    await page.getByRole('button', { name: 'Registrar Evento Manual' })
+      .evaluate((button: HTMLButtonElement) => button.click())
 
     await page.getByPlaceholder('Ej. 00000000-0000-0000-0000-000000000000').fill('student-new-manual')
     await page.getByLabel('Hora y Fecha Real Ocurrida').fill('2026-06-08T10:00')
@@ -255,7 +256,7 @@ test.describe('Supervisión de Asistencia - FE-010', () => {
     await page.getByPlaceholder('Ej. Alumno se retira temprano por cita médica familiar...').fill('Motivo justificado de prueba')
     await page.getByRole('button', { name: 'Registrar Evento', exact: true }).click({ force: true })
 
-    await expect(page.locator('text=Estudiante student-new-manual')).toBeVisible
+    await expect(page.locator('text=Estudiante student-new-manual')).toBeVisible()
   })
 
   test('debe permitir a superadmin o auxiliar resolver anomalías de entrada registrando hora real y motivo', async ({ page }) => {

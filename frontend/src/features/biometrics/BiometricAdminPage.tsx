@@ -15,6 +15,7 @@ import { OperationalState } from '@/components/shared/OperationalState'
 import { getApiError } from '@/lib/api/client'
 import {
   listBiometricConsents,
+  searchStudents,
   grantBiometricConsent,
   revokeBiometricConsent,
   enrollBiometricProfile,
@@ -25,6 +26,7 @@ import {
   createStationCamera,
   createStationActivationCode
 } from './api'
+import type { StudentLookup } from './api'
 
 export function BiometricAdminPage() {
   const { user } = useAuth()
@@ -45,6 +47,10 @@ export function BiometricAdminPage() {
 
   // --- TAB 1: Consents state & mutations ---
   const [consentStudentId, setConsentStudentId] = useState('')
+  const [consentStudentSearch, setConsentStudentSearch] = useState('')
+  const [consentStudentResults, setConsentStudentResults] = useState<StudentLookup[]>([])
+  const [selectedConsentStudent, setSelectedConsentStudent] = useState<StudentLookup | null>(null)
+  const [consentAccepted, setConsentAccepted] = useState(false)
   const [legalBasis, setLegalBasis] = useState('')
   const [expiresAt, setExpiresAt] = useState('')
   const [consentMessage, setConsentMessage] = useState('')
@@ -52,10 +58,26 @@ export function BiometricAdminPage() {
   const [revocationConsentId, setRevocationConsentId] = useState<string | null>(null)
   const [revocationReason, setRevocationReason] = useState('')
 
+  const searchConsentStudentsMutation = useMutation({
+    mutationFn: searchStudents,
+    onSuccess: (students) => {
+      setConsentStudentResults(students)
+      setConsentError(students.length === 0 ? 'No se encontraron alumnos con ese DNI o nombre.' : '')
+    },
+    onError: (err) => {
+      setConsentStudentResults([])
+      setConsentError(getApiError(err).message)
+    }
+  })
+
   const grantConsentMutation = useMutation({
     mutationFn: grantBiometricConsent,
     onSuccess: async () => {
       setConsentStudentId('')
+      setConsentStudentSearch('')
+      setConsentStudentResults([])
+      setSelectedConsentStudent(null)
+      setConsentAccepted(false)
       setLegalBasis('')
       setExpiresAt('')
       setConsentMessage('Consentimiento biométrico otorgado con éxito.')
@@ -80,20 +102,36 @@ export function BiometricAdminPage() {
 
   // --- TAB 2: Guided Enrollment state & mutations ---
   const [enrollStudentId, setEnrollStudentId] = useState('')
+  const [enrollStudentSearch, setEnrollStudentSearch] = useState('')
+  const [enrollStudentResults, setEnrollStudentResults] = useState<StudentLookup[]>([])
+  const [selectedEnrollStudent, setSelectedEnrollStudent] = useState<StudentLookup | null>(null)
   const [images, setImages] = useState<File[]>([])
   const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [cameraActive, setCameraActive] = useState(false)
   const [enrollMessage, setEnrollMessage] = useState('')
   const [enrollError, setEnrollError] = useState('')
+  const [cameraError, setCameraError] = useState('')
   const [isEnrolling, setIsEnrolling] = useState(false)
 
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
 
+  const searchEnrollStudentsMutation = useMutation({
+    mutationFn: searchStudents,
+    onSuccess: (students) => {
+      setEnrollStudentResults(students)
+      setEnrollError(students.length === 0 ? 'No se encontraron alumnos con ese DNI o nombre.' : '')
+    },
+    onError: (err) => {
+      setEnrollStudentResults([])
+      setEnrollError(getApiError(err).message)
+    }
+  })
+
   // Find active consent for target student
   const activeConsent = consentsQuery.data?.data.find(
     (c) =>
-      c.student_id.toLowerCase() === enrollStudentId.trim().toLowerCase() &&
+      c.student_id?.toLowerCase() === enrollStudentId.trim().toLowerCase() &&
       c.status === 'active'
   )
 
@@ -107,14 +145,22 @@ export function BiometricAdminPage() {
   // Camera control
   const startCamera = async () => {
     try {
-      setCameraActive(true)
+      setCameraError('')
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setCameraError('Tu navegador no permite acceso a camara en este contexto. Usa http://localhost:5173 o habilita permisos.')
+        return
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ video: true })
       streamRef.current = stream
+      setCameraActive(true)
       if (videoRef.current) {
         videoRef.current.srcObject = stream
       }
-    } catch (err) {
-      console.error('Error starting camera stream:', err)
+    } catch (err: unknown) {
+      const message = err instanceof DOMException && err.name === 'NotAllowedError'
+        ? 'Permiso de camara denegado. Habilitalo en el navegador para localhost:5173.'
+        : 'No se pudo encender la camara. Verifica que exista una camara conectada y que no este en uso.'
+      setCameraError(message)
       setCameraActive(false)
     }
   }
@@ -177,6 +223,9 @@ export function BiometricAdminPage() {
       setImages([])
       setImagePreviews([])
       setEnrollStudentId('')
+      setEnrollStudentSearch('')
+      setEnrollStudentResults([])
+      setSelectedEnrollStudent(null)
       setEnrollMessage('Perfil facial enrolado con éxito.')
       setEnrollError('')
       setIsEnrolling(false)
@@ -317,9 +366,11 @@ export function BiometricAdminPage() {
               className="glass-panel-light p-6 rounded-2xl flex flex-col gap-5 text-slate-800"
               onSubmit={(e) => {
                 e.preventDefault()
+                if (!consentStudentId || !consentAccepted) return
+                const authorizationText = 'Autorizacion biometrica marcada en plataforma para registro facial y asistencia.'
                 grantConsentMutation.mutate({
                   student_id: consentStudentId,
-                  legal_basis: legalBasis,
+                  legal_basis: legalBasis || authorizationText,
                   expires_at: expiresAt || undefined
                 })
               }}
@@ -329,16 +380,57 @@ export function BiometricAdminPage() {
                 Otorgar Consentimiento
               </h2>
               <label className="text-xs font-bold text-slate-700 uppercase tracking-wide flex flex-col gap-1.5 cursor-pointer">
-                ID del Alumno (UUID)
-                <input
-                  type="text"
-                  className="glass-input-light mt-1 p-3 rounded-xl text-sm font-normal normal-case tracking-normal shadow-sm"
-                  placeholder="00000000-0000-0000-0000-000000000000"
-                  value={consentStudentId}
-                  onChange={(e) => setConsentStudentId(e.target.value)}
-                  required
-                />
+                Alumno por DNI o nombre
+                <span className="flex gap-2">
+                  <input
+                    type="text"
+                    className="glass-input-light mt-1 p-3 rounded-xl text-sm font-normal normal-case tracking-normal shadow-sm flex-1"
+                    placeholder="DNI o nombre del alumno"
+                    value={consentStudentSearch}
+                    onChange={(e) => {
+                      setConsentStudentSearch(e.target.value)
+                      setSelectedConsentStudent(null)
+                      setConsentStudentId('')
+                    }}
+                  />
+                  <button
+                    className="button button-secondary mt-1 rounded-xl px-3 text-sm"
+                    type="button"
+                    disabled={consentStudentSearch.trim().length < 3 || searchConsentStudentsMutation.isPending}
+                    onClick={() => searchConsentStudentsMutation.mutate(consentStudentSearch.trim())}
+                  >
+                    Buscar
+                  </button>
+                </span>
               </label>
+              {consentStudentResults.length > 0 && (
+                <div className="space-y-2">
+                  {consentStudentResults.map((student) => (
+                    <button
+                      key={student.id}
+                      type="button"
+                      className={`w-full text-left rounded-xl border p-3 text-sm transition ${
+                        consentStudentId === student.id
+                          ? 'border-blue-300 bg-blue-50 text-blue-800'
+                          : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                      }`}
+                      onClick={() => {
+                        setSelectedConsentStudent(student)
+                        setConsentStudentId(student.id)
+                        setConsentStudentSearch(`${student.dni} - ${student.name}`)
+                      }}
+                    >
+                      <strong className="block">{student.name}</strong>
+                      <span className="text-xs text-slate-500">DNI {student.dni}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {selectedConsentStudent && (
+                <p className="form-success bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm p-3 rounded-xl">
+                  Alumno seleccionado: {selectedConsentStudent.name} - DNI {selectedConsentStudent.dni}
+                </p>
+              )}
               <label className="text-xs font-bold text-slate-700 uppercase tracking-wide flex flex-col gap-1.5 cursor-pointer">
                 Base Legal / Documentación
                 <input
@@ -347,8 +439,18 @@ export function BiometricAdminPage() {
                   placeholder="Ej. Consentimiento firmado 2026-06-08"
                   value={legalBasis}
                   onChange={(e) => setLegalBasis(e.target.value)}
-                  required
                 />
+              </label>
+              <label className="flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-3 text-sm text-slate-700 cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="mt-1 accent-blue-600"
+                  checked={consentAccepted}
+                  onChange={(e) => setConsentAccepted(e.target.checked)}
+                />
+                <span>
+                  Confirmo que el alumno/apoderado autorizo el uso de datos biometricos faciales para enrolamiento y registro de asistencia, segun la politica del colegio.
+                </span>
               </label>
               <label className="text-xs font-bold text-slate-700 uppercase tracking-wide flex flex-col gap-1.5 cursor-pointer">
                 Fecha de Expiración (Opcional)
@@ -360,7 +462,7 @@ export function BiometricAdminPage() {
                 />
               </label>
 
-              <button className="button button-primary bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 font-semibold shadow-md shadow-blue-500/20 transition-all text-sm" type="submit" disabled={grantConsentMutation.isPending}>
+              <button className="button button-primary bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 font-semibold shadow-md shadow-blue-500/20 transition-all text-sm disabled:opacity-50" type="submit" disabled={grantConsentMutation.isPending || !consentStudentId || !consentAccepted}>
                 Registrar Consentimiento
               </button>
 
@@ -490,18 +592,60 @@ export function BiometricAdminPage() {
             <div>
               <h2 className="text-lg font-bold text-slate-900 mb-2">Verificar Consentimiento</h2>
               <p className="text-sm text-slate-500 mb-4">
-                Ingresa el ID del alumno para comprobar si tiene un consentimiento activo.
+                Busca al alumno por DNI o nombre para comprobar si tiene un consentimiento activo.
               </p>
               <label className="text-xs font-bold text-slate-700 uppercase tracking-wide flex flex-col gap-1.5 cursor-pointer">
-                ID del Alumno (UUID)
-                <input
-                  type="text"
-                  className="glass-input-light mt-1 p-3 rounded-xl text-sm font-normal normal-case tracking-normal shadow-sm"
-                  placeholder="00000000-0000-0000-0000-000000000000"
-                  value={enrollStudentId}
-                  onChange={(e) => setEnrollStudentId(e.target.value)}
-                />
+                Alumno por DNI o nombre
+                <span className="flex gap-2">
+                  <input
+                    type="text"
+                    className="glass-input-light mt-1 p-3 rounded-xl text-sm font-normal normal-case tracking-normal shadow-sm flex-1"
+                    placeholder="DNI o nombre del alumno"
+                    value={enrollStudentSearch}
+                    onChange={(e) => {
+                      setEnrollStudentSearch(e.target.value)
+                      setSelectedEnrollStudent(null)
+                      setEnrollStudentId('')
+                    }}
+                  />
+                  <button
+                    className="button button-secondary mt-1 rounded-xl px-3 text-sm"
+                    type="button"
+                    disabled={enrollStudentSearch.trim().length < 3 || searchEnrollStudentsMutation.isPending}
+                    onClick={() => searchEnrollStudentsMutation.mutate(enrollStudentSearch.trim())}
+                  >
+                    Buscar
+                  </button>
+                </span>
               </label>
+              {enrollStudentResults.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  {enrollStudentResults.map((student) => (
+                    <button
+                      key={student.id}
+                      type="button"
+                      className={`w-full text-left rounded-xl border p-3 text-sm transition ${
+                        enrollStudentId === student.id
+                          ? 'border-blue-300 bg-blue-50 text-blue-800'
+                          : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                      }`}
+                      onClick={() => {
+                        setSelectedEnrollStudent(student)
+                        setEnrollStudentId(student.id)
+                        setEnrollStudentSearch(`${student.dni} - ${student.name}`)
+                      }}
+                    >
+                      <strong className="block">{student.name}</strong>
+                      <span className="text-xs text-slate-500">DNI {student.dni}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {selectedEnrollStudent && (
+                <p className="form-success bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm p-3 rounded-xl mt-3">
+                  Alumno seleccionado: {selectedEnrollStudent.name} - DNI {selectedEnrollStudent.dni}
+                </p>
+              )}
 
               {/* Consent alert banners */}
               {enrollStudentId.trim() !== '' && (
@@ -545,10 +689,16 @@ export function BiometricAdminPage() {
             {!activeConsent ? (
               <div className="h-64 border border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-500 bg-slate-50/50 p-6 text-center">
                 <Fingerprint size={48} weight="thin" className="text-slate-400 mb-2 animate-pulse" />
-                <p className="text-sm font-semibold text-slate-700">Ingresa un ID con consentimiento activo para desbloquear la cámara.</p>
+                <p className="text-sm font-semibold text-slate-700">Selecciona un alumno con consentimiento activo para desbloquear la camara.</p>
               </div>
             ) : (
               <div className="space-y-4">
+                {cameraError && (
+                  <p className="form-error bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded-xl">
+                    {cameraError}
+                  </p>
+                )}
+
                 {/* Webcam capture feed */}
                 {cameraActive ? (
                   <div className="relative rounded-2xl overflow-hidden bg-slate-900 aspect-video border border-slate-200 shadow-inner">
@@ -581,8 +731,8 @@ export function BiometricAdminPage() {
                 {/* File picker alternative */}
                 <div className="flex items-center justify-between border-t border-slate-100 pt-4">
                   <div>
-                    <strong className="text-sm block text-slate-900 font-bold">Subida Manual / E2E</strong>
-                    <span className="text-xs text-slate-500">Alternativa para pruebas o carga de archivos</span>
+                    <strong className="text-sm block text-slate-900 font-bold">Carga de fotos reales</strong>
+                    <span className="text-xs text-slate-500">Alternativa cuando este equipo no tiene camara disponible</span>
                   </div>
                   <label className="button button-secondary bg-white border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl px-4 py-2 font-semibold text-xs cursor-pointer shadow-sm">
                     Seleccionar Archivos

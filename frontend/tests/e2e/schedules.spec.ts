@@ -369,7 +369,8 @@ test.describe('Horarios y Calendario - FE-018', () => {
     // Explore Calendar Escolar tab
     await page.getByRole('button', { name: 'Calendario Escolar' }).click({ force: true })
 
-    // Renders custom calendar. June 9th is selected by default which contains simulator exam
+    // Select June 9th explicitly so the assertion does not depend on the current day.
+    await page.getByRole('button', { name: '9', exact: true }).click()
     await expect(page.getByRole('heading', { name: 'Examen de Admisión Simulación' })).toBeVisible()
   })
 })

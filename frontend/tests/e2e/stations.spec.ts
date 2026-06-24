@@ -6,7 +6,22 @@ const mockStation = {
   name: 'Estación de Asistencia Kiosko',
   location: 'Entrada Principal Pabellón A',
   mode: 'mixed',
-  cameras: []
+  cameras: [
+    {
+      id: 'station-camera-1',
+      label: 'Cámara Frontal Principal',
+      device_identifier: 'mock-cam-1',
+      active: true,
+      mode: 'mixed'
+    },
+    {
+      id: 'station-camera-2',
+      label: 'Cámara Lateral Externa',
+      device_identifier: 'mock-cam-2',
+      active: true,
+      mode: 'mixed'
+    }
+  ]
 }
 
 async function mockMediaDevices(page: Page) {
