@@ -108,7 +108,7 @@ it('preserves historical teaching assignments when a teacher changes', function 
 
     $this->actingAs($coordinator)->postJson('/api/v1/teaching-assignments', [
         'teacher_id' => $newTeacher->id, 'course_id' => $course->id,
-        'section_id' => $section->id, 'academic_period_id' => $period->id,
+        'grade_id' => $grade->id, 'section_id' => $section->id, 'academic_period_id' => $period->id,
     ])->assertCreated()->assertJsonPath('data.teacher_id', $newTeacher->id);
 
     expect($old->fresh()->activo)->toBeFalse()

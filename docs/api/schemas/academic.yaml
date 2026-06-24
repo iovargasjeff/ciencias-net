@@ -22,6 +22,26 @@ createAcademicPeriodRequest:
         - draft
         - active
         - closed
+    terms:
+      type: array
+      minItems: 4
+      maxItems: 4
+      items:
+        type: object
+        required:
+          - name
+          - start_date
+          - end_date
+        properties:
+          name:
+            type: string
+            maxLength: 60
+          start_date:
+            type: string
+            format: date
+          end_date:
+            type: string
+            format: date
 updateAcademicPeriodRequest:
   type: object
   additionalProperties: false
@@ -47,13 +67,14 @@ createGradeRequest:
   type: object
   additionalProperties: false
   required:
-    - name
-    - level
     - academic_period_id
   properties:
     academic_period_id:
       type: string
       format: uuid
+    catalog_code:
+      type: string
+      description: Código del catálogo oficial de grados.
     name:
       type: string
       minLength: 1
@@ -89,9 +110,13 @@ createCourseRequest:
   type: object
   additionalProperties: false
   required:
+    - grade_id
     - code
     - name
   properties:
+    grade_id:
+      type: string
+      format: uuid
     code:
       type: string
       minLength: 1
@@ -109,10 +134,14 @@ createEnrollmentRequest:
   additionalProperties: false
   required:
     - student_id
+    - grade_id
     - section_id
     - academic_period_id
   properties:
     student_id:
+      type: string
+      format: uuid
+    grade_id:
       type: string
       format: uuid
     section_id:
@@ -129,11 +158,15 @@ createTeachingAssignmentRequest:
   additionalProperties: false
   required:
     - teacher_id
+    - grade_id
     - course_id
     - section_id
     - academic_period_id
   properties:
     teacher_id:
+      type: string
+      format: uuid
+    grade_id:
       type: string
       format: uuid
     course_id:
