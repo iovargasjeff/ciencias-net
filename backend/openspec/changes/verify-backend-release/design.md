@@ -2,12 +2,12 @@
 
 ## Source of Truth Check
 
-- Product docs reviewed:
-- Architecture docs reviewed:
-- API contracts reviewed:
-- Domain docs reviewed:
-- Security docs reviewed:
-- Conflicts found: yes/no
+- Product docs reviewed: `docs/product/approved-requirements.md`; `CAMBIOS CIENCIASNET.docx` no está disponible localmente, por lo que OpenSpec se usa como fuente suficiente para este change.
+- Architecture docs reviewed: `docs/architecture/backend.md`, `docs/architecture/database-schema.md`, `docs/architecture/deployment-runbook.md`
+- API contracts reviewed: `docs/api/openapi.yaml`, paquetes modificados en Fase 6 y Fase 7
+- Domain docs reviewed: `docs/domain/academic.md`, `docs/domain/identity-access.md`, `docs/domain/finance.md`, `docs/domain/incidents-communications.md`
+- Security docs reviewed: `docs/security/README.md`, `docs/security/data-and-files.md`
+- Conflicts found: no
 
 If any conflict exists, do not implement until docs are corrected or the task is rewritten.
 
