@@ -25,6 +25,14 @@ import {
 } from './api'
 import type { Material } from './types'
 
+const acceptedMaterialExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'zip', 'rar', 'mp4']
+const acceptedMaterialInput = acceptedMaterialExtensions.map((extension) => `.${extension}`).join(',')
+
+function isAcceptedMaterialFile(file: File) {
+  const extension = file.name.split('.').pop()?.toLowerCase()
+  return !!extension && acceptedMaterialExtensions.includes(extension)
+}
+
 export function MaterialsAdminPage() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
@@ -294,8 +302,8 @@ export function MaterialsAdminPage() {
         setCreateError('El archivo supera el límite permitido de 10 MB.')
         return
       }
-      if (!/^(application\/pdf|image\/|audio\/|video\/|text\/)/.test(createFile.type)) {
-        setCreateError('Formato no permitido. Se aceptan PDF, imagenes, audio, video o texto.')
+      if (!isAcceptedMaterialFile(createFile)) {
+        setCreateError('Formato no permitido. Se aceptan PDF, Word, PowerPoint, Excel, ZIP, RAR o MP4.')
         return
       }
     } else {
@@ -353,8 +361,8 @@ export function MaterialsAdminPage() {
       setReplaceError('El archivo supera el límite permitido de 10 MB.')
       return
     }
-    if (!/^(application\/pdf|image\/|audio\/|video\/|text\/)/.test(replaceFile.type)) {
-      setReplaceError('Formato no permitido. Se aceptan PDF, imagenes, audio, video o texto.')
+    if (!isAcceptedMaterialFile(replaceFile)) {
+      setReplaceError('Formato no permitido. Se aceptan PDF, Word, PowerPoint, Excel, ZIP, RAR o MP4.')
       return
     }
 
@@ -649,7 +657,7 @@ export function MaterialsAdminPage() {
                     Seleccionar Archivo (Límite: 10MB) *
                       <input
                         type="file"
-                        accept="application/pdf,image/*,audio/*,video/*,text/*"
+                        accept={acceptedMaterialInput}
                         ref={fileInputRef}
                       className="mt-2 text-xs text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100"
                       onChange={(e) => setCreateFile(e.target.files?.[0] || null)}
@@ -828,7 +836,7 @@ export function MaterialsAdminPage() {
                   Seleccionar Nuevo Archivo (Límite: 10MB) *
                     <input
                       type="file"
-                      accept="application/pdf,image/*,audio/*,video/*,text/*"
+                      accept={acceptedMaterialInput}
                       ref={replaceInputRef}
                     className="mt-2 text-xs text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100"
                     onChange={(e) => setReplaceFile(e.target.files?.[0] || null)}

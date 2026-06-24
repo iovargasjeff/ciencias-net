@@ -82,13 +82,18 @@ export function PsychologyAdminPage() {
       </div>
 
       {showForm && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3>Nueva Atención Psicológica</h3>
-              <button className="button-icon" onClick={() => setShowForm(false)} aria-label="Cerrar">x</button>
+        <div className="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 p-4">
+          <div
+            className="modal-content flex max-h-[calc(100dvh-2rem)] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="psychology-modal-title"
+          >
+            <div className="modal-header flex items-center justify-between border-b border-slate-100 px-5 py-4">
+              <h3 id="psychology-modal-title">Nueva Atención Psicológica</h3>
+              <button className="button-icon" type="button" onClick={() => setShowForm(false)} aria-label="Cerrar">x</button>
             </div>
-            <div className="modal-body">
+            <div className="modal-body overflow-y-auto px-5 py-4">
               <PsychologyForm onSubmit={handleSubmit} isSubmitting={submitting} />
               {submitError && <p className="form-error">{submitError}</p>}
             </div>
