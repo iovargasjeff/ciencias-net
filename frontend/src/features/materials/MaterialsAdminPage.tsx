@@ -25,6 +25,14 @@ import {
 } from './api'
 import type { Material } from './types'
 
+const acceptedMaterialExtensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx', 'zip', 'rar', 'mp4']
+const acceptedMaterialInput = acceptedMaterialExtensions.map((extension) => `.${extension}`).join(',')
+
+function isAcceptedMaterialFile(file: File) {
+  const extension = file.name.split('.').pop()?.toLowerCase()
+  return !!extension && acceptedMaterialExtensions.includes(extension)
+}
+
 export function MaterialsAdminPage() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
@@ -294,6 +302,10 @@ export function MaterialsAdminPage() {
         setCreateError('El archivo supera el límite permitido de 10 MB.')
         return
       }
+      if (!isAcceptedMaterialFile(createFile)) {
+        setCreateError('Formato no permitido. Se aceptan PDF, Word, PowerPoint, Excel, ZIP, RAR o MP4.')
+        return
+      }
     } else {
       if (!createUrl.trim()) {
         setCreateError('El enlace externo es requerido.')
@@ -347,6 +359,10 @@ export function MaterialsAdminPage() {
 
     if (replaceFile.size > 10 * 1024 * 1024) {
       setReplaceError('El archivo supera el límite permitido de 10 MB.')
+      return
+    }
+    if (!isAcceptedMaterialFile(replaceFile)) {
+      setReplaceError('Formato no permitido. Se aceptan PDF, Word, PowerPoint, Excel, ZIP, RAR o MP4.')
       return
     }
 
@@ -639,9 +655,10 @@ export function MaterialsAdminPage() {
                 <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-2">
                   <label className="text-[10px] font-extrabold text-slate-700 block cursor-pointer">
                     Seleccionar Archivo (Límite: 10MB) *
-                    <input
-                      type="file"
-                      ref={fileInputRef}
+                      <input
+                        type="file"
+                        accept={acceptedMaterialInput}
+                        ref={fileInputRef}
                       className="mt-2 text-xs text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100"
                       onChange={(e) => setCreateFile(e.target.files?.[0] || null)}
                     />
@@ -817,9 +834,10 @@ export function MaterialsAdminPage() {
               <div className="p-4 bg-slate-50 border border-slate-100 rounded-xl space-y-2">
                 <label className="text-[10px] font-extrabold text-slate-700 block cursor-pointer">
                   Seleccionar Nuevo Archivo (Límite: 10MB) *
-                  <input
-                    type="file"
-                    ref={replaceInputRef}
+                    <input
+                      type="file"
+                      accept={acceptedMaterialInput}
+                      ref={replaceInputRef}
                     className="mt-2 text-xs text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 file:cursor-pointer hover:file:bg-blue-100"
                     onChange={(e) => setReplaceFile(e.target.files?.[0] || null)}
                   />

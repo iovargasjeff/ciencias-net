@@ -100,15 +100,7 @@ export function CommunicationsAdminPage() {
 
       const matchedStudents = accounts.filter((acc) => enrolledStudentIds.includes(acc.id))
 
-      // E2E mock mapping: if student-1-uuid is matched, Padre Carlos (padre-uuid) is also matched
-      const reached = [...matchedStudents]
-      if (enrolledStudentIds.includes('student-1-uuid')) {
-        const parentAcc = accounts.find((acc) => acc.id === 'padre-uuid' || acc.roles.includes('padre'))
-        if (parentAcc && !reached.some((r) => r.id === parentAcc.id)) {
-          reached.push(parentAcc)
-        }
-      }
-      return reached
+      return matchedStudents
     }
     if (audienceType === 'accounts') {
       return accounts.filter((acc) => selectedAccounts.includes(acc.id))
@@ -353,7 +345,7 @@ export function CommunicationsAdminPage() {
                 <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-2">
                   <label className="text-[10px] font-extrabold text-slate-400 block uppercase tracking-wider">Seleccionar Roles de Destinatarios</label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {['superadmin', 'gestor_usuarios', 'toe', 'psicologia', 'auxiliar', 'coordinador_academico', 'docente', 'padre', 'alumno', 'administrativo'].map((role) => (
+                    {['gestor_usuarios', 'toe', 'psicologia', 'auxiliar', 'coordinador_academico', 'docente', 'padre', 'alumno', 'administrativo'].map((role) => (
                       <label key={role} className="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
                         <input
                           type="checkbox"
@@ -499,7 +491,7 @@ export function CommunicationsAdminPage() {
                     <tr key={item.id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                       <td className="p-3 font-extrabold text-slate-900">{item.title}</td>
                       <td className="p-3 text-slate-500 font-semibold uppercase text-[10px]">
-                        {item.audience_type}
+                        {item.audience_type}{item.audience_ids?.length ? ` (${item.audience_ids.length})` : ''}
                       </td>
                       <td className="p-3 text-slate-550 text-[11px] font-semibold">
                         {item.publish_at ? new Date(item.publish_at).toLocaleString('es-PE') : new Date(item.created_at).toLocaleString('es-PE')}

@@ -3,20 +3,26 @@ import { Link } from 'react-router-dom'
 import { listIncidents, createIncident } from './api'
 import type { Incident } from './types'
 import { IncidentForm } from './components/IncidentForm'
+import { DataTable } from '@/components/shared/DataTable'
+import { OperationalState } from '@/components/shared/OperationalState'
+import { getApiError } from '@/lib/api/client'
 
 export function IncidentsAdminPage() {
   const [incidents, setIncidents] = useState<Incident[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const fetchIncidents = async () => {
     setLoading(true)
+    setError('')
     try {
       const res = await listIncidents()
       setIncidents(res.data)
     } catch (err) {
-      console.error(err)
+      setError(getApiError(err).message)
     } finally {
       setLoading(false)
     }
@@ -29,12 +35,13 @@ export function IncidentsAdminPage() {
 
   const handleCreate = async (data: import('./types').CreateIncidentRequest) => {
     setSubmitting(true)
+    setSubmitError('')
     try {
       await createIncident(data)
       setShowModal(false)
       fetchIncidents()
     } catch (err) {
-      console.error(err)
+      setSubmitError(getApiError(err).message)
     } finally {
       setSubmitting(false)
     }
@@ -55,42 +62,27 @@ export function IncidentsAdminPage() {
           <div className="modal-content">
             <h3>Nueva Incidencia</h3>
             <IncidentForm onSubmit={handleCreate} isSubmitting={submitting} />
+            {submitError && <p className="form-error">{submitError}</p>}
             <button className="button outline mt-4" onClick={() => setShowModal(false)}>Cancelar</button>
           </div>
         </div>
       )}
 
       {loading ? (
-        <p>Cargando incidencias...</p>
+        <OperationalState state="loading" title="Cargando incidencias" message="Consultando el cuaderno de incidencias." />
+      ) : error ? (
+        <OperationalState state="error" title="No se pudieron cargar las incidencias" message={error} />
       ) : incidents.length === 0 ? (
-        <p>No se encontraron incidencias registradas.</p>
+        <OperationalState state="empty" title="Sin incidencias" message="No se encontraron incidencias registradas." />
       ) : (
-        <div className="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Alumno ID</th>
-                <th>Tipo</th>
-                <th>Severidad</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {incidents.map((inc) => (
-                <tr key={inc.id}>
-                  <td>{new Date(inc.occurred_at).toLocaleDateString()}</td>
-                  <td>{inc.student_id}</td>
-                  <td>{inc.incident_type}</td>
-                  <td>{inc.severity}</td>
-                  <td>{inc.status}</td>
-                  <td><Link to={`/admin/incidencias/${inc.id}`} className="button small">Ver Detalle</Link></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <DataTable rows={incidents} isLoading={false} error={null} columns={[
+          { label: 'Fecha', render: (inc) => new Date(inc.occurred_at).toLocaleDateString() },
+          { label: 'Alumno', render: (inc) => `Ref. ${inc.student_id}` },
+          { label: 'Tipo', render: (inc) => inc.incident_type },
+          { label: 'Severidad', render: (inc) => inc.severity },
+          { label: 'Estado', render: (inc) => inc.status },
+          { label: 'Acciones', render: (inc) => <Link to={`/admin/incidencias/${inc.id}`} className="button button-secondary">Ver detalle</Link> },
+        ]} />
       )}
     </section>
   )

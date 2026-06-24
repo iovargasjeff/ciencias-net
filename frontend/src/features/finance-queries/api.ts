@@ -1,82 +1,84 @@
-import type { AccountStatement, Debtor, CashReport, SendRemindersRequest } from './types';
+import { apiClient } from '@/lib/api/client'
+import type { AccountStatement, CashReport, Debtor, Receipt, SendRemindersRequest } from './types'
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+type ApiPage<T> = { data: T[] }
+type ApiResource<T> = { data: T }
 
-const MOCK_STATEMENTS: AccountStatement[] = [
-  {
-    studentId: 'STU-001',
-    studentName: 'Ana García',
-    grade: '1ro Secundaria',
-    totalDue: 350.00,
-    earlyPaymentDiscount: {
-      eligible: true,
-      amount: 50.00,
-      deadline: '2023-11-10',
-    },
-    receipts: [
-      { id: 'REC-001', description: 'Matrícula 2023', amount: 300.00, status: 'paid', dueDate: '2023-02-15', paymentDate: '2023-02-10' },
-      { id: 'REC-002', description: 'Pensión Marzo', amount: 350.00, status: 'paid', dueDate: '2023-03-31', paymentDate: '2023-03-25' },
-      { id: 'REC-003', description: 'Pensión Abril', amount: 350.00, status: 'pending', dueDate: '2023-04-30' },
-    ]
-  },
-  {
-    studentId: 'STU-002',
-    studentName: 'Carlos García',
-    grade: '3ro Secundaria',
-    totalDue: 0,
-    earlyPaymentDiscount: null,
-    receipts: [
-      { id: 'REC-004', description: 'Matrícula 2023', amount: 300.00, status: 'paid', dueDate: '2023-02-15', paymentDate: '2023-02-15' },
-      { id: 'REC-005', description: 'Pensión Marzo', amount: 350.00, status: 'paid', dueDate: '2023-03-31', paymentDate: '2023-03-28' },
-    ]
+function pageData<T>(response: { data: ApiPage<T> | T[] }): T[] {
+  return Array.isArray(response.data) ? response.data : response.data.data
+}
+
+function resourceData<T>(response: { data: ApiResource<T> | T }): T {
+  return typeof response.data === 'object' && response.data !== null && 'data' in response.data
+    ? (response.data as ApiResource<T>).data
+    : response.data
+}
+
+function toReceipt(item: Record<string, unknown>): Receipt {
+  return {
+    id: String(item.id),
+    description: String(item.description ?? item.concept_name ?? item.concept ?? 'Obligacion de pago'),
+    amount: Number(item.amount ?? item.total_amount ?? item.pending_amount ?? 0),
+    status: String(item.status ?? item.payment_status ?? 'pending') as Receipt['status'],
+    dueDate: String(item.dueDate ?? item.due_date ?? item.expires_at ?? ''),
+    paymentDate: item.paymentDate || item.payment_date ? String(item.paymentDate ?? item.payment_date) : undefined,
   }
-];
+}
 
-const MOCK_DEBTORS: Debtor[] = [
-  { studentId: 'STU-010', studentName: 'Luis Pérez', guardianName: 'Juan Pérez', guardianEmail: 'juan.perez@email.com', overdueAmount: 700.00, overdueReceiptsCount: 2, daysOverdue: 45 },
-  { studentId: 'STU-011', studentName: 'María Gómez', guardianName: 'Rosa Gómez', guardianEmail: 'rosa.gomez@email.com', overdueAmount: 350.00, overdueReceiptsCount: 1, daysOverdue: 15 },
-];
+function toAccountStatement(item: Record<string, unknown>): AccountStatement {
+  const receipts = Array.isArray(item.receipts)
+    ? item.receipts.map((receipt) => toReceipt(receipt as Record<string, unknown>))
+    : []
 
-const MOCK_CASH_REPORT: CashReport = {
-  date: new Date().toISOString().split('T')[0],
-  totalIncome: 15400.00,
-  incomeByMethod: [
-    { method: 'cash', amount: 3400.00 },
-    { method: 'transfer', amount: 8000.00 },
-    { method: 'card', amount: 4000.00 },
-  ],
-  dailyData: [
-    { date: '2023-10-01', amount: 1200 },
-    { date: '2023-10-02', amount: 2300 },
-    { date: '2023-10-03', amount: 800 },
-    { date: '2023-10-04', amount: 3100 },
-    { date: '2023-10-05', amount: 1500 },
-    { date: '2023-10-06', amount: 4500 },
-    { date: '2023-10-07', amount: 2000 },
-  ]
-};
+  const discount = item.earlyPaymentDiscount ?? item.early_payment_discount
+
+  return {
+    studentId: String(item.studentId ?? item.student_id ?? item.id),
+    studentName: String(item.studentName ?? item.student_name ?? item.name ?? 'Alumno'),
+    grade: String(item.grade ?? item.grade_name ?? ''),
+    receipts,
+    totalDue: Number(item.totalDue ?? item.total_due ?? item.pending_total ?? receipts.reduce((sum, receipt) => sum + (receipt.status === 'paid' ? 0 : receipt.amount), 0)),
+    earlyPaymentDiscount: discount && typeof discount === 'object'
+      ? {
+          eligible: Boolean((discount as Record<string, unknown>).eligible),
+          amount: Number((discount as Record<string, unknown>).amount ?? 0),
+          deadline: String((discount as Record<string, unknown>).deadline ?? ''),
+        }
+      : null,
+  }
+}
+
+function toDebtor(item: Record<string, unknown>): Debtor {
+  return {
+    studentId: String(item.studentId ?? item.student_id ?? item.id),
+    studentName: String(item.studentName ?? item.student_name ?? 'Alumno'),
+    guardianName: String(item.guardianName ?? item.guardian_name ?? item.parent_name ?? ''),
+    guardianEmail: String(item.guardianEmail ?? item.guardian_email ?? item.parent_email ?? ''),
+    overdueAmount: Number(item.overdueAmount ?? item.overdue_amount ?? 0),
+    overdueReceiptsCount: Number(item.overdueReceiptsCount ?? item.overdue_receipts_count ?? 0),
+    daysOverdue: Number(item.daysOverdue ?? item.days_overdue ?? 0),
+  }
+}
 
 export const financeQueriesApi = {
-  listAccountStatements: async (): Promise<AccountStatement[]> => {
-    await delay(800);
-    return MOCK_STATEMENTS;
+  async listAccountStatements(): Promise<AccountStatement[]> {
+    const response = await apiClient.get<ApiPage<Record<string, unknown>>>('/api/v1/finance/account-statements')
+    return pageData(response).map(toAccountStatement)
   },
 
-  listDebtors: async (): Promise<Debtor[]> => {
-    await delay(800);
-    return MOCK_DEBTORS;
+  async listDebtors(): Promise<Debtor[]> {
+    const response = await apiClient.get<ApiPage<Record<string, unknown>>>('/api/v1/finance/debtors')
+    return pageData(response).map(toDebtor)
   },
 
-  getCashReport: async (): Promise<CashReport> => {
-    await delay(1000);
-    if (localStorage.getItem('force_cash_report_error') === 'true') {
-      throw new Error('Error simulado al obtener el reporte de caja.');
-    }
-    return MOCK_CASH_REPORT;
+  async getCashReport(): Promise<CashReport> {
+    const response = await apiClient.get<ApiResource<CashReport>>('/api/v1/finance/cash-reports')
+    return resourceData(response)
   },
 
-  sendPaymentReminders: async (data: SendRemindersRequest): Promise<void> => {
-    await delay(1200);
-    console.log(`Reminders sent to ${data.debtorIds.length} debtors.`);
-  }
-};
+  async sendPaymentReminders(data: SendRemindersRequest): Promise<void> {
+    await apiClient.post('/api/v1/finance/payment-reminders', data, {
+      headers: { 'Idempotency-Key': `payment-reminders-${Date.now()}` },
+    })
+  },
+}
