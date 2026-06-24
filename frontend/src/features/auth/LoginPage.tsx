@@ -29,10 +29,11 @@ export function LoginPage() {
   const submit = form.handleSubmit(async (values) => {
     setError('')
     try {
-      await login(values)
+      const user = await login(values)
       await auth.refreshSession()
       const requested = (location.state as { from?: string } | null)?.from
-      navigate(requested ?? '/seleccionar-contexto', { replace: true })
+      const destination = user.roles.includes('superadmin') ? '/admin' : (requested ?? '/seleccionar-contexto')
+      navigate(destination, { replace: true })
     } catch (requestError) {
       setError(getApiError(requestError).message)
     }
