@@ -29,7 +29,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/health', fn () => response()->json([
-        'data' => ['status' => 'ok'],
+        'data' => [
+            'status' => 'ok',
+            'checks' => [
+                'api' => 'ok',
+                'queue' => config('queue.default'),
+                'cache' => config('cache.default'),
+            ],
+        ],
     ]))->name('api.v1.health');
 
     Route::get('private-files/{fileId}/signed-download', [PrivateFileController::class, 'signedDownload'])
@@ -56,7 +63,7 @@ Route::prefix('v1')->group(function (): void {
         });
     });
 
-    Route::middleware(['auth:sanctum', 'active.account'])->group(function (): void {
+    Route::middleware(['auth:sanctum', 'active.account', 'throttle:authenticated-api'])->group(function (): void {
         Route::post('private-files', [PrivateFileController::class, 'store'])->middleware('throttle:private-files-upload');
         Route::get('private-files/{fileId}/download', [PrivateFileController::class, 'download'])->name('api.v1.private-files.download');
 

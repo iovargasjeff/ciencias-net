@@ -128,5 +128,9 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('private-files-upload', fn (Request $request) => [
             Limit::perMinute(20)->by($request->user()?->id ?: $request->ip()),
         ]);
+
+        RateLimiter::for('authenticated-api', fn (Request $request) => [
+            Limit::perMinute(600)->by($request->user()?->id ?: $request->ip()),
+        ]);
     }
 }
